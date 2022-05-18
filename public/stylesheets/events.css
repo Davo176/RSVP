@@ -1,0 +1,55 @@
+.app {
+    display: flex;
+    justify-content: center;
+}
+
+.container {
+    background-color: white;
+    width:95vw;
+    margin:20px 0px;
+    padding: 15px;
+    border-radius: 20px;
+}
+
+.buttonsAndEvents {
+    display:flex;
+    justify-content:space-between;
+    align-items: stretch;
+}
+
+.arrowButtonContainer {
+    min-height:100%;
+}
+
+.arrowButton {
+    width:40px;
+    background-color: white;
+    height:100%;
+    color:var(--secondary-color);
+    font-size:32px;
+}
+
+.eventContainer {
+    display:flex;
+    flex-direction: column;
+    background-color: var(--primary-color);
+    margin-bottom:10px;
+    border-radius: 10px;
+    overflow: hidden;
+}
+
+.eventAttendeeInfoContainer{
+    display:flex;
+    justify-content: space-around;
+}
+
+.eventTextContainer{
+    padding:0px 10px;
+    display:flex;
+    flex-direction:column;
+}
+
+.center {
+    display:flex;
+    justify-content: center;
+}

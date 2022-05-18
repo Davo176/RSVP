@@ -1,0 +1,31 @@
+.friendsColSeperator {
+    display:flex;
+    justify-content: space-around;
+}
+
+.friendCol {
+    background-color: white;
+    width: 30vw;
+    margin: 10px;
+    border-radius: 20px;
+    padding: 20px;
+}
+
+.friendContainer {
+    display:flex;
+    justify-content: space-between;
+    align-items: center;
+    margin: 5px;
+}
+
+.friendRequestContainer {
+    display:flex;
+    justify-content: space-between;
+    align-items: center;
+    margin: 5px;
+}
+
+.friendReqButton{
+    margin: 0px 5px;
+    padding: 2px;
+}
