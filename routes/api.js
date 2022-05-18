@@ -10,4 +10,8 @@ router.get('/test', function(req, res, next) {
   res.send('server Healthy');
 });
 
+router.get('/login', function(req, res, next) {
+  res.send('server Healthy');
+});
+
 module.exports = router;
