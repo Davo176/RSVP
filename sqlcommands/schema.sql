@@ -27,7 +27,7 @@ CREATE TABLE friends (
     request_date DATE,
     friendship_start_date DATE,
     FOREIGN KEY (requester) REFERENCES users(user_name);
-    FOREIGN KEY (requester) REFERENCES users(user_name);
+    FOREIGN KEY (requestee) REFERENCES users(user_name);
     PRIMARY KEY (requester, requestee);
 
 );
