@@ -1,12 +1,48 @@
-<html>
-
-<head>
-  <title>Express</title>
-  <link rel="stylesheet" href="/stylesheets/style.css">
-</head>
-
-<body>
-  <h1>Notifications</h1>
-</body>
-
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <title>Event Planning - Notifications</title>
+        <link rel="stylesheet" href="stylesheets/global.css">
+        <link rel="stylesheet" href="stylesheets/notifications.css">
+        <link rel="icon" type="image/x-icon" href="/images/favicon.ico">
+        <script src="https://kit.fontawesome.com/849e072605.js" crossorigin="anonymous"></script>
+        <script src="https://cdn.jsdelivr.net/npm/vue@2.6.12/dist/vue.js"></script>
+        <script src="https://unpkg.com/element-ui/lib/index.js"></script>
+        <script src="https://unpkg.com/element-ui/lib/umd/locale/en.js"></script>
+        <script>
+            ELEMENT.locale(ELEMENT.lang.en)
+        </script>
+        <script src="scripts/global.js" defer></script>
+        <script src="scripts/notifications.js" defer></script>
+    </head>
+    <body>
+    <div id="app">
+        <header id="Nav"></header>
+        </header>
+        <div class="notifCenter">
+            <div class="notifContainer" >
+                <div class="notification" v-if="n.type=='invite'" v-for="n in notifications">
+                    <span>{{n.details.inviter}} Invited you to</span>
+                    <strong>{{n.details.eventName}}</strong>
+                    <span>On {{n.details.eventDate}} at {{n.details.eventAddress}}</span>
+                    <span>You are Available!</span>
+                    <div>
+                        <span>Quick Response:</span>
+                        <button>Yes</button>
+                        <button>No</button>
+                    </div>
+                </div>
+                <div class="notification" v-if="n.type=='Friend Request'" v-for="n in notifications">
+                    <span>{{n.details.requester}} sent you a friend request</span>
+                    <div>
+                        <span>Quick Response:</span>
+                        <button>Accept</button>
+                        <button>Decline</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    </body>
 </html>
+
