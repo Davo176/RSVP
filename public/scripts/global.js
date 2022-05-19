@@ -23,21 +23,20 @@ function updateNav () {
   nav.innerHTML += `
 <nav>
   <ul class="navBar">
-      <li><button >RSVP</button></li>
-      <li><button onclick="homeButton()">Home</button></li>
-      <li><button onclick="friendsButton()">Friends</button></li>
-      <li><button onclick="eventsButton()">My Events</button></li>
+      <li class="navBarElementContainerText"><button >RSVP</button></li>
+      <li class="navBarElementContainerText"><a href="/home" class="navBarElement">Home</a></li>
+      <li class="navBarElementContainerText"><a href="/friends" class="navBarElement">Friends</a></li>
+      <li class="navBarElementContainerText"><a href="/events" class="navBarElement">My Events</a></li>
   </ul>
 </nav>
 <nav>
   <ul class="navBar">
-      <li style="padding-right: 0;"><input class="search" type="text" placeholder="Search.."></li>
-      <li style="padding-left: 0;"><i href="#" class="icon fa-solid fa-magnifying-glass"></i></li>
-      <li><i href="#" class="icon fa-solid fa-plus"></i></li>
-      <li><i href="#" class="icon fa-solid fa-bell"></i></li>
-      <li><i href="#" class="icon fa-solid fa-calendar-days"></i></li>
-      <li><button onclick="loginButton()">Log in</button></li>
-      <li><button onclick="signUpButton()">Sign up</button></li>
+      <li class="navBarElementContainer" style="padding-right: 0;"><input class="search" type="text" placeholder="Search.."></li>
+      <li class="navBarElementContainer"><a href="/newpost"><i href="#" class="icon fa-solid fa-plus"></i></a></li>
+      <li class="navBarElementContainer"><a href="/notification"><i class="icon fa-solid fa-bell"></i></a></li>
+      <li class="navBarElementContainer"><a href="/calendar"><i class="icon fa-solid fa-calendar-days"></i></a></li>
+      <li class="navBarElementContainer"><button onclick="loginButton()">Log in</button></li>
+      <li class="navBarElementContainer"><button onclick="signUpButton()">Sign up</button></li>
   </ul>
 </nav>`;
 }
