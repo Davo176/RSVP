@@ -1,0 +1,42 @@
+.calendarPageContainer {
+    background-color: white;
+    border-radius: 20px;
+    padding: 20px;
+    margin: 2.5vh 2.5vw ;
+    width: 95vw
+}
+
+.columnContainer {
+    display: flex;
+    justify-content:center;
+}
+
+.activeBlock {
+    width: calc(calc(90vw - 40px) / 7);
+    aspect-ratio: 4 / 2;
+    background-color: var(--primary-color);
+    border: solid black;
+    border-width: 1px;
+    overflow: scroll;
+    overflow-y: auto;
+    overflow-x: auto;
+}
+.inactiveBlock {
+    width: calc(calc(90vw - 40px) / 7);
+    color: white;
+    aspect-ratio: 4 / 2;
+    background-color:grey;
+    border: solid black;
+    border-width: 1px;
+    overflow: scroll;
+    overflow-y: auto;
+    overflow-x: auto;
+}
+
+.miniEvent{
+    background-color: var(--secondary-color);
+    border-radius:999px;
+    padding: 2px 0px 2px 8px;
+    color: white;
+    margin: 2px;
+}

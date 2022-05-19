@@ -1,12 +1,41 @@
-<html>
-
-<head>
-  <title>Express</title>
-  <link rel="stylesheet" href="/stylesheets/style.css">
-</head>
-
-<body>
-  <h1>calendar</h1>
-</body>
-
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <title>Event Planning - Home</title>
+        <link rel="stylesheet" href="/stylesheets/global.css">
+        <link rel="stylesheet" href="/stylesheets/calendar.css">
+        <link rel="icon" type="image/x-icon" href="/images/favicon.ico">
+        <script src="https://kit.fontawesome.com/849e072605.js" crossorigin="anonymous"></script>
+        <script src="https://cdn.jsdelivr.net/npm/vue@2.6.12/dist/vue.js"></script>
+        <script>
+            ELEMENT.locale(ELEMENT.lang.en)
+        </script>
+        <script src="/scripts/global.js" defer></script>
+        <script src="/scripts/calendar.js" defer></script>
+    </head>
+    <body>
+    <div id="app">
+        <header id="Nav"></header>
+        <div class="calendarPageContainer">
+          <div>
+            <strong>{{calendar.month}} {{calendar.year}}</strong>
+            <button>Last Month</button>
+            <button>Next Month</button>
+          </div>
+          <div  class="columnContainer">
+            <div v-for="day in calendar.days">
+              <strong>{{day.dayName}}</strong>
+              <div class="column">
+                <div v-bind:class="{ activeBlock:!date.blank, inactiveBlock:date.blank }" v-for="date in day.dates">
+                  {{date.date}}
+                  <div v-for="event in date.events" class="miniEvent">
+                    {{event.time}} <strong>{{event.reason}}</strong>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+    </div>
+    </body>
 </html>
