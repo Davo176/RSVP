@@ -1,12 +1,83 @@
-<html>
-
-<head>
-  <title>Express</title>
-  <link rel="stylesheet" href="/stylesheets/style.css">
-</head>
-
-<body>
-  <h1>Home</h1>
-</body>
-
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <title>Event Planning - Home</title>
+        <link rel="stylesheet" href="/stylesheets/global.css">
+        <link rel="stylesheet" href="/stylesheets/events.css">
+        <link rel="stylesheet" href="/stylesheets/notifications.css">
+        <link rel="stylesheet" href="/stylesheets/home.css">
+        <link rel="icon" type="image/x-icon" href="/images/favicon.ico">
+        <script src="https://kit.fontawesome.com/849e072605.js" crossorigin="anonymous"></script>
+        <script src="https://cdn.jsdelivr.net/npm/vue@2.6.12/dist/vue.js"></script>
+        <script src="https://unpkg.com/element-ui/lib/index.js"></script>
+        <script src="https://unpkg.com/element-ui/lib/umd/locale/en.js"></script>
+        <script>
+            ELEMENT.locale(ELEMENT.lang.en)
+        </script>
+        <script src="/scripts/global.js" defer></script>
+        <script src="/scripts/home.js" defer></script>
+    </head>
+    <body>
+    <div id="app">
+        <header id="Nav"></header>
+        <div class="homeDiv">
+            <div class="homeEvents">
+                <h1 style="text-align: center">Upcoming Events:</h1>
+                <div v-for="event in homeEvents" class="eventsCont">
+                    <h3>Event on: {{event.eventDate}}, at: {{event.eventTime}}</h3>
+                    <div class="eventContainer">
+                        <div class="center">
+                          <img v-bind:src="event.eventPicture" style="width:20vw;"/>
+                        </div>
+                        <div class="eventTextContainer">
+                            <strong class="eventName">{{event.eventName}}</strong>
+                            <em class="eventDate">{{event.eventDate}} {{event.eventTime}}</em>
+                            <span class="eventText">{{event.eventAddress}}</span>
+                            <div class="eventAttendeeInfoContainer">
+                                <div>
+                                    <div class="center">{{event.eventAttendees.going}}</div>
+                                    <div class="center">People Going</div>
+                                </div>
+                                <div>
+                                    <div class="center">{{event.eventAttendees.pending}}</div>
+                                    <div class="center">Pending</div>
+                                </div>
+                                <div>
+                                    <div class="center">{{event.eventAttendees.notGoing}}</div>
+                                    <div class="center">Can't Go</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="homeNotifications">
+                <h1 style="text-align: center">Notifications:</h1>
+                <div class="notifCenter">
+                    <div class="homeNotifContainer" >
+                        <div class="notification" v-if="n.type=='invite'" v-for="n in notifications">
+                            <span>{{n.details.inviter}} Invited you to</span>
+                            <strong>{{n.details.eventName}}</strong>
+                            <span>On {{n.details.eventDate}} at {{n.details.eventAddress}}</span>
+                            <span>You are Available!</span>
+                            <div>
+                                <span>Quick Response:</span>
+                                <button>Yes</button>
+                                <button>No</button>
+                            </div>
+                        </div>
+                        <div class="notification" v-if="n.type=='Friend Request'" v-for="n in notifications">
+                            <span>{{n.details.requester}} sent you a friend request</span>
+                            <div>
+                                <span>Quick Response:</span>
+                                <button>Accept</button>
+                                <button>Decline</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    </body>
 </html>

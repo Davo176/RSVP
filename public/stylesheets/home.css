@@ -1,0 +1,42 @@
+
+.homeDiv {
+    display: flex;
+    justify-content: space-evenly;
+    align-items: stretch;
+}
+
+.homeEvents {
+    display:flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin: 10px;
+    flex-grow: 3;
+    background-color: white;
+    text-align: center;
+}
+
+.eventsCont{
+    width:20vw;
+    display:flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.homeNotifications {
+    margin: 10px;
+    flex-grow: 1;
+    background-color: white;
+}
+
+.notifCenter {
+    display: flex;
+    justify-content: space-around;
+}
+
+.homeNotifContainer {
+    background-color: white;
+    border-radius: 20px;
+    margin: 20px;
+}
