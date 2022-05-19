@@ -18,14 +18,22 @@ mysql --host=127.0.0.1 < sqlcommands/backup.sql
 
 Github Routine
 
-Checkout new branch
-Git checkout -b "W-Example"
-make your changes to files
-IF YOU WANT, BACKUP THE DATABASE ONLY CHANGE backup.sql
-at key points we may want to create more backups.
-git add
-git commit -m "message"
-git push
-git push -set--upstream origin
-open github
-open pull request
+When writing new code:
+  Checkout new branch
+  git checkout -b "W-Example"
+    replace W with your first initial
+  make your changes to files
+  IF YOU WANT, BACKUP THE DATABASE ONLY CHANGE backup.sql
+  at key points we may want to create more backups.
+  git add
+  git commit -m "message"
+  git push
+  git push -set--upstream origin
+  open github
+  open pull request
+ 
+To update to newest code from master:
+  git checkout master
+  git pull
+
+
