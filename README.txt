@@ -25,7 +25,10 @@ When writing new code:
   make your changes to files
   IF YOU WANT, BACKUP THE DATABASE ONLY CHANGE backup.sql
   at key points we may want to create more backups.
+  git status
+    to see which files you have made changes to
   git add
+    add files you have made changes to
   git commit -m "message"
   git push
   git push -set--upstream origin
