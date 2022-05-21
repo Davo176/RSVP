@@ -17,13 +17,14 @@ let users = {
   admin1: { username: "admin1", name: "Some Admin", password: "admin" },
   user1: { username: "user1", name: "Some User", password: "user" }
 };
+
 router.post('/login', function(req, res, next) {
   console.log(req.body);
   if ('username' in req.body && 'password' in req.body)
   {
     if(req.body.username in users && users[req.body.username].password === req.body.password)
     {
-      console.log('Sucess!');
+      console.log('Success!');
       req.session.user = users[req.body.username].username;
       res.sendStatus(200);
     }
@@ -38,7 +39,25 @@ router.post('/login', function(req, res, next) {
     console.log('Inproper Login Form');
     res.sendStatus(400);
   }
+});
 
+router.post('/signup', function(req, res, next) {
+  console.log(req.body);
+
+  if ('username' in req.body && 'name' in req.body && 'password' in req.body) {
+    if(req.body.username in users){
+      console.log('user exists');
+      res.sendStatus(403);
+    } else {
+      users[req.body.username] = { username: req.body.username, name: req.body.name, password: req.body.password };
+      console.log("User "+req.body.username+" created");
+      req.session.user = users[req.body.username].username;
+      res.sendStatus(200);
+    }
+  } else {
+    console.log('bad request');
+    res.sendStatus(400);
+  }
 });
 
 router.get('/', function(req, res, next) {
