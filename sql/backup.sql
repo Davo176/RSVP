@@ -1,8 +1,8 @@
--- MySQL dump 10.13  Distrib 8.0.29, for Linux (x86_64)
+-- MySQL dump 10.13  Distrib 8.0.28, for Linux (x86_64)
 --
 -- Host: 127.0.0.1    Database: production
 -- ------------------------------------------------------
--- Server version	8.0.29-0ubuntu0.20.04.3
+-- Server version	8.0.28-0ubuntu0.20.04.3
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
@@ -46,6 +46,7 @@ CREATE TABLE `event_admins` (
 
 LOCK TABLES `event_admins` WRITE;
 /*!40000 ALTER TABLE `event_admins` DISABLE KEYS */;
+INSERT INTO `event_admins` VALUES ('Will','1111111'),('Neil','1111112'),('Harrison','1111113');
 /*!40000 ALTER TABLE `event_admins` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -72,6 +73,7 @@ CREATE TABLE `event_invitees` (
 
 LOCK TABLES `event_invitees` WRITE;
 /*!40000 ALTER TABLE `event_invitees` DISABLE KEYS */;
+INSERT INTO `event_invitees` VALUES ('Harrison','1111111'),('Neil','1111111'),('Seamus','1111111'),('Harrison','1111112'),('Seamus','1111112'),('Will','1111112'),('Neil','1111113'),('Seamus','1111113'),('Will','1111113');
 /*!40000 ALTER TABLE `event_invitees` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -100,6 +102,7 @@ CREATE TABLE `events` (
 
 LOCK TABLES `events` WRITE;
 /*!40000 ALTER TABLE `events` DISABLE KEYS */;
+INSERT INTO `events` VALUES ('1111111','Wills 20th Birthday','21/06/2022','7:00pm','4006','60th fourth avenue St. Peters',NULL),('1111112','Neil 20th Birthday','23/06/2022','7:00pm','4006','60th fourth avenue St. Peters','Lets party like kings for my 20th birthday'),('1111113','Poker Night','23/07/2022','8:00pm','4006','60th fourth avenue St. Peters','Test your lucky stars tonight and win big at poker night');
 /*!40000 ALTER TABLE `events` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -128,6 +131,7 @@ CREATE TABLE `friends` (
 
 LOCK TABLES `friends` WRITE;
 /*!40000 ALTER TABLE `friends` DISABLE KEYS */;
+INSERT INTO `friends` VALUES ('Harrison','Seamus','2022-05-23',NULL),('Harrison','Will','2022-05-23','2022-05-23'),('Neil','Will','2022-05-23','2022-05-23');
 /*!40000 ALTER TABLE `friends` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -159,7 +163,7 @@ CREATE TABLE `unavailabilities` (
 
 LOCK TABLES `unavailabilities` WRITE;
 /*!40000 ALTER TABLE `unavailabilities` DISABLE KEYS */;
-INSERT INTO `unavailabilities` VALUES ('61def84f-2f8f-4ac5-9d68-df9dce2382c2','2022-05-31 09:00:00','2022-05-31 11:00:00','Testing','will',NULL),('bdcca053-971f-47d2-b2fb-2a7b5a7b70d1','2022-05-23 10:00:00','2022-05-23 11:00:00','Party','will',NULL),('d6d6d04e-f5b1-401f-8921-c14401d72f37','2022-05-01 09:00:00','2022-05-01 11:00:00','Poker','will',NULL);
+INSERT INTO `unavailabilities` VALUES ('22222221','2022-06-23 18:00:00','2022-06-24 18:00:00','clashes with another event','Seamus','1111112'),('22222222','2022-05-23 18:00:00','2022-05-24 18:00:00','clashes with another event','Neil','1111113'),('61def84f-2f8f-4ac5-9d68-df9dce2382c2','2022-05-31 09:00:00','2022-05-31 11:00:00','Testing','will',NULL),('bdcca053-971f-47d2-b2fb-2a7b5a7b70d1','2022-05-23 10:00:00','2022-05-23 11:00:00','Party','will',NULL),('d6d6d04e-f5b1-401f-8921-c14401d72f37','2022-05-01 09:00:00','2022-05-01 11:00:00','Poker','will',NULL);
 /*!40000 ALTER TABLE `unavailabilities` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -186,7 +190,7 @@ CREATE TABLE `users` (
 
 LOCK TABLES `users` WRITE;
 /*!40000 ALTER TABLE `users` DISABLE KEYS */;
-INSERT INTO `users` VALUES ('will','will','davis','willdavis925@gmail.com','admin');
+INSERT INTO `users` VALUES ('Harrison','Harrison','Stokes','hazzaj467@gmail.com','pale'),('Humshikan','Humshikan','Gill','Hgill@gmail.com','hummus22'),('Neil','Neil','Mazumdar','neil.k.mazumdar@gmail.com','curry'),('Seamus','Seamus','Pitcher','SPitcher@gmail.com','besttrim'),('Thomas','Thomas','Foo','tfue@gmail.com','fooey2002'),('will','will','davis','willdavis925@gmail.com','admin');
 /*!40000 ALTER TABLE `users` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -199,4 +203,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2022-05-23  7:04:30
+-- Dump completed on 2022-05-23 10:46:53
