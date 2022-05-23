@@ -1,0 +1,44 @@
+.main {
+    margin: auto;
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    width: 50vw;
+    height: 100vh;
+
+}
+
+.main2 {
+    height: 25%;
+    display: flex;
+    justify-content: space-between;
+    flex-direction: row;
+}
+
+.guest {
+    background: white;
+    height: 25%;
+}
+
+.login {
+    background: white;
+    width: 49%;
+    height: 100%;
+    text-align: center
+}
+
+.signup {
+    background: white;
+    width: 49%;
+    height: 100%;
+    text-align: center
+}
+
+h2 {
+    text-align: center;
+    color: #3F6844;
+}
+h1 {
+    text-align: center;
+    color: #3F6844;
+}

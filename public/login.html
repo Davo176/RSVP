@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <title>Event Planning - Home</title>
+        <link rel="stylesheet" href="/stylesheets/global.css">
+        <link rel="stylesheet" href="/stylesheets/events.css">
+        <link rel="stylesheet" href="/stylesheets/notifications.css">
+        <link rel="stylesheet" href="/stylesheets/login.css">
+        <link rel="icon" type="image/x-icon" href="/images/favicon.ico">
+        <script src="https://kit.fontawesome.com/849e072605.js" crossorigin="anonymous"></script>
+        <script src="https://cdn.jsdelivr.net/npm/vue@2.6.12/dist/vue.js"></script>
+        <script src="/scripts/login.js" defer></script>
+    </head>
+    <body>
+    <div id="app" style="align-content: center;">
+        <div class="main">
+            <h1>RSVP</h1>
+            <div class="main2">
+                <div class="login">
+                    <h2>Login</h2>
+                    <hr />
+                    <div class="loginContainer">
+                        <label for="user_name">Username</label>
+                        <input type="text" id="l_username" placeholder="Enter Username" name="username" required>
+                        <label for="password">Password</label>
+                        <input type="password" id="l_password" placeholder="Enter Password" name="password" required>
+                        <button onclick="login()">Login</button>
+                        <p id="login_result"></p>
+                    </div>
+                </div>
+                <div class="signup">
+                    <h2>Sign Up</h2>
+                    <hr />
+                    <div class="loginContainer">
+                        <label for="email">Email</label>
+                        <input type="email" placeholder="Enter Your Email" name="email" required>
+                        <label for="username">Username</label>
+                        <input type="text" placeholder="Enter Username" name="username" required>
+                        <label for="password">Password</label>
+                        <input type="password" placeholder="Enter Password" name="password" required>
+                        <button onclick="signup()">Login</button>
+                    </div>
+                </div>
+            </div>
+            <br/>
+            <div class="guest">
+                <h2>Enter Via Event Code</h2>
+                <hr />
+            </div>
+        </div>
+    </div>
+    </body>
+</html>
