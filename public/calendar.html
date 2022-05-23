@@ -19,8 +19,8 @@
         <div class="calendarPageContainer">
           <div>
             <strong>{{calendar.month}} {{calendar.year}}</strong>
-            <button>Last Month</button>
-            <button>Next Month</button>
+            <button v-on:click="prevMonth()">Last Month</button>
+            <button v-on:click="nextMonth()">Next Month</button>
           </div>
           <div  class="columnContainer">
             <div v-for="day in calendar.days">
@@ -29,7 +29,7 @@
                 <div v-bind:class="{ activeBlock:!date.blank, inactiveBlock:date.blank }" v-for="date in day.dates">
                   {{date.date}}
                   <div v-for="event in date.events" class="miniEvent">
-                    {{event.time}} <strong>{{event.reason}}</strong>
+                    {{event.unavailable_from}} <strong>{{event.reason}}</strong>
                   </div>
                 </div>
               </div>

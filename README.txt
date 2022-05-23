@@ -11,10 +11,10 @@ stop database
 sql_stop
 
 To backup database
-mysqldump --host=127.0.0.1 --databases production > sqlcommands/backup.sql
+mysqldump --host=127.0.0.1 --databases production > sql/backup.sql
 
 To restore database backup
-mysql --host=127.0.0.1 < sqlcommands/backup.sql
+mysql --host=127.0.0.1 < sql/backup.sql
 
 Github Routine
 
@@ -34,7 +34,7 @@ When writing new code:
   git push -set--upstream origin
   open github
   open pull request
- 
+
 To update to newest code from master:
   git checkout master
   git pull
