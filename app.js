@@ -18,6 +18,11 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 
+app.use(function(req,res,next){
+  req.pool = dbConnectionPool;
+  next();
+});
+
 app.use(session({
     secret: 'IanKnight',
     resave: false,

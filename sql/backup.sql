@@ -159,6 +159,7 @@ CREATE TABLE `unavailabilities` (
 
 LOCK TABLES `unavailabilities` WRITE;
 /*!40000 ALTER TABLE `unavailabilities` DISABLE KEYS */;
+INSERT INTO `unavailabilities` VALUES ('61def84f-2f8f-4ac5-9d68-df9dce2382c2','2022-05-31 09:00:00','2022-05-31 11:00:00','Testing','will',NULL),('bdcca053-971f-47d2-b2fb-2a7b5a7b70d1','2022-05-23 10:00:00','2022-05-23 11:00:00','Party','will',NULL),('d6d6d04e-f5b1-401f-8921-c14401d72f37','2022-05-01 09:00:00','2022-05-01 11:00:00','Poker','will',NULL);
 /*!40000 ALTER TABLE `unavailabilities` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -185,6 +186,7 @@ CREATE TABLE `users` (
 
 LOCK TABLES `users` WRITE;
 /*!40000 ALTER TABLE `users` DISABLE KEYS */;
+INSERT INTO `users` VALUES ('will','will','davis','willdavis925@gmail.com','admin');
 /*!40000 ALTER TABLE `users` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -197,4 +199,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2022-05-18 12:53:10
+-- Dump completed on 2022-05-23  7:04:30
