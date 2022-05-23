@@ -1,6 +1,7 @@
 var express = require('express');
 var router = express.Router();
 const moment = require('moment');
+const Uuid = require('uuid');
 /* GET users listing. */
 router.get('/', function(req, res, next) {
   res.send('respond with a resource');
@@ -103,14 +104,41 @@ router.get('/calendar', function(req,res,next){
           }
 
         }
-
         res.json(calendar);
-
-
       });
     });
   }
 });
 
+router.post('/calendar/add', function(req,res,next){
+  if (!('date' in req.body) || !('unavailable_from' in req.body) || !('unavailable_to' in req.body) || !('reason' in req.body)){
+    res.sendStatus(400);
+    return;
+  }else{
+    let unavailableFrom = moment(req.body.date + ' ' + req.body.unavailable_from,"YYYY-MM-DD HH:mm");
+    let unavailableTo = moment(req.body.date + ' ' + req.body.unavailable_to,"YYYY-MM-DD HH:mm");
+    let reason = req.body.reason;
+    const unavailabilityID = Uuid.v4();
+    req.pool.getConnection(function(error, connection){
+      if(error){
+        console.log(error);
+        res.sendStatus(500);
+        return;
+      }
+
+      let query = "insert into unavailabilities (unavailability_id,unavailable_from,unavailable_to,reason,user,event_id) values (?,?,?,?,?,?)";
+      connection.query(query, [unavailabilityID,unavailableFrom.format(),unavailableTo.format(),reason,'will',null], function(error, rows, fields) {
+        connection.release();
+        if (error) {
+          console.log(error);
+          res.sendStatus(500);
+          return;
+        }
+        res.sendStatus(200);
+      });
+    });
+  }
+
+});
 
 module.exports = router;
