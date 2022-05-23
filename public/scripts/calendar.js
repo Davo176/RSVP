@@ -53,11 +53,31 @@ var vueinst = new Vue({
         },
         submitUnavailability: function(){
             if (this.unavailableFrom===null || this.reason===null||this.unavailableTo===null){
-                console.log("FAILED");
                 return;
             }
-            console.log("sending");
             let reqBody = JSON.stringify({date: `${this.year}-${this.month}-${this.addUnavailabilityDate}`,unavailable_from: this.unavailableFrom, unavailable_to:this.unavailableTo,reason:this.reason});
+            let xhttp = new XMLHttpRequest();
+            let vueReference = this;
+
+            xhttp.onreadystatechange = function() {
+                if (this.readyState == 4 && this.status == 500){
+                    console.log("error");
+                }
+                if (this.readyState == 4 && this.status == 200){
+                    vueReference.getMonth();
+                    vueReference.showForm = false;
+                    vueReference.reason = null;
+                    vueReference.unavailableFrom=null;
+                    vueReference.unavailableTo=null;
+                }
+            };
+
+            xhttp.open("POST","/api/calendar/add",true);
+            xhttp.setRequestHeader('Content-type', 'application/json; charset=UTF-8')
+            xhttp.send(reqBody);
+        },
+        deleteEvent: function(event){
+            let reqBody = JSON.stringify({id: event.unavailability_id});
             let xhttp = new XMLHttpRequest();
             let vueReference = this;
 
@@ -73,7 +93,7 @@ var vueinst = new Vue({
                 }
             };
 
-            xhttp.open("POST","/api/calendar/add",true);
+            xhttp.open("POST","/api/calendar/delete",true);
             xhttp.setRequestHeader('Content-type', 'application/json; charset=UTF-8')
             xhttp.send(reqBody);
         }

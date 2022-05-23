@@ -18,7 +18,7 @@ router.get('/', function(req,res,next){
         return;
       }
 
-      let query = "select unavailable_from, unavailable_to, reason from unavailabilities where user= ? AND MONTH(unavailable_from)=? AND MONTH(unavailable_to)=? AND YEAR(unavailable_from)=? AND YEAR(unavailable_to)=?";
+      let query = "select unavailability_id, unavailable_from, unavailable_to, reason from unavailabilities where user= ? AND MONTH(unavailable_from)=? AND MONTH(unavailable_to)=? AND YEAR(unavailable_from)=? AND YEAR(unavailable_to)=?";
       connection.query(query, ['will',month,month,year,year], function(error, rows, fields) {
         connection.release();
         if (error) {
@@ -127,7 +127,32 @@ router.post('/add', function(req,res,next){
       });
     });
   }
-
 });
+
+router.post('/delete', function(req,res,next){
+  if (!('id' in req.body)){
+    res.sendStatus(400);
+    return;
+  }else{
+    req.pool.getConnection(function(error, connection){
+      if(error){
+        console.log(error);
+        res.sendStatus(500);
+        return;
+      }
+      let unavailabilityID = req.body.id;
+      let query = "delete from unavailabilities where unavailability_id=?";
+      connection.query(query, [unavailabilityID], function(error, rows, fields) {
+        connection.release();
+        if (error) {
+          console.log(error);
+          res.sendStatus(500);
+          return;
+        }
+        res.sendStatus(200);
+      });
+    });
+  }
+})
 
 module.exports = router;

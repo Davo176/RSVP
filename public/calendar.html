@@ -29,7 +29,12 @@
                 <div v-on:click="addUnavailability(date)" v-bind:class="{ activeBlock:!date.blank, inactiveBlock:date.blank }" v-for="date in day.dates">
                   {{date.date}}
                   <div v-for="event in date.events" class="miniEvent">
-                    {{event.unavailable_from}} <strong>{{event.reason}}</strong>
+                    <div>
+                      {{event.unavailable_from}} <strong>{{event.reason}}</strong>
+                    </div>
+                    <div v-on:click.stop="deleteEvent(event)">
+                      <i class="fa-solid fa-trash-can" style="font-size:14px;"></i>
+                    </div>
                   </div>
                 </div>
               </div>
