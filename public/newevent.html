@@ -11,6 +11,8 @@
             ELEMENT.locale(ELEMENT.lang.en)
         </script>
         <script src="/scripts/global.js" defer></script>
+        <script async src="https://maps.googleapis.com/maps/api/js?key=YOUR_API_KEY&libraries=places&callback=initMap"></script>
+        <script src="/scripts/newevent.js" defer></script>
 
     </head>
     <body>
@@ -18,7 +20,24 @@
         <header id="Nav"></header>
         <div class="FormContainer">
             <strong>Create a New Event</strong>
-            <!--FORM Goes here-->
+            <br/>
+            <br/>
+            <form>
+                <label for "eventTitle">Title: </label>
+                <input type="text" id="eventTitle" name="eventTitle"></input>
+                <br/>
+                <label for "eventDate">Date: </label>
+                <input type="date" id="eventDate" name="eventDate"></input>
+                <br/>
+                <label for "eventTime">Time: </label>
+                <input type="time" id="eventTime" name="eventTime"></input>
+                <br/>
+                <label for "eventLocation">Location: </label>
+                <input type="text" id="eventLocation" name="eventLocation"></input>
+                <br/>
+                <label for "eventImage">Image: </label>
+                <input type="file" id="eventImage" name="eventImage"></input>
+            </form>
         </div>
     </div>
     </body>
