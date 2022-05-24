@@ -18,6 +18,7 @@
 .guest {
     background: white;
     height: 25%;
+    text-align: center;
 }
 
 .login {
@@ -27,11 +28,23 @@
     text-align: center
 }
 
-.signup {
+.loginContainer {
+    margin-top: 5%;
+}
+
+.eventLogin {
     background: white;
     width: 49%;
     height: 100%;
     text-align: center
+}
+
+.signup {
+    text-align: center;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    margin-top: 5%
 }
 
 h2 {
@@ -41,4 +54,10 @@ h2 {
 h1 {
     text-align: center;
     color: #3F6844;
+}
+
+.loginButton {
+    height: 30px;
+    width: 50%;
+    margin-top: 5%
 }
