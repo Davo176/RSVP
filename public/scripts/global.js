@@ -35,7 +35,7 @@ function updateNav () {
       <li class="navBarElementContainer"><a href="/newevent"><i href="#" class="icon fa-solid fa-plus"></i></a></li>
       <li class="navBarElementContainer"><a href="/notifications"><i class="icon fa-solid fa-bell"></i></a></li>
       <li class="navBarElementContainer"><a href="/calendar"><i class="icon fa-solid fa-calendar-days"></i></a></li>
-      <li class="navBarElementContainer"><button onclick="loginButton()">Log in</button></li>
+      <li class="navBarElementContainerText"><a  href="/login.html" class="navBarElement">Log in</a></li>
       <li class="navBarElementContainer"><button onclick="signUpButton()">Sign up</button></li>
   </ul>
 </nav>`;

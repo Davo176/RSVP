@@ -3,7 +3,7 @@ var router = express.Router();
 const moment = require('moment');
 const Uuid = require('uuid');
 
-const calendarRouter = require('./calendar/calendar');
+const calendarRouter = require('./calendar');
 /* GET users listing. */
 router.get('/', function(req, res, next) {
   res.send('respond with a resource');
