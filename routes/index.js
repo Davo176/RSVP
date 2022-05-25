@@ -16,7 +16,7 @@ router.get('/test', function(req, res, next) {
 let users = {
   admin1: { username: "admin1", name: "Some Admin", password: "admin" },
   user1: { username: "user1", name: "Some User", password: "user" },
-  
+
 };
 
 router.post('/login', function(req, res, next) {
@@ -119,6 +119,10 @@ router.post('/signup', function(req, res, next) {
     console.log('bad request');
     res.sendStatus(400);
   }
+});
+
+router.get('/user', function(req, res, next) {
+  res.send(req.session.user_name);
 });
 
 router.get('/', function(req, res, next) {
