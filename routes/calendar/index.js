@@ -9,7 +9,7 @@ router.get('/', function(req,res,next){
   if (req.query.month == undefined || req.query.year==undefined){
     res.sendStatus(400);
   }else{
-    let user = req.session.user;
+    let user = req.session.user_name;
     let month = req.query.month;
     let year = req.query.year;
     req.pool.getConnection(function(error, connection){
@@ -105,7 +105,9 @@ router.post('/add', function(req,res,next){
     res.sendStatus(400);
     return;
   }else{
-    let user = req.session.user;
+    let user = req.session.user_name;
+    console.log(req.session);
+    //console.log(user);
     let unavailableFrom = moment(req.body.date + ' ' + req.body.unavailable_from,"YYYY-MM-DD HH:mm");
     let unavailableTo = moment(req.body.date + ' ' + req.body.unavailable_to,"YYYY-MM-DD HH:mm");
     let reason = req.body.reason;
@@ -136,7 +138,7 @@ router.post('/delete', function(req,res,next){
     res.sendStatus(400);
     return;
   }else{
-    let user = req.session.user;
+    let user = req.session.user_name;
     req.pool.getConnection(function(error, connection){
       if(error){
         console.log(error);
