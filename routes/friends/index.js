@@ -9,7 +9,7 @@ router.get('/', function(req,res,next){
   if (req.query.month == undefined || req.query.year==undefined){
     res.sendStatus(400);
   }else{
-    let user = req.session.user;
+    let user = req.session.user_name;
     let month = req.query.month;
     req.pool.getConnection(function(error, connection){
       if(error){
@@ -36,8 +36,8 @@ router.get('/requests', function(req,res,next){
     if (req.query.month == undefined || req.query.year==undefined){
       res.sendStatus(400);
     }else{
-      let user = req.session.user;
-      let month = req.query.month;
+      let user = req.session.user_name;
+
       req.pool.getConnection(function(error, connection){
         if(error){
           console.log(error);
@@ -64,7 +64,7 @@ router.post('/acceptRequest', function(req,res,next){
     res.sendStatus(400);
     return;
   }else{
-    let user = req.session.user;
+    let user = req.session.user_name;
 
     const ID = Uuid.v4();
     req.pool.getConnection(function(error, connection){
@@ -93,7 +93,7 @@ router.post('/declineRequest', function(req,res,next){
     res.sendStatus(400);
     return;
   }else{
-    let user = req.session.user;
+    let user = req.session.user_name;
     req.pool.getConnection(function(error, connection){
       if(error){
         console.log(error);
@@ -120,7 +120,7 @@ router.post('/sendRequest', function(req,res,next){
       res.sendStatus(400);
       return;
     }else{
-      let user = req.session.user;
+      let user = req.session.user_name;
 
       const unavailabilityID = Uuid.v4();
       req.pool.getConnection(function(error, connection){
@@ -149,7 +149,7 @@ router.post('/sendRequest', function(req,res,next){
       res.sendStatus(400);
       return;
     }else{
-      let user = req.session.user;
+      let user = req.session.user_name;
       req.pool.getConnection(function(error, connection){
         if(error){
           console.log(error);

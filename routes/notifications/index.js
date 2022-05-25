@@ -9,7 +9,7 @@ router.get('/', function(req,res,next){
   if (req.query.month == undefined || req.query.year==undefined){
     res.sendStatus(400);
   }else{
-    let user = req.session.user;
+    let user = req.session.user_name;
     let month = req.query.month;
     req.pool.getConnection(function(error, connection){
       if(error){
