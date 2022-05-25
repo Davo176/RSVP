@@ -21,19 +21,48 @@ let users = {
 
 router.post('/login', function(req, res, next) {
   console.log(req.body);
-  if ('username' in req.body && 'password' in req.body)
+  if ('user_name' in req.body && 'password' in req.body)
   {
-    if(req.body.username in users && users[req.body.username].password === req.body.password)
+    req.pool.getConnection(function(error, connection)
     {
-      console.log('Success!');
-      req.session.user = users[req.body.username].username;
-      res.sendStatus(200);
-    }
-    else
-    {
-      console.log('Incorrect Username/Password');
-      res.sendStatus(401);
-    }
+      if (error)
+      {
+        console.log(error);
+        res.sendStatus(500);
+        return;
+      }
+      console.log("Connected to database");
+      let user_name = req.body.user_name;
+      let password = req.body.password;
+      let query = "SELECT * FROM users WHERE user_name = ? and password_hash = ?";
+      connection.query(query,[user_name, password], function(error, rows, fields)
+      {
+        console.log("Got query");
+        connection.release();
+        if (error)
+        {
+          console.log(error);
+          res.sendStatus(500);
+          return;
+        }
+        if (rows.length == 0)
+        {
+          console.log('Incorrect Username/Password');
+          res.sendStatus(401);
+        }
+        if (rows.length == 1)
+        {
+          console.log('Logged In');
+          req.session.user_name = rows[0].user_name;
+          req.session.first_name = rows[0].first_name;
+          req.session.last_name = rows[0].last_name;
+          req.session.email = rows[0].email;
+          console.log(req.session);
+          res.sendStatus(200);
+        }
+      });
+
+    });
   }
   else
   {
@@ -45,20 +74,45 @@ router.post('/login', function(req, res, next) {
 router.post('/signup', function(req, res, next) {
   console.log(req.body);
 
-  if ('user_name' in req.body && 'first_name' in req.body && 'password' in req.body)
+  if ('user_name' in req.body && 'email' in req.body && 'password' in req.body && 'first_name' in req.body && 'last_name' in req.body)
   {
-    if(req.body.username in users)
+    req.pool.getConnection(function(error, connection)
     {
-      console.log('user exists');
-      res.sendStatus(403);
-    }
-    else
-    {
-      users[req.body.username] = { username: req.body.username, name: req.body.name, password: req.body.password };
-      console.log("User "+req.body.username+" created");
-      req.session.user = users[req.body.username].username;
-      res.sendStatus(200);
-    }
+      if (error)
+      {
+        console.log(error);
+        res.sendStatus(500);
+        return;
+      }
+      console.log("Connected to database");
+      let user_name = req.body.user_name;
+      let email = req.body.email;
+      let password = req.body.password;
+      let first_name = req.body.first_name;
+      let last_name = req.body.last_name;
+      let check = "SELECT * FROM users WHERE user_name = ?";
+      connection.query(check,[user_name], function(error, rows, fields)
+      {
+        if (rows.length == 1)
+        {
+          console.log("User Exists");
+          res.sendStatus(403);
+          return;
+        }
+      });
+      let query = "INSERT INTO users (user_name, first_name, last_name, email, password_hash) VALUES (?,?,?,?,?)";
+      connection.query(query,[user_name, first_name, last_name, email, password], function(error, rows, fields)
+      {
+        connection.release();
+        console.log("Signed up");
+        req.session.user_name = user_name;
+        req.session.first_name = first_name;
+        req.session.last_name = last_name;
+        req.session.email = email;
+        console.log(req.session);
+        res.sendStatus(200);
+      });
+    });
   }
   else
   {
