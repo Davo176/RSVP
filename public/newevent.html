@@ -8,11 +8,41 @@
         <script src="https://kit.fontawesome.com/849e072605.js" crossorigin="anonymous"></script>
         <script src="https://cdn.jsdelivr.net/npm/vue@2.6.12/dist/vue.js"></script>
         <script>
-            ELEMENT.locale(ELEMENT.lang.en)
+            ELEMENT.locale(ELEMENT.lang.en);
         </script>
         <script src="/scripts/global.js" defer></script>
-        <script async src="https://maps.googleapis.com/maps/api/js?key=YOUR_API_KEY&libraries=places&callback=initMap"></script>
-        <script src="/scripts/newevent.js" defer></script>
+
+        <script>
+
+            // function pushEvent(){
+
+            //     console.log("pushing");
+
+            //     let xhttp = new XMLHttpRequest();
+
+            //     let title = document.getElementById("eventTitle").value;
+            //     let date = document.getElementById("eventDate").value;
+            //     let time = document.getElementById("eventTime").value;
+            //     let address = document.getElementById("eventAddress").value;
+            //     let image = document.getElementById("eventImage").value;
+            //     let description = document.getElementById("eventDescription").value;
+
+            //     let form = new FormData();
+
+            //     form.append("eventTitle", title);
+            //     form.append("eventDate", date);
+            //     form.append("eventTime", time);
+            //     form.append("eventAddress", address);
+            //     form.append("eventImage", image);
+            //     form.append("eventDescription", description);
+
+            //     xhttp.open("POST", "/users/addevent", true);
+
+            //     console.log(form);
+            //     xhttp.send(form);
+            // }
+
+        </script>
 
     </head>
     <body>
@@ -22,7 +52,7 @@
             <strong>Create a New Event</strong>
             <br/>
             <br/>
-            <form>
+            <form action='/users/addevent' method="POST" encType="multipart/form-data">
                 <label for "eventTitle">Title: </label>
                 <input type="text" id="eventTitle" name="eventTitle"></input>
                 <br/>
@@ -32,11 +62,16 @@
                 <label for "eventTime">Time: </label>
                 <input type="time" id="eventTime" name="eventTime"></input>
                 <br/>
-                <label for "eventLocation">Location: </label>
-                <input type="text" id="eventLocation" name="eventLocation"></input>
+                <label for "eventAddress">Address: </label>
+                <input type="text" id="eventAddress" name="eventAddress"></input>
                 <br/>
                 <label for "eventImage">Image: </label>
-                <input type="file" id="eventImage" name="eventImage"></input>
+                <input type="file" id="eventImage" name="eventImage" accept="image/*"></input> <!--accept="image/*" means that the file upload will only accept image types-->
+                <br/>
+                <label for "eventDescription">Description: </label>
+                <input type="textarea" id="eventDescription" name="eventDescription"></input>
+                </br/>
+                <input type="submit"></input>
             </form>
         </div>
     </div>
