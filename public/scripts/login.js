@@ -55,7 +55,7 @@ function signup()
         {
             console.log('Signed Up');
             signup_result.innerText = "Signed UP"
-            location.href = "https://nmazzy-code50-84065477-g47rr7v9xhvgq-8080.githubpreview.dev/"
+            location.href = "/"
         }
         else if (this.status == 403)
         {
