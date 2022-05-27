@@ -86,10 +86,10 @@ DROP TABLE IF EXISTS `events`;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `events` (
   `event_id` varchar(36) NOT NULL,
-  `event_name` varchar(32) DEFAULT NULL,
+  `event_title` varchar(32) DEFAULT NULL,
   `event_date` varchar(50) DEFAULT NULL,
   `event_time` varchar(255) DEFAULT NULL,
-  `event_image` varchar(64) DEFAULT NULL,
+  `event_image` varchar(500) DEFAULT NULL,
   `event_address` varchar(255) DEFAULT NULL,
   `event_description` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`event_id`)
