@@ -80,12 +80,15 @@ router.get('/admin', function(req,res,next){
   })
 
 //Where multer should upload files
+
 var storage = multer.diskStorage({
   destination: function (req, file, cb) {
     cb(null, './public/images/userUploads')
   },
   filename: function (req, file, cb) {
-    cb(null, file.originalname)
+    let split = file.originalname.split(".");
+    let extension = file.originalname.split(".")[split.length-1];
+    cb(null, Uuid.v4() + "." + extension)
   }
 })
 
@@ -104,8 +107,16 @@ router.post('/add', upload.single("eventImage"), function(req, res, next){
     }
     const eventID = Uuid.v4();
     let user = req.session.user_name;
+    let eventTitle = "My Event";
+    if(req.body.eventTitle){
+      eventTitle = req.body.eventTitle;
+    }
+    let fileName = "test.jpg"
+    if(req.file){
+      fileName = req.file.filename;
+    }
     let query = "INSERT INTO events (event_id, event_title, event_date, event_time, event_image, event_address, event_description) VALUES (?, ?, ?, ?, ?, ?, ?)";
-    connection.query(query, [eventID, req.body.eventTitle, req.body.eventDate, req.body.eventTime, req.file.path, req.body.eventAddress, req.body.eventDescription], function(error, rows, fields){
+    connection.query(query, [eventID, eventTitle, req.body.eventDate, req.body.eventTime, fileName, req.body.eventAddress, req.body.eventDescription], function(error, rows, fields){
       if(error){
         console.log(error);
         res.sendStatus(500);
