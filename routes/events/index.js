@@ -16,7 +16,7 @@ router.get('/invited', function(req,res,next){
 
         let query = `SELECT
                         events.event_id,
-                        event_name as Title,
+                        event_title as Title,
                         event_date as Date,
                         event_time as Time,
                         event_image as Image,
@@ -54,7 +54,7 @@ router.get('/admin', function(req,res,next){
 
       let query = `SELECT
                       events.event_id,
-                      event_name as Title,
+                      event_title as Title,
                       event_date as Date,
                       event_time as Time,
                       event_image as Image,
@@ -104,7 +104,7 @@ router.post('/add', upload.single("eventImage"), function(req, res, next){
     }
     const eventID = Uuid.v4();
     let user = req.session.user_name;
-    let query = "INSERT INTO events (event_id, event_name, event_date, event_time, event_image, event_address, event_description) VALUES (?, ?, ?, ?, ?, ?, ?)";
+    let query = "INSERT INTO events (event_id, event_title, event_date, event_time, event_image, event_address, event_description) VALUES (?, ?, ?, ?, ?, ?, ?)";
     connection.query(query, [eventID, req.body.eventTitle, req.body.eventDate, req.body.eventTime, req.file.path, req.body.eventAddress, req.body.eventDescription], function(error, rows, fields){
       if(error){
         console.log(error);
