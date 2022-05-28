@@ -16,19 +16,22 @@ router.get('/invited', function(req,res,next){
 
         let query = `SELECT
                         events.event_id,
+                        event_name as Title,
                         event_date as Date,
                         event_time as Time,
                         event_image as Image,
                         event_address as Address,
                         event_description as Description,
-                        (SELECT COUNT(event_invitees.invitee_id) FROM event_invitees WHERE events.event_id = event_invitees.event_id AND attending_status='going') as Going,
-                        (SELECT COUNT(event_invitees.invitee_id) FROM event_invitees WHERE events.event_id = event_invitees.event_id AND attending_status='unsure') as Unsure,
-                        (SELECT COUNT(event_invitees.invitee_id) FROM event_invitees WHERE events.event_id = event_invitees.event_id AND attending_status='not going') as Not_Going
+                        i.attending_status as Status
                     FROM
                         events
+                    INNER JOIN
+                        event_invitees as i on events.event_id = i.event_id
                     WHERE
-                        events.event_id IN (select event_invitees.event_id from event_invitees where event_invitees.invitee_id=?);`;
-        connection.query(query, [user], function(error, rows, fields) {
+                        events.event_id IN (select event_invitees.event_id from event_invitees where event_invitees.invitee_id=?)
+                        AND
+                        i.invitee_id = ?;`;
+        connection.query(query, [user,user], function(error, rows, fields) {
           connection.release();
           if (error) {
             console.log(error);
@@ -51,6 +54,7 @@ router.get('/admin', function(req,res,next){
 
       let query = `SELECT
                       events.event_id,
+                      event_name as Title,
                       event_date as Date,
                       event_time as Time,
                       event_image as Image,
@@ -86,7 +90,6 @@ var storage = multer.diskStorage({
 })
 
 var upload = multer({ storage: storage });
-
 
 router.post('/add', upload.single("eventImage"), function(req, res, next){
 
@@ -124,5 +127,32 @@ router.post('/add', upload.single("eventImage"), function(req, res, next){
 
   })
 });
+
+router.post('/updateStatus', function(req,res,next){
+  let user = req.session.user_name;
+  if (!('status' in req.body) || !('event_id' in req.body)){
+
+    res.sendStatus(400);
+    return;
+  }else{
+    let query="update event_invitees set attending_status=? where event_id=? and invitee_id=?"
+    req.pool.getConnection(function(error, connection){
+      if(error){
+        console.log(error);
+        res.sendStatus(500);
+        return;
+      }
+      connection.query(query, [req.body.status,req.body.event_id,user], function(error, rows, fields) {
+        connection.release();
+        if (error) {
+          console.log(error);
+          res.sendStatus(500);
+          return;
+        }
+        res.sendStatus(200);
+      });
+    });
+  }
+})
 
 module.exports = router;
