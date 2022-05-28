@@ -137,6 +137,10 @@ router.get('/calendar', function(req, res, next) {
   res.sendFile('/public/calendar.html', { root: __dirname+"/.." });
 });
 
+router.get('/login', function(req, res, next) {
+  res.sendFile('/public/login.html', { root: __dirname+"/.." });
+});
+
 router.get('/events', function(req, res, next) {
   res.sendFile('/public/events.html', { root: __dirname+"/.." });
 });

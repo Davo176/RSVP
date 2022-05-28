@@ -10,14 +10,9 @@ function eventsButton () {
   location.href = "events"
 }
 
-function signUpButton () {
-  alert("You pressed the sign up button");
-}
-
 function loginButton ()
 {
-  alert("You pressed the login button");
-  location.href = "/login.html"
+  location.href = "/login"
 }
 
 var user_name = "";
@@ -31,12 +26,13 @@ function getUser() {
         console.log(this.responseText);
         user_name=this.responseText;
         loggedIn = true;
+        updateNav()
       }
   };
   xhttp.open("GET","/user");
   xhttp.send();
 }
-getUser();
+
 
 function updateNav () {
   var nav = document.getElementById('Nav');
@@ -85,4 +81,4 @@ function updateNav () {
   }
 
 }
-window.addEventListener("load", updateNav);
+window.addEventListener("load", getUser);
