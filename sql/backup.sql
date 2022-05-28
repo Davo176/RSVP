@@ -1,8 +1,8 @@
--- MySQL dump 10.13  Distrib 8.0.28, for Linux (x86_64)
+-- MySQL dump 10.13  Distrib 8.0.29, for Linux (x86_64)
 --
 -- Host: 127.0.0.1    Database: production
 -- ------------------------------------------------------
--- Server version	8.0.28-0ubuntu0.20.04.3
+-- Server version	8.0.29-0ubuntu0.20.04.3
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
@@ -46,7 +46,7 @@ CREATE TABLE `event_admins` (
 
 LOCK TABLES `event_admins` WRITE;
 /*!40000 ALTER TABLE `event_admins` DISABLE KEYS */;
-INSERT INTO `event_admins` VALUES ('Will','1111111'),('Neil','1111112'),('Harrison','1111113');
+INSERT INTO `event_admins` VALUES ('Will','1111111'),('Neil','1111112'),('Harrison','1111113'),('thomas','1111113'),('Will','1111113');
 /*!40000 ALTER TABLE `event_admins` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -58,11 +58,12 @@ DROP TABLE IF EXISTS `event_invitees`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `event_invitees` (
-  `admin_id` varchar(36) NOT NULL,
+  `invitee_id` varchar(36) NOT NULL,
   `event_id` varchar(36) NOT NULL,
-  PRIMARY KEY (`admin_id`,`event_id`),
+  `attending_status` varchar(30) DEFAULT NULL,
+  PRIMARY KEY (`invitee_id`,`event_id`),
   KEY `event_id` (`event_id`),
-  CONSTRAINT `event_invitees_ibfk_1` FOREIGN KEY (`admin_id`) REFERENCES `users` (`user_name`) ON DELETE CASCADE,
+  CONSTRAINT `event_invitees_ibfk_1` FOREIGN KEY (`invitee_id`) REFERENCES `users` (`user_name`) ON DELETE CASCADE,
   CONSTRAINT `event_invitees_ibfk_2` FOREIGN KEY (`event_id`) REFERENCES `events` (`event_id`) ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -73,7 +74,7 @@ CREATE TABLE `event_invitees` (
 
 LOCK TABLES `event_invitees` WRITE;
 /*!40000 ALTER TABLE `event_invitees` DISABLE KEYS */;
-INSERT INTO `event_invitees` VALUES ('Harrison','1111111'),('Neil','1111111'),('Seamus','1111111'),('Harrison','1111112'),('Seamus','1111112'),('Will','1111112'),('Neil','1111113'),('Seamus','1111113'),('Will','1111113');
+INSERT INTO `event_invitees` VALUES ('Harrison','1111111','unsure'),('Harrison','1111112','unsure'),('Neil','1111111','going'),('Neil','1111113','going'),('Seamus','1111111','not going'),('Seamus','1111112','not going'),('Seamus','1111113','not going'),('thomas','1111111','not going'),('Will','1111112','going'),('Will','1111113','going');
 /*!40000 ALTER TABLE `event_invitees` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -203,4 +204,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2022-05-23 10:46:53
+-- Dump completed on 2022-05-27 13:49:42
