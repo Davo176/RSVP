@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <title>Event Planning - Login</title>
+        <link rel="stylesheet" href="/stylesheets/global.css">
+        <link rel="stylesheet" href="/stylesheets/events.css">
+        <link rel="stylesheet" href="/stylesheets/notifications.css">
+        <link rel="stylesheet" href="/stylesheets/login.css">
+        <link rel="icon" type="image/x-icon" href="/images/favicon.ico">
+        <script src="https://kit.fontawesome.com/849e072605.js" crossorigin="anonymous"></script>
+        <script src="https://cdn.jsdelivr.net/npm/vue@2.6.12/dist/vue.js"></script>
+        <script src="/scripts/login.js" defer></script>
+    </head>
+    <body>
+    <div id="app" style="align-content: center;">
+        <div class="main">
+            <h1>RSVP</h1>
+            <div class="main2">
+                <div class="login">
+                    <h2>Login</h2>
+                    <hr />
+                    <div class="loginContainer">
+                        <p>Username</p>
+                        <input type="text" id="l_username" placeholder="Enter Username" name="username" required>
+                        <p>Password</p>
+                        <input type="password" id="l_password" placeholder="Enter Password" name="password" required>
+                        <br/>
+                        <button onclick="login()">Login</button>
+                        <p id="login_result"></p>
+                    </div>
+                </div>
+                <div class="eventLogin">
+                    <h2>Enter Via Event Code</h2>
+                    <hr />
+
+                </div>
+            </div>
+            <br/>
+            <div class="guest">
+                <h2>Sign Up</h2>
+                <hr />
+                <div class="signup">
+                    <div class="signupL">
+                        <p>Email</p>
+                        <input type="email" id="s_email" placeholder="Enter Your Email" name="email" required>
+                        <p>First Name</p>
+                        <input type="text" id="s_fname" placeholder="Enter First Name" name="fname" required>
+                        <p>Last Name</p>
+                        <input type="text" id="s_lname" placeholder="Enter Last Name" name="lname" required>
+                    </div>
+                    <div class="signupR">
+                        <p>Username</p>
+                        <input type="text" id="s_username" placeholder="Enter Username" name="username" required>
+                        <p>Password</p>
+                        <input type="password" id="s_password" placeholder="Enter Password" name="password" required>
+                        <br/>
+                        <button class="loginButton" onclick="signup()">Login</button>
+                    </div>
+                </div>
+                <p id="signup_result"></p>
+            </div>
+        </div>
+    </div>
+    </body>
+</html>

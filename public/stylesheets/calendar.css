@@ -36,7 +36,9 @@
 .miniEvent{
     background-color: var(--secondary-color);
     border-radius:999px;
-    padding: 2px 0px 2px 8px;
+    padding: 2px 8px 2px 8px;
     color: white;
     margin: 2px;
+    display: flex;
+    justify-content: space-between;
 }

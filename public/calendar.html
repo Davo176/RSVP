@@ -19,22 +19,47 @@
         <div class="calendarPageContainer">
           <div>
             <strong>{{calendar.month}} {{calendar.year}}</strong>
-            <button>Last Month</button>
-            <button>Next Month</button>
+            <button v-on:click="prevMonth()">Last Month</button>
+            <button v-on:click="nextMonth()">Next Month</button>
           </div>
           <div  class="columnContainer">
             <div v-for="day in calendar.days">
               <strong>{{day.dayName}}</strong>
               <div class="column">
-                <div v-bind:class="{ activeBlock:!date.blank, inactiveBlock:date.blank }" v-for="date in day.dates">
+                <div v-on:click="addUnavailability(date)" v-bind:class="{ activeBlock:!date.blank, inactiveBlock:date.blank }" v-for="date in day.dates">
                   {{date.date}}
                   <div v-for="event in date.events" class="miniEvent">
-                    {{event.time}} <strong>{{event.reason}}</strong>
+                    <div>
+                      {{event.unavailable_from}} <strong>{{event.reason}}</strong>
+                    </div>
+                    <div v-on:click.stop="deleteEvent(event)">
+                      <i class="fa-solid fa-trash-can" style="font-size:14px;"></i>
+                    </div>
                   </div>
                 </div>
               </div>
             </div>
           </div>
+        </div>
+        <div class="calendarPageContainer" v-if="showForm">
+          <div style="width: 95vw">
+            Add Unavailability on {{calendar.month}} {{addUnavailabilityDate}} {{year}}
+          <form onsubmit="return false">
+            <div>
+              <label for="reason">Name</label>
+              <input v-model="reason" type="text" id="reason"/>
+            </div>
+            <div>
+              <label for="from">Unavailable from</label>
+              <input v-model="unavailableFrom" type="time" id="from"/>
+            </div>
+            <div>
+              <label for="to">Unavailable to</label>
+              <input v-model="unavailableTo" type="time" id="to"/>
+            </div>
+            <button v-on:click="submitUnavailability">Submit</button>
+          </form>
+        </div>
         </div>
     </div>
     </body>
