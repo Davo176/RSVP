@@ -96,8 +96,6 @@ var upload = multer({ storage: storage });
 
 router.post('/add', upload.single("eventImage"), function(req, res, next){
 
-  //console.log(req.file);
-
   req.pool.getConnection(function(err, connection){
 
     if(err){

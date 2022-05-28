@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+
+    <head>
+        <title>Event Planning - Events</title>
+        <link rel="stylesheet" href="/stylesheets/global.css">
+        <link rel="stylesheet" href="/stylesheets/events.css">
+        <link rel="icon" type="image/x-icon" href="/images/favicon.ico">
+        <script src="https://kit.fontawesome.com/849e072605.js" crossorigin="anonymous"></script>
+        <script src="https://cdn.jsdelivr.net/npm/vue@2.6.12/dist/vue.js"></script>
+        <script src="/scripts/global.js" defer></script>
+
+        <!--Get user's info-->
+        <script>
+
+            let xhttp = new XMLHttpRequest();
+
+            xhttp.onreadystatechange = function(req, res){
+                if(this.readyState == 4 && this.status == 200){
+
+                    let user = JSON.parse(this.responseText);
+
+                    document.getElementById("user_name").innerText = user[0]["user_name"];
+                    document.getElementById("first_name").value = user[0]["first_name"];
+                    document.getElementById("last_name").value = user[0]["last_name"];
+                    document.getElementById("email").value = user[0]["email"];
+
+                }
+            }
+
+            xhttp.open("GET", 'api/account/getuserinfo');
+
+            xhttp.send();
+
+            function updateUser(field){
+
+                console.log("updating");
+
+                let newFieldValue = document.getElementById(field).value;
+                let reqBody = JSON.stringify({"newFieldValue": newFieldValue, "field": field});
+
+                let xhttp2 = new XMLHttpRequest();
+
+                xhttp2.onreadystatechange = function(){
+
+                    if(this.readyState == 4 && this.status == 200){
+                        alert("updated " + field + " to " + newFieldValue)
+                        console.log("updated " + field + " to " + newFieldValue);
+                    }
+                }
+
+                xhttp2.open("POST", "api/account/updateinfo", true);
+                xhttp2.setRequestHeader('Content-type', 'application/json');
+                xhttp2.send(reqBody);
+
+            }
+
+        </script>
+    </head>
+
+    <body>
+        <div id="app">
+            <header id="Nav"></header>
+
+            </br>
+
+            <label for "userName">Username: </label>
+            <p style="display: inline" id="user_name" name = "userName"></p>
+
+            </br>
+            </br>
+
+            <label for "firstName">First name: </label>
+            <input type="text" name="firstName" id="first_name"> </input>
+            <button type="submit" onclick="updateUser(`first_name`)">Submit</button>
+
+            </br>
+            </br>
+
+            <label for "lastName">Last name: </label>
+            <input type="text" name="lastName" id="last_name"> </input>
+            <button type="submit" onclick="updateUser(`last_name`)">Submit</button>
+
+            </br>
+            </br>
+
+            <label for "email">Email: </label>
+            <input type="text" name="email" id="email"> </input>
+            <button type="submit" onclick="updateUser(`email`)">Submit</button>
+
+
+        </div>
+    </body>
+
+</html>

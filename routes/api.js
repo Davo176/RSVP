@@ -3,12 +3,12 @@ var router = express.Router();
 const moment = require('moment');
 const Uuid = require('uuid');
 var multer = require('multer');
-// var upload = multer({ des: 'public/images/userUploads'});
 
 const eventRouter = require('./events');
 const calendarRouter = require('./calendar');
 const friendRouter = require('./friends');
 const notificationRouter = require('./notifications');
+const accountRouter = require('./account');
 
 router.get('/test', function(req, res, next) {
   res.send('server Healthy');
@@ -22,5 +22,6 @@ router.use('/events', eventRouter);
 router.use('/calendar', calendarRouter);
 router.use('/friends', friendRouter);
 router.use('/notifications', friendRouter);
+router.use('/account', accountRouter);
 
 module.exports = router;

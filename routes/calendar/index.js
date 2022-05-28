@@ -3,8 +3,6 @@ var router = express.Router();
 const moment = require('moment');
 const Uuid = require('uuid');
 
-
-
 router.get('/', function(req,res,next){
   //make sure month and year are in query
   if (req.query.month == undefined || req.query.year==undefined){
