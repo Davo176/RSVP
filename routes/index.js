@@ -126,12 +126,9 @@ router.get('/user', function(req, res, next) {
 });
 
 router.get('/', function(req, res, next) {
-  res.redirect('/home');
+  res.redirect('/events');
 });
 
-router.get('/home', function(req, res, next) {
-  res.sendFile('/public/home.html', { root: __dirname+"/.." });
-});
 
 router.get('/calendar', function(req, res, next) {
   res.sendFile('/public/calendar.html', { root: __dirname+"/.." });

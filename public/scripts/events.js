@@ -112,6 +112,8 @@ const INVITEDEVENTS = [
     },
 ]
 
+
+
 var vueinst = new Vue({
     el: '#app',
     data: {
@@ -120,6 +122,7 @@ var vueinst = new Vue({
         invitedEventsBase: INVITEDEVENTS,
         n:0,
         m:0,
+        imagePreURL: '/images/userUploads/'
     },
     computed: {
         myEvents: function(){
@@ -151,12 +154,58 @@ var vueinst = new Vue({
             }
         },
         changeStatus: function(eventId,newStatus){
-            for (let eventIter in this.invitedEventsBase){
-                if ( this.invitedEventsBase[eventIter].eventId==eventId){
-                    this.invitedEventsBase[eventIter].yourStatus=newStatus;
+            let reqBody = JSON.stringify({event_id: eventId,status: newStatus});
+            let xhttp = new XMLHttpRequest();
+            let vueReference = this;
+
+            xhttp.onreadystatechange = function() {
+                if (this.readyState == 4 && this.status == 500){
+                    console.log("error");
                 }
-            }
+                if (this.readyState == 4 && this.status == 200){
+                    vueReference.getInvited();
+                }
+            };
+
+            xhttp.open("POST","/api/events/updateStatus",true);
+            xhttp.setRequestHeader('Content-type', 'application/json; charset=UTF-8')
+            xhttp.send(reqBody);
         },
+        getEvents: function(){
+            this.getInvited();
+            this.getAdmin();
+        },
+        getInvited: function(){
+            let xhttp = new XMLHttpRequest();
+            let vueReference = this;
+            xhttp.onreadystatechange = function() {
+                if (this.readyState == 4 && this.status == 500){
+                    console.log("error");
+                }
+                if (this.readyState == 4 && this.status == 200){
+                    vueReference.invitedEventsBase = JSON.parse(this.responseText);
+                }
+            };
+            xhttp.open("GET",`/api/events/invited`,true);
+            xhttp.send();
+        },
+        getAdmin: function(){
+            let xhttp = new XMLHttpRequest();
+            let vueReference = this;
+            xhttp.onreadystatechange = function() {
+                if (this.readyState == 4 && this.status == 500){
+                    console.log("error");
+                }
+                if (this.readyState == 4 && this.status == 200){
+                    vueReference.myEventsBase = JSON.parse(this.responseText);
+                }
+            };
+            xhttp.open("GET",`/api/events/admin`,true);
+            xhttp.send();
+        }
+    },
+    created: function(){
+        this.getEvents();
     }
 });
 

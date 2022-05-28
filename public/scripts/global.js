@@ -42,9 +42,8 @@ function updateNav () {
   <nav>
     <ul class="navBar">
         <li class="navBarElementContainerText"><button >RSVP</button></li>
-        <li class="navBarElementContainerText"><a href="/home" class="navBarElement">Home</a></li>
+        <li class="navBarElementContainerText"><a href="/events" class="navBarElement">Home</a></li>
         <li class="navBarElementContainerText"><a href="/friends" class="navBarElement">Friends</a></li>
-        <li class="navBarElementContainerText"><a href="/events" class="navBarElement">My Events</a></li>
     </ul>
   </nav>
   <nav>
@@ -63,9 +62,8 @@ function updateNav () {
   <nav>
     <ul class="navBar">
         <li class="navBarElementContainerText"><button >RSVP</button></li>
-        <li class="navBarElementContainerText"><a href="/home" class="navBarElement">Home</a></li>
+        <li class="navBarElementContainerText"><a href="/events" class="navBarElement">Home</a></li>
         <li class="navBarElementContainerText"><a href="/friends" class="navBarElement">Friends</a></li>
-        <li class="navBarElementContainerText"><a href="/events" class="navBarElement">My Events</a></li>
     </ul>
   </nav>
   <nav>
