@@ -80,12 +80,15 @@ router.get('/admin', function(req,res,next){
   })
 
 //Where multer should upload files
+
 var storage = multer.diskStorage({
   destination: function (req, file, cb) {
     cb(null, './public/images/userUploads')
   },
   filename: function (req, file, cb) {
-    cb(null, file.originalname)
+    let split = file.originalname.split(".");
+    let extension = file.originalname.split(".")[split.length-1];
+    cb(null, Uuid.v4() + "." + extension)
   }
 })
 
