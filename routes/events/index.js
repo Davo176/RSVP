@@ -104,8 +104,12 @@ router.post('/add', upload.single("eventImage"), function(req, res, next){
     }
     const eventID = Uuid.v4();
     let user = req.session.user_name;
+    let eventTitle = "My Event";
+    if(req.body.eventTitle){
+      eventTitle = req.body.eventTitle;
+    }
     let query = "INSERT INTO events (event_id, event_title, event_date, event_time, event_image, event_address, event_description) VALUES (?, ?, ?, ?, ?, ?, ?)";
-    connection.query(query, [eventID, req.body.eventTitle, req.body.eventDate, req.body.eventTime, req.file.path, req.body.eventAddress, req.body.eventDescription], function(error, rows, fields){
+    connection.query(query, [eventID, eventTitle, req.body.eventDate, req.body.eventTime, req.file.filename, req.body.eventAddress, req.body.eventDescription], function(error, rows, fields){
       if(error){
         console.log(error);
         res.sendStatus(500);
