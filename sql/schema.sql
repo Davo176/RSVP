@@ -52,9 +52,9 @@ CREATE TABLE event_admins (
 );
 
 CREATE TABLE event_invitees (
-    admin_id VARCHAR(36),
+    invitee_id VARCHAR(36),
     event_id VARCHAR(36),
-    FOREIGN KEY (admin_id) REFERENCES users(user_name) ON DELETE CASCADE,
+    FOREIGN KEY (invitee_id) REFERENCES users(user_name) ON DELETE CASCADE,
     FOREIGN KEY (event_id) REFERENCES events(event_id) ON DELETE CASCADE,
-    PRIMARY KEY (admin_id,event_id)
+    PRIMARY KEY (invitee_id,event_id)
 );

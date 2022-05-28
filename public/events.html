@@ -7,9 +7,6 @@
         <link rel="icon" type="image/x-icon" href="/images/favicon.ico">
         <script src="https://kit.fontawesome.com/849e072605.js" crossorigin="anonymous"></script>
         <script src="https://cdn.jsdelivr.net/npm/vue@2.6.12/dist/vue.js"></script>
-        <script>
-            ELEMENT.locale(ELEMENT.lang.en)
-        </script>
         <script src="/scripts/global.js" defer></script>
         <script src="/scripts/events.js" defer></script>
     </head>
@@ -25,22 +22,22 @@
                             <button class="arrowButton" v-on:click="shiftNLeft">&lt;</button>
                         </div>
                         <div v-for="event in myEvents" class="eventContainer">
-                            <img v-bind:src="event.eventPicture" style="width:20vw;"/>
+                            <img v-bind:src="imagePreURL + event.Image" style="width:20vw;"/>
                             <div class="eventTextContainer">
-                                <strong class="eventName">{{event.eventName}}</strong>
-                                <em class="eventDate">{{event.eventDate}} {{event.eventTime}}</em>
-                                <span class="eventText">{{event.eventAddress}}</span>
+                                <strong class="eventName">{{event.Title}}</strong>
+                                <em class="eventDate">{{event.Date}} {{event.Time}}</em>
+                                <span class="eventText">{{event.Address}}</span>
                                 <div class="eventAttendeeInfoContainer">
                                     <div>
-                                        <div class="center">{{event.eventAttendees.going}}</div>
+                                        <div class="center">{{event.Going}}</div>
                                         <div class="center">People Going</div>
                                     </div>
                                     <div>
-                                        <div class="center">{{event.eventAttendees.pending}}</div>
+                                        <div class="center">{{event.Unsure}}</div>
                                         <div class="center">Pending</div>
                                     </div>
                                     <div>
-                                        <div class="center">{{event.eventAttendees.notGoing}}</div>
+                                        <div class="center">{{event.Not_Going}}</div>
                                         <div class="center">Can't Go</div>
                                     </div>
                                 </div>
@@ -58,23 +55,23 @@
                             <button class="arrowButton" v-on:click="shiftMLeft">&lt;</button>
                         </div>
                         <div v-for="event in invitedEvents" class="eventContainer">
-                            <img v-bind:src="event.eventPicture" style="width:20vw;"/>
+                            <img v-bind:src="imagePreURL + event.Image" style="width:20vw;"/>
                             <div class="eventTextContainer">
-                                <strong class="eventName">{{event.eventName}}</strong>
-                                <em class="eventDate">{{event.eventDate}} {{event.eventTime}}</em>
-                                <span class="eventText">{{event.eventAddress}}</span>
-                                <span class="eventText">{{event.yourStatus}}, Change Status Below</span>
+                                <strong class="eventName">{{event.Title}}</strong>
+                                <em class="eventDate">{{event.Date}} {{event.Time}}</em>
+                                <span class="eventText">{{event.Address}}</span>
+                                <span class="eventText">{{event.Status}}, Change Status Below</span>
                                 <div class="eventAttendeeInfoContainer">
                                     <div>
-                                        <div class="center"><i style="color:green" href="#" class="icon fa-solid fa-check" v-on:click="changeStatus(event.eventId,'Accepted')"></i></div>
+                                        <div class="center"><i style="color:green" href="#" class="icon fa-solid fa-check" v-on:click.stop="changeStatus(event.event_id,'Going')"></i></div>
                                         <div class="center">Accept Invite</div>
                                     </div>
                                     <div>
-                                        <div class="center"><i style="color:orange" href="#" class="icon fa-solid fa-question" v-on:click="changeStatus(event.eventId,'Might Go')"></i></div>
+                                        <div class="center"><i style="color:orange" href="#" class="icon fa-solid fa-question" v-on:click.stop="changeStatus(event.event_id,'Unsure')"></i></div>
                                         <div class="center">Maybe</div>
                                     </div>
                                     <div>
-                                        <div class="center"><i style="color:red" href="#" class="icon fa-solid fa-xmark" v-on:click="changeStatus(event.eventId,'Not Going')"></i></div>
+                                        <div class="center"><i style="color:red" href="#" class="icon fa-solid fa-xmark" v-on:click.stop="changeStatus(event.event_id,'Not Going')"></i></div>
                                         <div class="center">Decline Invite</div>
                                     </div>
                                 </div>

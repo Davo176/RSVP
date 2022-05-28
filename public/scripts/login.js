@@ -3,7 +3,7 @@ function login()
     console.log('Logging in')
     let username = document.getElementById("l_username").value;
     let password = document.getElementById("l_password").value;
-    let login = {username: username, password: password};
+    let login = {user_name: username, password: password};
     let login_result = document.getElementById("login_result");
     var xhttp = new XMLHttpRequest();
     xhttp.onreadystatechange = function()
@@ -12,6 +12,7 @@ function login()
         {
             console.log('Logged in');
             login_result.innerText = "Logged in"
+            location.href = "/"
         }
         else if (this.status == 401)
         {
@@ -53,7 +54,8 @@ function signup()
         if (this.readyState == 4 && this.status == 200)
         {
             console.log('Signed Up');
-            signup_result.innerText = "Logged in"
+            signup_result.innerText = "Signed UP"
+            location.href = "/"
         }
         else if (this.status == 403)
         {
