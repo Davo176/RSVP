@@ -1,5 +1,5 @@
 const MYFRIENDS = [
-    "Erasmia Tsakalos",
+    "Joseph Gorden",
     "Matei Sherman",
     "Mathilda Walsh",
     "Elyas Sweeney",

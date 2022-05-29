@@ -13,18 +13,17 @@ router.get('/test', function(req, res, next) {
   }
 });
 
-let users = {
-  admin1: { username: "admin1", name: "Some Admin", password: "admin" },
-  user1: { username: "user1", name: "Some User", password: "user" },
-
-};
-
 router.get('/user', function(req, res, next) {
   res.send(req.session.user_name);
 });
 
 router.get('/', function(req, res, next) {
   res.redirect('/events');
+});
+
+router.get('/event', function(req, res, next) {
+  console.log(req.query);
+  res.sendFile('/public/event.html', { root: __dirname+"/.." });
 });
 
 router.get('/calendar', function(req, res, next) {
