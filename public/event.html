@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <title>Event Planning - Friends</title>
+        <link rel="stylesheet" href="/stylesheets/global.css">
+        <link rel="stylesheet" href="/stylesheets/event.css">
+        <link rel="icon" type="image/x-icon" href="/images/favicon.ico">
+        <script src="https://kit.fontawesome.com/849e072605.js" crossorigin="anonymous"></script>
+        <script src="https://cdn.jsdelivr.net/npm/vue@2.6.12/dist/vue.js"></script>
+        <script src="/scripts/global.js"></script>
+        <script src="/scripts/event.js" defer></script>
+    </head>
+    <body>
+    <div id="app">
+        <header id="Nav"></header>
+        </header>
+        <div class="eventPageContainer">
+            <div>
+                <div class="eventTitleBar">
+                    <img v-bind:src="imagePreURL + event.Image" style="width:20vw;"/>
+                    <div class="eventInfoContainer">
+                        <h1 class="title">{{event.Title}}</h1>
+                        <div class="datetime">On {{event.Date}} at {{event.Time}}</div>
+                        <div class="address">{{event.Address}}</div>
+                    </div>
+                    <div class="eventAttendingStatusContainer">
+                        <form action="/action_page.php">
+                            <label for="Attending_Status"></label>
+                            <select id="Attending_Status" v-on:change="test()" v-model="newStatus">
+                              <option v-for="option in options" v-bind:value="option" v-bind:selected="option == event.AttendingStatus">{{option}}</option>
+                            </select>
+                          </form>
+                    </div>
+
+                </div>
+                <div class="eventDescriptionContainer">
+                    {{event.Description}}
+                </div>
+            </div>
+            <div class="inviteeContainer">
+                <div class="groupContainer">
+                    <div class="groupTitleContainer">
+                        <h4>Admin</h4>
+                        <i class="chevron fa-solid" v-bind:class="{ 'fa-chevron-up':adminOpen, 'fa-chevron-down':!adminOpen }" v-on:click="adminOpen=!adminOpen"></i>
+                    </div>
+                    <div v-if="adminOpen && name.attending_status==='Admin'" v-for="name in people">{{name.first_name}} {{name.last_name}}</div>
+                </div>
+                <div class="groupContainer">
+                    <div class="groupTitleContainer">
+                        <h4>Going</h4>
+                        <i class="chevron fa-solid" v-bind:class="{ 'fa-chevron-up':goingOpen, 'fa-chevron-down':!goingOpen }" v-on:click="goingOpen=!goingOpen"></i>
+                    </div>
+                    <div v-if="goingOpen && name.attending_status==='Going'" v-for="name in people">{{name.first_name}} {{name.last_name}}</div>
+                </div>
+                <div class="groupContainer">
+                    <div class="groupTitleContainer">
+                        <h4>Pending</h4>
+                        <i class="chevron fa-solid" v-bind:class="{ 'fa-chevron-up':pendingOpen, 'fa-chevron-down':!pendingOpen }" v-on:click="pendingOpen=!pendingOpen"></i>
+                    </div>
+                    <div v-if="pendingOpen && name.attending_status==='Unsure'" v-for="name in people">{{name.first_name}} {{name.last_name}}</div>
+                </div>
+                <div class="groupContainer">
+                    <div class="groupTitleContainer">
+                        <h4>Not Going</h4>
+                        <i class="chevron fa-solid" v-bind:class="{ 'fa-chevron-up':notGoingOpen, 'fa-chevron-down':!notGoingOpen }" v-on:click="notGoingOpen=!notGoingOpen"></i>
+                    </div>
+                    <div v-if="notGoingOpen && name.attending_status==='Not Going'" v-for="name in people">{{name.first_name}} {{name.last_name}}</div>
+                </div>
+            </div>
+        </div>
+    </body>
+</html>
+

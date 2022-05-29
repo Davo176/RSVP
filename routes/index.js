@@ -13,18 +13,46 @@ router.get('/test', function(req, res, next) {
   }
 });
 
-let users = {
-  admin1: { username: "admin1", name: "Some Admin", password: "admin" },
-  user1: { username: "user1", name: "Some User", password: "user" },
-
-};
-
 router.get('/user', function(req, res, next) {
   res.send(req.session.user_name);
 });
 
 router.get('/', function(req, res, next) {
   res.redirect('/events');
+});
+
+router.get('/event', function(req, res, next) {
+  //if request doesnt have an event id
+  if (!"id" in req.query){
+    //cannot find
+    res.sendStatus(404);
+  }else{
+    //check if they are allowed to see the event
+    req.pool.getConnection(function(error, connection){
+      if(error){
+        console.log(error);
+        res.sendStatus(500);
+        return;
+      }
+      let user = req.session.user_name;
+      let id = req.query.id;
+      let query = "select * from event_invitees where invitee_id=? and event_id=?";
+      connection.query(query, [user, id], function(error, rows, fields) {
+        connection.release();
+        if (error) {
+          console.log(error);
+          res.sendStatus(500);
+          return;
+        }
+        if (rows.length>=1){
+          res.sendFile('/public/event.html', { root: __dirname+"/.." });
+        }else{
+          res.sendStatus(403);
+        }
+      });
+    });
+
+  }
 });
 
 router.get('/calendar', function(req, res, next) {

@@ -126,7 +126,17 @@ router.post('/add', upload.single("eventImage"), function(req, res, next){
 
     let query2 = "INSERT INTO event_admins (event_id, admin_id) VALUES (?, ?)";
     connection.query(query2, [eventID, user], function(error, rows, fields){
-      connection.release();
+
+      if(error){
+        console.log(error);
+        res.sendStatus(500);
+        return;
+      }
+    });
+
+    let query3 = "INSERT INTO event_invitees (event_id, invitee_id,attending_status) VALUES (?, ?,'Unsure')";
+    connection.query(query3, [eventID, user], function(error, rows, fields){
+
       if(error){
         console.log(error);
         res.sendStatus(500);
@@ -135,14 +145,12 @@ router.post('/add', upload.single("eventImage"), function(req, res, next){
     });
 
     res.redirect('/newevent');
-
   })
 });
 
 router.post('/updateStatus', function(req,res,next){
   let user = req.session.user_name;
   if (!('status' in req.body) || !('event_id' in req.body)){
-
     res.sendStatus(400);
     return;
   }else{
@@ -164,6 +172,89 @@ router.post('/updateStatus', function(req,res,next){
       });
     });
   }
+})
+
+router.get('/info', function(req,res,next){
+  if (!('event_id' in req.query)){
+    res.sendStatus(400);
+    return;
+  }else{
+  let user=req.session.user_name;
+  let event_id=req.query.event_id;
+    let query=`
+              select
+                  e.event_id,
+                  e.event_image as Image,
+                  e.event_title as Title,
+                  e.event_date as Date,
+                  e.event_time as Time,
+                  e.event_address as Address,
+                  e.event_description as Description,
+                  i.attending_status as AttendingStatus
+              from event_invitees as i
+              left join events as e on e.event_id = i.event_id
+              where i.event_id = ? and i.invitee_id=?;
+              `
+    req.pool.getConnection(function(error, connection){
+      if(error){
+        console.log(error);
+        res.sendStatus(500);
+        return;
+      }
+      connection.query(query, [event_id,user], function(error, rows, fields) {
+        connection.release();
+        if (error) {
+          console.log(error);
+          res.sendStatus(500);
+          return;
+        }
+        res.send(rows);
+      });
+    });
+  }
+})
+
+router.get('/people', function(req,res,next){
+  if (!('event_id' in req.query)){
+      res.sendStatus(400);
+      return;
+    }else{
+    let user=req.session.user_name;
+    let event_id=req.query.event_id;
+      let query=`select
+                  i.invitee_id,
+                  i.attending_status,
+                  u.first_name,
+                  u.last_name
+              from event_invitees as i
+              left join users as u on i.invitee_id=u.user_name
+              where event_id=?
+              union
+              select
+                  a.admin_id,
+                  'Admin',
+                  u.first_name,
+                  u.last_name
+              from event_admins as a
+              left join users as u on a.admin_id=u.user_name
+              where event_id=?;`
+      req.pool.getConnection(function(error, connection){
+        if(error){
+          console.log(error);
+          res.sendStatus(500);
+          return;
+        }
+        connection.query(query, [event_id,event_id], function(error, rows, fields) {
+          connection.release();
+          if (error) {
+            console.log(error);
+            res.sendStatus(500);
+            return;
+          }
+          res.send(rows);
+        });
+      });
+    }
 })
 
 module.exports = router;
