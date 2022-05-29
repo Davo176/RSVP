@@ -10,6 +10,8 @@
         <script src="https://kit.fontawesome.com/849e072605.js" crossorigin="anonymous"></script>
         <script src="https://cdn.jsdelivr.net/npm/vue@2.6.12/dist/vue.js"></script>
         <script src="/scripts/login.js" defer></script>
+        <script src="https://accounts.google.com/gsi/client" async defer></script>
+        <meta name="google-signin-client_id" content="304572589092-a2plf5r7k7d1d5j91e62mjhgkq4tglbg.apps.googleusercontent.com">
     </head>
     <body>
     <div id="app" style="align-content: center;">
@@ -26,6 +28,21 @@
                         <input type="password" id="l_password" placeholder="Enter Password" name="password" required>
                         <br/>
                         <button onclick="login()">Login</button>
+                        <br />
+                        <div id="g_id_onload"
+                        data-client_id="304572589092-a2plf5r7k7d1d5j91e62mjhgkq4tglbg.apps.googleusercontent.com"
+                        data-context="signin"
+                        data-ux_mode="popup"
+                        data-login_uri="/loginGoogle"
+                        data-auto_prompt="false">
+                        </div>
+                        <div class="g_id_signin"
+                                data-type="standard"
+                                data-shape="rectangular"
+                                data-text="signin_with"
+                                data-size="large"
+                                data-logo_alignment="left">
+                        </div>
                         <p id="login_result"></p>
                     </div>
                 </div>
