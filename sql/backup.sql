@@ -74,7 +74,7 @@ CREATE TABLE `event_invitees` (
 
 LOCK TABLES `event_invitees` WRITE;
 /*!40000 ALTER TABLE `event_invitees` DISABLE KEYS */;
-INSERT INTO `event_invitees` VALUES ('Harrison','1111111','unsure'),('Harrison','1111112','unsure'),('Neil','1111111','going'),('Neil','1111113','going'),('Seamus','1111111','not going'),('Seamus','1111112','not going'),('Seamus','1111113','not going'),('thomas','1111111','not going'),('Will','1111112','going'),('Will','1111113','going');
+INSERT INTO `event_invitees` VALUES ('Harrison','1111111','unsure'),('Harrison','1111112','unsure'),('Neil','1111111','going'),('Neil','1111113','going'),('Seamus','1111111','not going'),('Seamus','1111112','not going'),('Seamus','1111113','not going'),('thomas','1111111','not going'),('Will','1111112','going'),('Will','1111113','Going');
 /*!40000 ALTER TABLE `event_invitees` ENABLE KEYS */;
 UNLOCK TABLES;
 

@@ -21,7 +21,7 @@
                         <div class="arrowButtonContainer">
                             <button class="arrowButton" v-on:click="shiftNLeft">&lt;</button>
                         </div>
-                        <div v-for="event in myEvents" class="eventContainer">
+                        <div v-for="event in myEvents" class="eventContainer" v-on:click="goToEvent(event.event_id)">
                             <img v-bind:src="imagePreURL + event.Image" style="width:20vw;"/>
                             <div class="eventTextContainer">
                                 <strong class="eventName">{{event.Title}}</strong>
@@ -54,7 +54,7 @@
                         <div class="arrowButtonContainer">
                             <button class="arrowButton" v-on:click="shiftMLeft">&lt;</button>
                         </div>
-                        <div v-for="event in invitedEvents" class="eventContainer">
+                        <div v-for="event in invitedEvents" class="eventContainer" v-on:click="goToEvent(event.event_id)">
                             <img v-bind:src="imagePreURL + event.Image" style="width:20vw;"/>
                             <div class="eventTextContainer">
                                 <strong class="eventName">{{event.Title}}</strong>
