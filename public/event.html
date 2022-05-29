@@ -24,14 +24,17 @@
                         <div class="address">{{event.Address}}</div>
                     </div>
                     <div class="eventAttendingStatusContainer">
+
                         <form action="/action_page.php">
                             <label for="Attending_Status"></label>
                             <select id="Attending_Status" v-on:change="test()" v-model="newStatus">
                               <option v-for="option in options" v-bind:value="option" v-bind:selected="option == event.AttendingStatus">{{option}}</option>
                             </select>
-                          </form>
+                        </form>
+                        <div v-if="areAdmin" v-on:click.stop="openEditMode()" class="editContainer">
+                            Edit Job <i class="edit fas fa-edit"></i>
+                          </div>
                     </div>
-
                 </div>
                 <div class="eventDescriptionContainer">
                     {{event.Description}}
@@ -65,6 +68,13 @@
                         <i class="chevron fa-solid" v-bind:class="{ 'fa-chevron-up':notGoingOpen, 'fa-chevron-down':!notGoingOpen }" v-on:click="notGoingOpen=!notGoingOpen"></i>
                     </div>
                     <div v-if="notGoingOpen && name.attending_status==='Not Going'" v-for="name in people">{{name.first_name}} {{name.last_name}}</div>
+                </div>
+                <div v-if="areAdmin" class="groupContainer">
+                    <div class="groupTitleContainer">
+                        <h4>Other Friends</h4>
+                        <i class="chevron fa-solid" v-bind:class="{ 'fa-chevron-up':friendOpen, 'fa-chevron-down':!friendOpen }" v-on:click="friendOpen=!friendOpen"></i>
+                    </div>
+                    <div v-if="friendOpen" v-for="name in notInvitedFriends">{{name.first_name}} {{name.last_name}}</div>
                 </div>
             </div>
         </div>

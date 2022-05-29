@@ -6,12 +6,15 @@ var vueinst = new Vue({
         event: {Image: 'test.jpg'},
         people: {},
         areAdmin: false,
+        adminInfo: {},
         adminOpen: false,
         goingOpen: false,
         pendingOpen: false,
         notGoingOpen: false,
+        friendOpen: false,
         options: ["Going","Unsure","Not Going"],
         newStatus: "",
+        notInvitedFriends: []
     },
     methods: {
         test: function(){
@@ -61,6 +64,28 @@ var vueinst = new Vue({
             };
             xhttp.open("GET",`/api/events/people?event_id=${eventID}`,true);
             xhttp.send();
+        },
+        checkAdmin: function(eventID){
+            let xhttp = new XMLHttpRequest();
+            let vueReference = this;
+            xhttp.onreadystatechange = function() {
+                if (this.readyState == 4 && this.status == 500){
+                    console.log("error");
+                }
+                if (this.readyState == 4 && this.status == 200){
+                    if (this.responseText=="False"){
+                        vueReference.areAdmin=false;
+                    }else{
+                        vueReference.areAdmin=true;
+                        vueReference.adminInfo = this.responseText;
+                    }
+                }
+            };
+            xhttp.open("GET",`/api/events/areAdmin?event_id=${eventID}`,true);
+            xhttp.send();
+        },
+        openEditMode: function(){
+
         }
     },
     created: function(){
@@ -69,5 +94,6 @@ var vueinst = new Vue({
         let eventID = urlParams.get('id');
         this.getEventInfo(eventID);
         this.getPeople(eventID);
+        this.checkAdmin(eventID);
     }
 });

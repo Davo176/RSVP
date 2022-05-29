@@ -69,6 +69,16 @@
     font-size: 1em;
 }
 
+.edit {
+    color: var(--secondary-color);
+    font-size: 1em;
+}
+
 .inviteeContainer {
     width: 25vw;
+}
+
+.editContainer {
+    cursor: pointer;
+    font-size: 1em;
 }
