@@ -4,6 +4,7 @@ var cookieParser = require('cookie-parser');
 var session = require('express-session');
 var logger = require('morgan');
 var mysql = require('mysql');
+var requestify = require('requestify');
 
 var indexRouter = require('./routes/index');
 const apiRouter = require('./routes/api');
@@ -81,6 +82,35 @@ app.post('/login', function(req, res, next) {
     console.log('Inproper Login Form');
     res.sendStatus(400);
   }
+});
+
+app.post('/loginGoogle', function(req, res, next) {
+  console.log(req.cookies.g_csrf_token);
+  console.log(req.body.g_csrf_token);
+  var csrf_token_cookie = req.cookies.g_csrf_token;
+  var csrf_token_body = req.body.g_csrf_token;
+  if (csrf_token_body != csrf_token_cookie)
+  {
+    console.log('Failed to verify double submit cookie.')
+    res.send(400);
+    return;
+  }
+  var token = req.body.credential;
+  var url = `https://oauth2.googleapis.com/tokeninfo?id_token=${token}`;
+  console.log(url);
+  requestify.get(url).then(function(response)
+  {
+    response.getBody();
+    console.log(response.body);
+    var info = JSON.parse(response.body)
+    console.log(info.email);
+    console.log(info.given_name);
+    console.log(info.family_name);
+    console.log(info.name);
+    //Check if user has signed up before
+    //If not sign up
+    //Else login
+  });
 });
 
 app.post('/signup', function(req, res, next) {
