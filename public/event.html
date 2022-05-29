@@ -43,28 +43,28 @@
                         <h4>Admin</h4>
                         <i class="chevron fa-solid" v-bind:class="{ 'fa-chevron-up':adminOpen, 'fa-chevron-down':!adminOpen }" v-on:click="adminOpen=!adminOpen"></i>
                     </div>
-                    <div v-if="adminOpen" v-for="name in event.admins">{{name}}</div>
+                    <div v-if="adminOpen && name.attending_status==='Admin'" v-for="name in people">{{name.first_name}} {{name.last_name}}</div>
                 </div>
                 <div class="groupContainer">
                     <div class="groupTitleContainer">
                         <h4>Going</h4>
                         <i class="chevron fa-solid" v-bind:class="{ 'fa-chevron-up':goingOpen, 'fa-chevron-down':!goingOpen }" v-on:click="goingOpen=!goingOpen"></i>
                     </div>
-                    <div v-if="goingOpen" v-for="name in event.going">{{name}}</div>
+                    <div v-if="goingOpen && name.attending_status==='Going'" v-for="name in people">{{name.first_name}} {{name.last_name}}</div>
                 </div>
                 <div class="groupContainer">
                     <div class="groupTitleContainer">
                         <h4>Pending</h4>
                         <i class="chevron fa-solid" v-bind:class="{ 'fa-chevron-up':pendingOpen, 'fa-chevron-down':!pendingOpen }" v-on:click="pendingOpen=!pendingOpen"></i>
                     </div>
-                    <div v-if="pendingOpen" v-for="name in event.pending">{{name}}</div>
+                    <div v-if="pendingOpen && name.attending_status==='Unsure'" v-for="name in people">{{name.first_name}} {{name.last_name}}</div>
                 </div>
                 <div class="groupContainer">
                     <div class="groupTitleContainer">
                         <h4>Not Going</h4>
                         <i class="chevron fa-solid" v-bind:class="{ 'fa-chevron-up':notGoingOpen, 'fa-chevron-down':!notGoingOpen }" v-on:click="notGoingOpen=!notGoingOpen"></i>
                     </div>
-                    <div v-if="notGoingOpen" v-for="name in event.notGoing">{{name}}</div>
+                    <div v-if="notGoingOpen && name.attending_status==='Not Going'" v-for="name in people">{{name.first_name}} {{name.last_name}}</div>
                 </div>
             </div>
         </div>

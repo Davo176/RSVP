@@ -23,6 +23,9 @@ var vueinst = new Vue({
             }
         },
         shiftNRight: function(){
+            if (this.myEventsBase.length<=3){
+                return;
+            }
             if(this.n+3!==this.myEventsBase.length){
                 this.n+=1;
             }
@@ -33,6 +36,9 @@ var vueinst = new Vue({
             }
         },
         shiftMRight: function(){
+            if (this.invitedEventsBase.length<=3){
+                return;
+            }
             if(this.m+3!==this.invitedEventsBase.length){
                 this.m+=1;
             }
@@ -67,7 +73,6 @@ var vueinst = new Vue({
                     console.log("error");
                 }
                 if (this.readyState == 4 && this.status == 200){
-                    console.log(this.responseText);
                     vueReference.invitedEventsBase = JSON.parse(this.responseText);
                 }
             };
@@ -82,12 +87,14 @@ var vueinst = new Vue({
                     console.log("error");
                 }
                 if (this.readyState == 4 && this.status == 200){
-                    console.log(this.responseText);
                     vueReference.myEventsBase = JSON.parse(this.responseText);
                 }
             };
             xhttp.open("GET",`/api/events/admin`,true);
             xhttp.send();
+        },
+        goToEvent: function(eventId){
+            location.href = `/event?id=${eventId}`
         }
     },
     created: function(){
