@@ -23,7 +23,6 @@ function getUser() {
   {
       if (this.readyState == 4 && this.status == 200)
       {
-        console.log(this.responseText);
         user_name=this.responseText;
         loggedIn = true;
         updateNav()

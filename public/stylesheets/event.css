@@ -1,0 +1,74 @@
+.eventPageContainer {
+    margin: 2.5vh 2.5vw ;
+    background-color: white;
+    width: 95vw;
+    border-radius: 20px;
+    padding: 20px;
+    display: flex;
+    justify-content: space-around;
+}
+
+.eventTitleBar {
+    width: 65vw;
+    background-color: var(--primary-color);
+    border-radius: 20px;
+    display: flex;
+    flex-direction: horizontal;
+    justify-content: space-between;
+    overflow: hidden;
+}
+
+.eventDescriptionContainer {
+    margin-top: 2.5vh;
+    width: 65vw;
+    background-color: var(--primary-color);
+    height: 10vh;
+    border-radius: 20px;
+}
+
+.eventInfoContainer {
+    width: 20vw;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.eventAttendingStatusContainer {
+    width: 20vw;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.title {
+    color: var(--secondary-color);
+    font-weight: bolder;
+}
+
+.datetime {
+    color: var(--secondary-color);
+}
+
+.address {
+    color: var(--secondary-color);
+}
+
+.eventDescriptionContainer {
+    padding: 20px;
+}
+
+.groupTitleContainer {
+    display: flex;
+    justify-content: space-between;
+}
+
+.chevron {
+    color: black;
+    font-size: 1em;
+}
+
+.inviteeContainer {
+    width: 25vw;
+}
