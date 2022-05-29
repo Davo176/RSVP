@@ -31,13 +31,52 @@
                               <option v-for="option in options" v-bind:value="option" v-bind:selected="option == event.AttendingStatus">{{option}}</option>
                             </select>
                         </form>
-                        <div v-if="areAdmin" v-on:click.stop="openEditMode()" class="editContainer">
-                            Edit Job <i class="edit fas fa-edit"></i>
+                        <div v-if="areAdmin" v-on:click.stop="toggleEditMode()" class="editContainer">
+                            <span v-if="!editMode">Edit Job</span><span v-if="editMode">Close Edit Mode</span> <i class="edit fas fa-edit"></i>
                           </div>
                     </div>
                 </div>
                 <div class="eventDescriptionContainer">
                     {{event.Description}}
+                </div>
+                <div v-if="editMode" class="editModeContainer">
+                    <div class="halfEditContainer">
+                        <div class="editGroupContainer">
+                            <div class="labelContainer">
+                                Title
+                                <input v-model="newTitle" v-bind:placeholder="event.Title" type="text"></input>
+                            </div>
+                            <button v-on:click="changeTitle">Change</button>
+                        </div>
+                        <div class="editGroupContainer">
+                            <div class="labelContainer">
+                                Date
+                                <input v-model="newDate" type="date"></input>
+                            </div>
+                            <button v-on:click="changeDate">Change</button>
+                        </div>
+                        <div class="editGroupContainer">
+                            <div class="labelContainer">
+                                Time
+                                <input v-model="newTime" type="time"></input>
+                            </div>
+                            <button v-on:click="changeTime">Change</button>
+                        </div>
+                        <div class="editGroupContainer">
+                            <div class="labelContainer">
+                                Address
+                                <input v-model="newAddress" v-bind:placeholder="event.Address" type="text"></input>
+                            </div>
+                            <button v-on:click="changeAddress">Change</button>
+                        </div>
+                        <div class="editGroupContainer">
+                            <div class="labelContainer">
+                                Description
+                                <textarea v-model="newDescription"></textarea>
+                            </div>
+                            <button v-on:click="changeDescription">Change</button>
+                        </div>
+                    </div>
                 </div>
             </div>
             <div class="inviteeContainer">

@@ -4,6 +4,9 @@ const moment = require('moment');
 var multer = require('multer');
 var upload = multer({ des: 'public/images/userUploads'});
 const Uuid = require('uuid');
+const changeRouter = require('./change');
+
+router.use('/change', changeRouter);
 
 router.get('/invited', function(req,res,next){
     let user = req.session.user_name;
