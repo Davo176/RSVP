@@ -51,4 +51,11 @@ router.get('/account', function(req, res, next){
   res.sendFile('/public/account.html', { root: __dirname+"/.."});
 })
 
+router.get('/logout', function(req, res, next){
+  console.log(req.session);
+  delete req.session;
+  console.log(req.session);
+  res.redirect('/login');
+})
+
 module.exports = router;

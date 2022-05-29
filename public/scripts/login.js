@@ -21,8 +21,8 @@ function login()
         }
         else if (this.status == 400)
         {
-            console.log('Inproper Login Form')
-            login_result.innerText = "Inproper Login Form"
+            console.log('Improper Login Form')
+            login_result.innerText = "Improper Login Form"
         }
     };
 
