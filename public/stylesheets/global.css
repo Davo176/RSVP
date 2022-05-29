@@ -96,9 +96,15 @@ header {
   display: none;
   position: absolute;
   color: black;
-  background-color: darkgrey;
+  background-color:#3F6844;
   right: 0.5em;
   top: 3em;
+}
+
+.dropdown-content a{
+  text-decoration: none;
+  display: block;
+  color: white;
 }
 
 /*for dropdown*/
