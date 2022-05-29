@@ -24,17 +24,59 @@
                         <div class="address">{{event.Address}}</div>
                     </div>
                     <div class="eventAttendingStatusContainer">
+
                         <form action="/action_page.php">
                             <label for="Attending_Status"></label>
                             <select id="Attending_Status" v-on:change="test()" v-model="newStatus">
                               <option v-for="option in options" v-bind:value="option" v-bind:selected="option == event.AttendingStatus">{{option}}</option>
                             </select>
-                          </form>
+                        </form>
+                        <div v-if="areAdmin" v-on:click.stop="toggleEditMode()" class="editContainer">
+                            <span v-if="!editMode">Edit Job</span><span v-if="editMode">Close Edit Mode</span> <i class="edit fas fa-edit"></i>
+                          </div>
                     </div>
-
                 </div>
                 <div class="eventDescriptionContainer">
                     {{event.Description}}
+                </div>
+                <div v-if="editMode" class="editModeContainer">
+                    <div class="halfEditContainer">
+                        <div class="editGroupContainer">
+                            <div class="labelContainer">
+                                Title
+                                <input v-model="newTitle" v-bind:placeholder="event.Title" type="text"></input>
+                            </div>
+                            <button v-on:click="changeTitle">Change</button>
+                        </div>
+                        <div class="editGroupContainer">
+                            <div class="labelContainer">
+                                Date
+                                <input v-model="newDate" type="date"></input>
+                            </div>
+                            <button v-on:click="changeDate">Change</button>
+                        </div>
+                        <div class="editGroupContainer">
+                            <div class="labelContainer">
+                                Time
+                                <input v-model="newTime" type="time"></input>
+                            </div>
+                            <button v-on:click="changeTime">Change</button>
+                        </div>
+                        <div class="editGroupContainer">
+                            <div class="labelContainer">
+                                Address
+                                <input v-model="newAddress" v-bind:placeholder="event.Address" type="text"></input>
+                            </div>
+                            <button v-on:click="changeAddress">Change</button>
+                        </div>
+                        <div class="editGroupContainer">
+                            <div class="labelContainer">
+                                Description
+                                <textarea v-model="newDescription"></textarea>
+                            </div>
+                            <button v-on:click="changeDescription">Change</button>
+                        </div>
+                    </div>
                 </div>
             </div>
             <div class="inviteeContainer">
@@ -65,6 +107,13 @@
                         <i class="chevron fa-solid" v-bind:class="{ 'fa-chevron-up':notGoingOpen, 'fa-chevron-down':!notGoingOpen }" v-on:click="notGoingOpen=!notGoingOpen"></i>
                     </div>
                     <div v-if="notGoingOpen && name.attending_status==='Not Going'" v-for="name in people">{{name.first_name}} {{name.last_name}}</div>
+                </div>
+                <div v-if="areAdmin" class="groupContainer">
+                    <div class="groupTitleContainer">
+                        <h4>Other Friends</h4>
+                        <i class="chevron fa-solid" v-bind:class="{ 'fa-chevron-up':friendOpen, 'fa-chevron-down':!friendOpen }" v-on:click="friendOpen=!friendOpen"></i>
+                    </div>
+                    <div v-if="friendOpen" v-for="name in notInvitedFriends">{{name.first_name}} {{name.last_name}}</div>
                 </div>
             </div>
         </div>

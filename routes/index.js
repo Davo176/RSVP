@@ -51,7 +51,6 @@ router.get('/event', function(req, res, next) {
         }
       });
     });
-
   }
 });
 

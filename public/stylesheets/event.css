@@ -19,6 +19,7 @@
 }
 
 .eventDescriptionContainer {
+    padding: 20px;
     margin-top: 2.5vh;
     width: 65vw;
     background-color: var(--primary-color);
@@ -55,8 +56,12 @@
     color: var(--secondary-color);
 }
 
-.eventDescriptionContainer {
+.editModeContainer {
     padding: 20px;
+    margin-top: 2.5vh;
+    width: 65vw;
+    background-color: var(--primary-color);
+    border-radius: 20px;
 }
 
 .groupTitleContainer {
@@ -69,6 +74,31 @@
     font-size: 1em;
 }
 
+.edit {
+    color: var(--secondary-color);
+    font-size: 1em;
+}
+
 .inviteeContainer {
     width: 25vw;
+}
+
+.halfEditContainer {
+    width: 30vw;
+}
+
+.editContainer {
+    cursor: pointer;
+    font-size: 1em;
+}
+
+.editGroupContainer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.labelContainer {
+    display: flex;
+    flex-direction: column;
 }

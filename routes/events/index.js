@@ -4,6 +4,9 @@ const moment = require('moment');
 var multer = require('multer');
 var upload = multer({ des: 'public/images/userUploads'});
 const Uuid = require('uuid');
+const changeRouter = require('./change');
+
+router.use('/change', changeRouter);
 
 router.get('/invited', function(req,res,next){
     let user = req.session.user_name;
@@ -252,6 +255,42 @@ router.get('/people', function(req,res,next){
             return;
           }
           res.send(rows);
+        });
+      });
+    }
+})
+
+router.get('/areAdmin', function(req,res,next){
+  if (!('event_id' in req.query)){
+      res.sendStatus(400);
+      return;
+    }else{
+    let user=req.session.user_name;
+    let event_id=req.query.event_id;
+      let query=`select
+                  admin_id
+                 from
+                  event_admins
+                 where event_id=? and admin_id=?;`
+      req.pool.getConnection(function(error, connection){
+        if(error){
+          console.log(error);
+          res.sendStatus(500);
+          return;
+        }
+        connection.query(query, [event_id,user], function(error, rows, fields) {
+          connection.release();
+          if (error) {
+            console.log(error);
+            res.sendStatus(500);
+            return;
+          }
+          if (rows.length>=1){
+            res.send(rows);
+          }else{
+            res.send("False");
+          }
+
         });
       });
     }
