@@ -49,6 +49,7 @@ button {
   border: none;
   height: 100%;
   line-height:calc(5vh*0.6);
+  cursor: pointer;
 }
 
 i {
@@ -89,4 +90,24 @@ header {
 .app {
   display: flex;
   justify-content: center;
+}
+
+.dropdown-content {
+  display: none;
+  position: absolute;
+  color: black;
+  background-color:#3F6844;
+  right: 0.5em;
+  top: 3em;
+}
+
+.dropdown-content a{
+  text-decoration: none;
+  display: block;
+  color: white;
+}
+
+/*for dropdown*/
+.show{
+  display: block;
 }

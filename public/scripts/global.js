@@ -32,6 +32,15 @@ function getUser() {
   xhttp.send();
 }
 
+function dropdown(){ //tutorial from https://www.w3schools.com/howto/howto_js_dropdown.asp
+  document.getElementById("dropdownContent").classList.toggle("show");
+}
+
+window.onclick = function(event){
+  if(!event.target.matches('.dropdown')){
+      document.getElementById("dropdownContent").classList.remove("show");
+  }
+}
 
 function updateNav () {
   var nav = document.getElementById('Nav');
@@ -72,10 +81,15 @@ function updateNav () {
         <li class="navBarElementContainer"><a href="/notifications"><i class="icon fa-solid fa-bell"></i></a></li>
         <li class="navBarElementContainer"><a href="/calendar"><i class="icon fa-solid fa-calendar-days"></i></a></li>
         <li class="navBarElementContainerText" style="padding-right: 5px"><p>${user_name}</p></li>
-        <li class="navBarElementContainer" style="padding-left: 0px"><a href="/account"><i class="fa-solid fa-circle-user"></i></a></li>
+        <li class="navBarElementContainer dropdown" style="padding-left: 0px"><button class="dropbtn dropdown" onclick="dropdown()"><i class="fa-solid fa-circle-user dropdown"></i></a></li>
     </ul>
-  </nav>`;
+  </nav>
+  <ul style="list-style-type: none" id="dropdownContent" class="dropdown-content dropdown">
+        <li><a href="/account" class="dropdown">Edit account</a></li>
+        <li><a href="/logout" class="dropdown">Log out</a></li>
+  </ul>`;
   }
 
 }
+
 window.addEventListener("load", getUser);
