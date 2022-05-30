@@ -19,7 +19,6 @@ router.get('/getuserinfo', function(req, res, next){
                 return;
             }
 
-            console.log(rows);
             res.json(rows);
         })
 

@@ -32,7 +32,9 @@
                     document.getElementById("last_name").setAttribute("maxlength", last_nameMax);
                     document.getElementById("email").setAttribute("maxlength", emailMax);
 
-                    console.log(object["user_name"]);
+                    document.getElementById("maxLengthFirstName").innerText = "Max length: " + first_nameMax + " characters";
+                    document.getElementById("maxLengthLastName").innerText = "Max length: " + last_nameMax + " characters";
+                    document.getElementById("maxLengthEmail").innerText = "Max length: " + emailMax + " characters";
 
                 }
             }
@@ -95,25 +97,25 @@
             <p style="display: inline" id="user_name" name = "userName"></p>
 
             </br>
-            </br>
 
             <label for "firstName">First name: </label>
             <input type="text" name="firstName" id="first_name"> </input>
             <button type="submit" onclick="updateUser(`first_name`)">Submit</button>
+            <p id="maxLengthFirstName"></p>
 
-            </br>
             </br>
 
             <label for "lastName">Last name: </label>
             <input type="text" name="lastName" id="last_name"> </input>
             <button type="submit" onclick="updateUser(`last_name`)">Submit</button>
+            <p id="maxLengthLastName"></p>
 
-            </br>
             </br>
 
             <label for "email">Email: </label>
             <input type="text" name="email" id="email"> </input>
             <button type="submit" onclick="updateUser(`email`)">Submit</button>
+            <p id="maxLengthEmail"></p>
 
 
         </div>
