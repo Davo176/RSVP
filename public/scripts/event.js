@@ -21,6 +21,8 @@ var vueinst = new Vue({
         newAddress: "",
         newTime: "",
         newDate: "",
+        yourUsername: "",
+        otherFriends: {},
     },
     methods: {
         moment: function(item=undefined){
@@ -30,7 +32,7 @@ var vueinst = new Vue({
             let reqBody = JSON.stringify({event_id: this.event.event_id,status: this.newStatus});
             let xhttp = new XMLHttpRequest();
             let vueReference = this;
-             
+
             xhttp.onreadystatechange = function() {
                 if (this.readyState == 4 && this.status == 500){
                     console.log("error");
@@ -86,11 +88,26 @@ var vueinst = new Vue({
                         vueReference.areAdmin=false;
                     }else{
                         vueReference.areAdmin=true;
-                        vueReference.adminInfo = this.responseText;
+                        vueReference.adminInfo = JSON.parse(this.responseText).rows.map(e => e.admin_id.toLowerCase());
+                        vueReference.yourUsername = JSON.parse(this.responseText).you;
                     }
                 }
             };
             xhttp.open("GET",`/api/events/areAdmin?event_id=${eventID}`,true);
+            xhttp.send();
+        },
+        getOtherFriends: function(eventID){
+            let xhttp = new XMLHttpRequest();
+            let vueReference = this;
+            xhttp.onreadystatechange = function() {
+                if (this.readyState == 4 && this.status == 500){
+                    console.log("error");
+                }
+                if (this.readyState == 4 && this.status == 200){
+                    vueReference.otherFriends=JSON.parse(this.responseText);
+                }
+            };
+            xhttp.open("GET",`/api/events/change/uninvitedFriends?event_id=${eventID}`,true);
             xhttp.send();
         },
         toggleEditMode: function(){
@@ -181,13 +198,71 @@ var vueinst = new Vue({
             xhttp.setRequestHeader('Content-type', 'application/json; charset=UTF-8');
             xhttp.send(reqBody);
         },
+        addFriend: function(user_id){
+            console.log("Friend Request Sent to ", user_id);
+        },
+        addAdmin: function(user_id){
+            let reqBody = JSON.stringify({event_id: this.event.event_id,user_id: user_id});
+            let xhttp = new XMLHttpRequest();
+            let vueReference = this;
+
+            xhttp.onreadystatechange = function() {
+                if (this.readyState == 4 && this.status == 500){
+                    console.log("error");
+                }
+                if (this.readyState == 4 && this.status == 200){
+                    vueReference.updateInfo(vueReference.event.event_id);
+                }
+            };
+            xhttp.open("POST","/api/events/change/makeAdmin",true);
+            xhttp.setRequestHeader('Content-type', 'application/json; charset=UTF-8');
+            xhttp.send(reqBody);
+        },
+        uninvite: function(user_id){
+            let reqBody = JSON.stringify({event_id: this.event.event_id,user_id: user_id});
+            let xhttp = new XMLHttpRequest();
+            let vueReference = this;
+
+            xhttp.onreadystatechange = function() {
+                if (this.readyState == 4 && this.status == 500){
+                    console.log("error");
+                }
+                if (this.readyState == 4 && this.status == 200){
+                    vueReference.updateInfo(vueReference.event.event_id);
+                }
+            };
+            xhttp.open("POST","/api/events/change/uninvite",true);
+            xhttp.setRequestHeader('Content-type', 'application/json; charset=UTF-8');
+            xhttp.send(reqBody);
+        },
+        invite: function(user_id){
+            let reqBody = JSON.stringify({event_id: this.event.event_id,user_id: user_id});
+            let xhttp = new XMLHttpRequest();
+            let vueReference = this;
+
+            xhttp.onreadystatechange = function() {
+                if (this.readyState == 4 && this.status == 500){
+                    console.log("error");
+                }
+                if (this.readyState == 4 && this.status == 200){
+                    vueReference.updateInfo(vueReference.event.event_id);
+                }
+            };
+            xhttp.open("POST","/api/events/change/invite",true);
+            xhttp.setRequestHeader('Content-type', 'application/json; charset=UTF-8');
+            xhttp.send(reqBody);
+        },
+        updateInfo: function(eventID){
+            this.getEventInfo(eventID);
+            this.getPeople(eventID);
+            this.checkAdmin(eventID);
+            this.getOtherFriends(eventID);
+        }
     },
     created: function(){
         let queryString = window.location.search;
         let urlParams = new URLSearchParams(queryString);
         let eventID = urlParams.get('id');
-        this.getEventInfo(eventID);
-        this.getPeople(eventID);
-        this.checkAdmin(eventID);
+        this.updateInfo(eventID)
     }
 });

@@ -102,3 +102,33 @@
     display: flex;
     flex-direction: column;
 }
+
+.addFriend {
+    color: var(--secondary-color);
+    font-size: 1em;
+    cursor: pointer;
+}
+
+.unInvite {
+    color: var(--secondary-color);
+    font-size: 1em;
+    cursor: pointer;
+}
+
+.nameContainer{
+    display:flex;
+    justify-content: space-between;
+}
+
+.star{
+    color: var(--secondary-color);
+    font-size: 1em;
+    cursor: pointer;
+}
+
+
+.inviteFriend {
+    color: var(--secondary-color);
+    font-size: 1em;
+    cursor: pointer;
+}
