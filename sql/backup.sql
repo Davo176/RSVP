@@ -46,7 +46,7 @@ CREATE TABLE `event_admins` (
 
 LOCK TABLES `event_admins` WRITE;
 /*!40000 ALTER TABLE `event_admins` DISABLE KEYS */;
-INSERT INTO `event_admins` VALUES ('Will','1111111'),('Neil','1111112'),('Harrison','1111113'),('thomas','1111113'),('Will','1111113');
+INSERT INTO `event_admins` VALUES ('Neil','1111111'),('Will','1111111'),('Neil','1111112'),('Harrison','1111113'),('thomas','1111113'),('Will','1111113');
 /*!40000 ALTER TABLE `event_admins` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -74,7 +74,7 @@ CREATE TABLE `event_invitees` (
 
 LOCK TABLES `event_invitees` WRITE;
 /*!40000 ALTER TABLE `event_invitees` DISABLE KEYS */;
-INSERT INTO `event_invitees` VALUES ('Harrison','1111111','unsure'),('Harrison','1111112','unsure'),('Neil','1111111','going'),('Neil','1111113','going'),('Seamus','1111111','not going'),('Seamus','1111112','not going'),('Seamus','1111113','not going'),('thomas','1111111','not going'),('Will','1111111','Unsure'),('Will','1111112','going'),('Will','1111113','Going');
+INSERT INTO `event_invitees` VALUES ('Harrison','1111112','Unsure'),('Neil','1111111','Going'),('Neil','1111113','Going'),('Seamus','1111111','Not Going'),('Seamus','1111112','Not Going'),('Seamus','1111113','Not Going'),('thomas','1111111','Not Going'),('Thomas','1111113','Unsure'),('Will','1111111','Unsure'),('Will','1111112','Going'),('Will','1111113','Going');
 /*!40000 ALTER TABLE `event_invitees` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -204,4 +204,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2022-05-30  2:53:23
+-- Dump completed on 2022-05-30  5:33:07
