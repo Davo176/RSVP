@@ -13,6 +13,34 @@
         <!--Get user's info-->
         <script>
 
+            //sets the maxlength attributes of the fields based on the max length specified in the database
+            let xhttp2 = new XMLHttpRequest();
+
+            xhttp2.onreadystatechange = function(req, res){
+                if(this.readyState == 4 && this.status == 200){
+
+                    //Formats the data into a JSON array
+                    object = JSON.parse(this.responseText);
+                    object = JSON.parse(object[0]["JSON_OBJECTAGG(COLUMN_NAME, CHARACTER_MAXIMUM_LENGTH)"]);
+
+                    user_nameMax = object["user_name"];
+                    first_nameMax = object["first_name"];
+                    last_nameMax = object["last_name"];
+                    emailMax = object["email"];
+
+                    document.getElementById("first_name").setAttribute("maxlength", first_nameMax);
+                    document.getElementById("last_name").setAttribute("maxlength", last_nameMax);
+                    document.getElementById("email").setAttribute("maxlength", emailMax);
+
+                    console.log(object["user_name"]);
+
+                }
+            }
+
+            xhttp2.open("GET", 'api/account/getfieldlengths', true);
+            xhttp2.send();
+
+            //puts users current info into the appropriate fields
             let xhttp = new XMLHttpRequest();
 
             xhttp.onreadystatechange = function(req, res){
@@ -44,7 +72,6 @@
                 xhttp2.onreadystatechange = function(){
 
                     if(this.readyState == 4 && this.status == 200){
-                        alert("updated " + field + " to " + newFieldValue)
                         console.log("updated " + field + " to " + newFieldValue);
                     }
                 }
