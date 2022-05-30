@@ -74,7 +74,7 @@ CREATE TABLE `event_invitees` (
 
 LOCK TABLES `event_invitees` WRITE;
 /*!40000 ALTER TABLE `event_invitees` DISABLE KEYS */;
-INSERT INTO `event_invitees` VALUES ('Harrison','1111112','Unsure'),('Neil','1111111','Going'),('Neil','1111113','Going'),('Seamus','1111111','Not Going'),('Seamus','1111112','Not Going'),('Seamus','1111113','Not Going'),('thomas','1111111','Not Going'),('Thomas','1111113','Unsure'),('Will','1111111','Unsure'),('Will','1111112','Going'),('Will','1111113','Going');
+INSERT INTO `event_invitees` VALUES ('Harrison','1111112','Unsure'),('Neil','1111111','Going'),('Neil','1111113','Going'),('Seamus','1111111','Not Going'),('Seamus','1111112','Not Going'),('Seamus','1111113','Not Going'),('thomas','1111111','Not Going'),('Thomas','1111113','Unsure'),('will','1111111','Unsure'),('Will','1111112','Going'),('Will','1111113','Going');
 /*!40000 ALTER TABLE `event_invitees` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -93,6 +93,7 @@ CREATE TABLE `events` (
   `event_image` varchar(500) DEFAULT NULL,
   `event_address` varchar(255) DEFAULT NULL,
   `event_description` varchar(255) DEFAULT NULL,
+  `finalised` tinyint NOT NULL,
   PRIMARY KEY (`event_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -103,7 +104,7 @@ CREATE TABLE `events` (
 
 LOCK TABLES `events` WRITE;
 /*!40000 ALTER TABLE `events` DISABLE KEYS */;
-INSERT INTO `events` VALUES ('1111111','Wills 20th Birthday','2022-06-21','19:00','test.jpg','60th fourth avenue St. Peters','a description'),('1111112','Neil 20th Birthday','2022-06-23','20:00','test.jpg','60th fourth avenue St. Peters','Lets party like kings for my 20th birthday'),('1111113','Poker Night','2022-07-23','20:00','test.jpg','60th fourth avenue St. Peters','Test your lucky stars tonight and win big at poker night');
+INSERT INTO `events` VALUES ('1111111','Wills 20th Birthday','2022-06-21','20:30','test.jpg','60th fourth avenue St. Peters','a description',0),('1111112','Neil 20th Birthday','2022-06-23','20:00','test.jpg','60th fourth avenue St. Peters','Lets party like kings for my 20th birthday',0),('1111113','Poker Night','2022-07-23','20:00','test.jpg','60th fourth avenue St. Peters','Test your lucky stars tonight and win big at poker night',0);
 /*!40000 ALTER TABLE `events` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -164,7 +165,7 @@ CREATE TABLE `unavailabilities` (
 
 LOCK TABLES `unavailabilities` WRITE;
 /*!40000 ALTER TABLE `unavailabilities` DISABLE KEYS */;
-INSERT INTO `unavailabilities` VALUES ('22222221','2022-06-23 18:00:00','2022-06-24 18:00:00','clashes with another event','Seamus','1111112'),('22222222','2022-05-23 18:00:00','2022-05-24 18:00:00','clashes with another event','Neil','1111113'),('61def84f-2f8f-4ac5-9d68-df9dce2382c2','2022-05-31 09:00:00','2022-05-31 11:00:00','Testing','will',NULL),('bdcca053-971f-47d2-b2fb-2a7b5a7b70d1','2022-05-23 10:00:00','2022-05-23 11:00:00','Party','will',NULL),('d6d6d04e-f5b1-401f-8921-c14401d72f37','2022-05-01 09:00:00','2022-05-01 11:00:00','Poker','will',NULL);
+INSERT INTO `unavailabilities` VALUES ('22222221','2022-06-23 18:00:00','2022-06-24 18:00:00','clashes with another event','Seamus','1111112'),('22222222','2022-05-23 18:00:00','2022-05-24 18:00:00','clashes with another event','Neil','1111113'),('22222223','2022-06-21 18:30:00','2022-06-21 19:40:00','TEST','neil',NULL),('61def84f-2f8f-4ac5-9d68-df9dce2382c2','2022-05-31 09:00:00','2022-05-31 11:00:00','Testing','will',NULL),('bdcca053-971f-47d2-b2fb-2a7b5a7b70d1','2022-05-23 10:00:00','2022-05-23 11:00:00','Party','will',NULL),('d6d6d04e-f5b1-401f-8921-c14401d72f37','2022-05-01 09:00:00','2022-05-01 11:00:00','Poker','will',NULL);
 /*!40000 ALTER TABLE `unavailabilities` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -204,4 +205,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2022-05-30  5:33:07
+-- Dump completed on 2022-05-30 11:41:02
