@@ -54,20 +54,7 @@
                             </div>
                             <button v-on:click="changeTitle">Change</button>
                         </div>
-                        <div class="editGroupContainer">
-                            <div class="labelContainer">
-                                Date
-                                <input v-model="newDate" type="date"></input>
-                            </div>
-                            <button v-on:click="changeDate">Change</button>
-                        </div>
-                        <div class="editGroupContainer">
-                            <div class="labelContainer">
-                                Time
-                                <input v-model="newTime" type="time"></input>
-                            </div>
-                            <button v-on:click="changeTime">Change</button>
-                        </div>
+
                         <div class="editGroupContainer">
                             <div class="labelContainer">
                                 Address
@@ -81,6 +68,50 @@
                                 <textarea v-model="newDescription"></textarea>
                             </div>
                             <button v-on:click="changeDescription">Change</button>
+                        </div>
+                        <div class="editGroupContainer" v-if="!event.Finalised">
+                            <div class="labelContainer">
+                                Date
+                                <input v-model="newDate" type="date"></input>
+                            </div>
+                            <button v-on:click="changeDate">Change</button>
+                        </div>
+                        <div class="editGroupContainer" v-if="!event.Finalised">
+                            <div class="labelContainer">
+                                Time
+                                <input v-model="newTime" type="time"></input>
+                            </div>
+                            <button v-on:click="changeTime">Change</button>
+                        </div>
+
+                        <div v-if="!event.Finalised && unavailable.length>=1">
+                            {{unavailable.length}} {{unavailable.length==1 ? 'person' : 'people'}} cannot make the current time, they are:
+                            <div v-for="person in unavailable">
+                                {{person.first_name}} {{person.last_name}}
+                            </div>
+                            <div class="editGroupContainer">
+                                <div>
+                                    We suggest you move it to {{nextDateTime}}
+                                </div>
+                                <button v-on:click="getNextFullAvailableTime(searchFromDate,searchFromTime)">Suggest Next Time</button>
+                                <button v-on:click="setNewDateTime()">Set this as Time</button>
+                            </div>
+                            <div class="editGroupContainer" v-if="!event.Finalised">
+                                <div class="labelContainer">
+                                    Search From
+                                    <input v-model="searchFromDate" type="date"></input>
+                                    <input v-model="searchFromTime" type="time"></input>
+                                </div>
+                            </div>
+                        </div>
+                        <div v-else>
+                            That time works for everyone!
+                        </div>
+                        <div class="editGroupContainer" v-if="!event.Finalised">
+                            <div class="labelContainer">
+                                Finalise Date and Time (Cannot be Undone)<br> Make sure you press change before finalise
+                            </div>
+                            <button v-on:click="finalise">Finalise</button>
                         </div>
                     </div>
                 </div>
@@ -110,7 +141,7 @@
                         <div>
                             <i v-on:click="addFriend(name.invitee_id)" v-if="name.areFriends=='0' && yourUsername.toLowerCase()!=name.invitee_id.toLowerCase()" class="addFriend fa-solid fa-user-plus"></i>
                             <i v-on:click="addAdmin(name.invitee_id)" v-if="areAdmin && !(adminInfo.includes(name.invitee_id.toLowerCase()))" class="star fa-solid fa-star"></i>
-                            <i v-on:click="uninvite(name.invitee_id)" v-if="areAdmin" class="unInvite fa-solid fa-calendar-xmark"></i>
+                            <i v-on:click="uninvite(name.invitee_id)" v-if="areAdmin && yourUsername.toLowerCase()!=name.invitee_id.toLowerCase() && !(adminInfo.includes(name.invitee_id.toLowerCase()))" class="unInvite fa-solid fa-calendar-xmark"></i>
                         </div>
                     </div>
                 </div>
@@ -126,7 +157,7 @@
                         <div>
                             <i v-on:click="addFriend(name.invitee_id)" v-if="name.areFriends=='0' && yourUsername.toLowerCase()!=name.invitee_id.toLowerCase()" class="addFriend fa-solid fa-user-plus"></i>
                             <i v-on:click="addAdmin(name.invitee_id)" v-if="areAdmin && !(adminInfo.includes(name.invitee_id.toLowerCase()))" class="star fa-solid fa-star"></i>
-                            <i v-on:click="uninvite(name.invitee_id)" v-if="areAdmin" class="unInvite fa-solid fa-calendar-xmark"></i>
+                            <i v-on:click="uninvite(name.invitee_id)" v-if="areAdmin && yourUsername.toLowerCase()!=name.invitee_id.toLowerCase() && !(adminInfo.includes(name.invitee_id.toLowerCase()))" class="unInvite fa-solid fa-calendar-xmark"></i>
                         </div>
                     </div>
                 </div>
@@ -142,7 +173,7 @@
                         <div>
                             <i v-on:click="addFriend(name.invitee_id)" v-if="name.areFriends=='0' && yourUsername.toLowerCase()!=name.invitee_id.toLowerCase()" class="addFriend fa-solid fa-user-plus"></i>
                             <i v-on:click="addAdmin(name.invitee_id)" v-if="areAdmin && !(adminInfo.includes(name.invitee_id.toLowerCase()))" class="star fa-solid fa-star"></i>
-                            <i v-on:click="uninvite(name.invitee_id)" v-if="areAdmin" class="unInvite fa-solid fa-calendar-xmark"></i>
+                            <i v-on:click="uninvite(name.invitee_id)" v-if="areAdmin && yourUsername.toLowerCase()!=name.invitee_id.toLowerCase() && !(adminInfo.includes(name.invitee_id.toLowerCase()))" class="unInvite fa-solid fa-calendar-xmark"></i>
                         </div>
                     </div>
                 </div>
