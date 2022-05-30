@@ -193,6 +193,7 @@ router.get('/info', function(req,res,next){
                   e.event_time as Time,
                   e.event_address as Address,
                   e.event_description as Description,
+                  e.finalised as Finalised,
                   i.attending_status as AttendingStatus
               from event_invitees as i
               left join events as e on e.event_id = i.event_id

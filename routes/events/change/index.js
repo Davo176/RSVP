@@ -3,7 +3,8 @@ var router = express.Router();
 
 router.use(function (req, res, next) {
     if (!("event_id" in req.body)) {
-        if (req.path=="/uninvitedFriends" && !("event_id" in req.params)){
+        //for these routes, its in the params
+        if (req.path == "/uninvitedFriends" || req.path == "/unavailable" && !("event_id" in req.params)) {
             next();
             return;
         }
@@ -74,8 +75,9 @@ router.post('/date', function (req, res, next) {
                 return;
             }
             let event_id = req.body.event_id;
-            let date = req.body.date
-            let query = "update events set event_date = ? where event_id = ?";
+            let date = req.body.date;
+            //no way of changing finalised event date
+            let query = "update events set event_date = ? where event_id = ? and finalised=0";
             connection.query(query, [date, event_id], function (error, rows, fields) {
                 connection.release();
                 if (error) {
@@ -100,8 +102,9 @@ router.post('/time', function (req, res, next) {
                 return;
             }
             let event_id = req.body.event_id;
-            let time = req.body.time
-            let query = "update events set event_time = ? where event_id = ?";
+            let time = req.body.time;
+            //no way of changing finalised event time
+            let query = "update events set event_time = ? where event_id = ? and finalised=0";
             connection.query(query, [time, event_id], function (error, rows, fields) {
                 connection.release();
                 if (error) {
@@ -113,6 +116,27 @@ router.post('/time', function (req, res, next) {
             });
         });
     }
+});
+
+router.post('/finalise', function (req, res, next) {
+    req.pool.getConnection(function (err, connection) {
+        if (err) {
+            console.log(err);
+            res.sendStatus(500);
+            return;
+        }
+        let event_id = req.body.event_id;
+        let query = "update events set finalised = 1 where event_id = ?";
+        connection.query(query, [event_id], function (error, rows, fields) {
+            connection.release();
+            if (error) {
+                console.log(error);
+                res.sendStatus(500);
+                return;
+            }
+            res.sendStatus(200);
+        });
+    });
 });
 
 router.post('/address', function (req, res, next) {
@@ -181,7 +205,7 @@ router.post('/invite', function (req, res, next) {
             let event_id = req.body.event_id;
             let user_id = req.body.user_id
             let query = "insert into event_invitees (event_id,invitee_id,attending_status) values (?,?,?)";
-            connection.query(query, [event_id, user_id,"Unsure"], function (error, rows, fields) {
+            connection.query(query, [event_id, user_id, "Unsure"], function (error, rows, fields) {
                 connection.release();
                 if (error) {
                     console.log(error);
@@ -250,15 +274,15 @@ router.post('/makeAdmin', function (req, res, next) {
 });
 
 //NOTE this endpoint doesnt change anything, but need event admin privledges to see
-router.get('/uninvitedFriends', function(req,res,next){
+router.get('/uninvitedFriends', function (req, res, next) {
     console.log('hit');
-    if (!('event_id' in req.query)){
+    if (!('event_id' in req.query)) {
         res.sendStatus(400);
         return;
-      }else{
-      let user=req.session.user_name;
-      let event_id=req.query.event_id;
-        let query=`select
+    } else {
+        let user = req.session.user_name;
+        let event_id = req.query.event_id;
+        let query = `select
                     f.requester as user_name,
                     u.first_name,
                     u.last_name
@@ -279,23 +303,69 @@ router.get('/uninvitedFriends', function(req,res,next){
                    where requester=?
                    and
                    requester NOT IN (select event_invitees.invitee_id from event_invitees where event_invitees.event_id=?);`
-        req.pool.getConnection(function(error, connection){
-          if(error){
-            console.log(error);
-            res.sendStatus(500);
-            return;
-          }
-          connection.query(query, [user,event_id,user,event_id], function(error, rows, fields) {
-            connection.release();
+        req.pool.getConnection(function (error, connection) {
             if (error) {
-              console.log(error);
-              res.sendStatus(500);
-              return;
+                console.log(error);
+                res.sendStatus(500);
+                return;
             }
-            res.send(rows);
-          });
+            connection.query(query, [user, event_id, user, event_id], function (error, rows, fields) {
+                connection.release();
+                if (error) {
+                    console.log(error);
+                    res.sendStatus(500);
+                    return;
+                }
+                res.send(rows);
+            });
         });
-      }
-  })
+    }
+})
+
+router.get('/unavailable', function (req, res, next) {
+    if (!('event_id' in req.query) && !('date' in req.query) && !('time' in req.query)) {
+        res.sendStatus(400);
+        return;
+    } else {
+        let user = req.session.user_name;
+        let event_id = req.query.event_id;
+        let time=req.query.time;
+        let date = req.query.date;
+        let datetime = date+' '+time;
+        console.log(datetime);
+        let query = `   select
+                            us.first_name,
+                            us.last_name,
+                            us.user_name
+                        from
+                            unavailabilities as un
+                        left join users as us on un.user=us.user_name
+                        where
+                            un.unavailable_from <= ?
+                        and
+                            un.unavailable_to >= ?
+                        and
+                            us.user_name in (select invitee_id from event_invitees where event_id=? and attending_status<>'Not Going')
+                        and
+                            un.event_id<>?;
+                            `
+        req.pool.getConnection(function (error, connection) {
+            if (error) {
+                console.log(error);
+                res.sendStatus(500);
+                return;
+            }
+            connection.query(query, [datetime,datetime,event_id,event_id], function (error, rows, fields) {
+                connection.release();
+                if (error) {
+                    console.log(error);
+                    res.sendStatus(500);
+                    return;
+                }
+                res.send(rows);
+            });
+        });
+    }
+})
 
 module.exports = router;
