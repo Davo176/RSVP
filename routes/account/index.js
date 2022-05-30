@@ -19,7 +19,6 @@ router.get('/getuserinfo', function(req, res, next){
                 return;
             }
 
-            console.log(rows);
             res.json(rows);
         })
 
@@ -27,9 +26,41 @@ router.get('/getuserinfo', function(req, res, next){
 
 })
 
+router.get('/getfieldlengths', function(req, res, next){
+
+    //Checks if user has entered something in a field that is longer than we have allocated space for
+    req.pool.getConnection(function(err, connection){
+
+        if(err){
+            console.log(err);
+            res.sendStatus(500);
+            return;
+        }
+        //SELECT * FROM INFORMATION_SCHEMA.COLUMNS WHERE TABLE_SCHEMA = 'production' AND TABLE_NAME = 'users' AND (COLUMN_NAME = 'first_name' OR COLUMN_NAME = 'last_name' OR COLUMN_NAME = 'email' OR COLUMN_NAME = 'user_name');
+        //SELECT * FROM INFORMATION_SCHEMA.COLUMNS WHERE TABLE_SCHEMA = 'production' AND TABLE_NAME = 'users';
+        let query = "SELECT JSON_OBJECTAGG(COLUMN_NAME, CHARACTER_MAXIMUM_LENGTH) FROM INFORMATION_SCHEMA.COLUMNS WHERE TABLE_SCHEMA = 'production' AND TABLE_NAME = 'users' AND (COLUMN_NAME = 'first_name' OR COLUMN_NAME = 'last_name' OR COLUMN_NAME = 'email' OR COLUMN_NAME = 'user_name')";
+        connection.query(query, [req.body.field], function(error, rows, fields){
+            connection.release();
+            console.log(rows);
+            console.log(fields);
+            if(error){
+                console.log(error);
+                res.sendStatus(500);
+                return;
+
+            }
+
+            res.json(rows);
+        })
+    })
+
+})
+
 router.post('/updateinfo', function(req, res, next){
 
     req.pool.getConnection(function(err, connection){
+
+        console.log("trying to make query");
 
         if(err){
             console.log(err);
