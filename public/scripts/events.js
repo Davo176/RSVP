@@ -17,6 +17,10 @@ var vueinst = new Vue({
         },
     },
     methods: {
+        moment: function(item=undefined){
+            console.log(item);
+            return moment(item).format("Do MMM YYYY h:mm a");
+        },
         shiftNLeft: function(){
             if(this.n!==0){
                 this.n-=1;

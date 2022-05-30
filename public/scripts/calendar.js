@@ -11,6 +11,9 @@ var vueinst = new Vue({
         reason: null,
     },
     methods: {
+        formatTime: function(time){
+            return moment(time).format("h:mm A")
+        },
         getMonth: function(month,year){
             let xhttp = new XMLHttpRequest();
             let vueReference = this;
