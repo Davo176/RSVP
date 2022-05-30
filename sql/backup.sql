@@ -1,8 +1,8 @@
--- MySQL dump 10.13  Distrib 8.0.28, for Linux (x86_64)
+-- MySQL dump 10.13  Distrib 8.0.29, for Linux (x86_64)
 --
 -- Host: 127.0.0.1    Database: production
 -- ------------------------------------------------------
--- Server version	8.0.28-0ubuntu0.20.04.3
+-- Server version	8.0.29-0ubuntu0.20.04.3
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
@@ -74,7 +74,7 @@ CREATE TABLE `event_invitees` (
 
 LOCK TABLES `event_invitees` WRITE;
 /*!40000 ALTER TABLE `event_invitees` DISABLE KEYS */;
-INSERT INTO `event_invitees` VALUES ('Harrison','1111111','unsure'),('Harrison','1111112','unsure'),('Neil','1111111','going'),('Neil','1111113','going'),('Seamus','1111111','not going'),('Seamus','1111112','not going'),('Seamus','1111113','not going'),('thomas','1111111','not going'),('Will','1111112','going'),('Will','1111113','Going');
+INSERT INTO `event_invitees` VALUES ('Harrison','1111111','unsure'),('Harrison','1111112','unsure'),('Neil','1111111','going'),('Neil','1111113','going'),('Seamus','1111111','not going'),('Seamus','1111112','not going'),('Seamus','1111113','not going'),('thomas','1111111','not going'),('Will','1111111','Unsure'),('Will','1111112','going'),('Will','1111113','Going');
 /*!40000 ALTER TABLE `event_invitees` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -103,7 +103,7 @@ CREATE TABLE `events` (
 
 LOCK TABLES `events` WRITE;
 /*!40000 ALTER TABLE `events` DISABLE KEYS */;
-INSERT INTO `events` VALUES ('1111111','Wills 20th Birthday','21/06/2022','7:00pm','test.jpg','60th fourth avenue St. Peters',NULL),('1111112','Neil 20th Birthday','23/06/2022','7:00pm','test.jpg','60th fourth avenue St. Peters','Lets party like kings for my 20th birthday'),('1111113','Poker Night','23/07/2022','8:00pm','test.jpg','60th fourth avenue St. Peters','Test your lucky stars tonight and win big at poker night');
+INSERT INTO `events` VALUES ('1111111','Wills 20th Birthday','2022-06-21','19:00','test.jpg','60th fourth avenue St. Peters','a description'),('1111112','Neil 20th Birthday','2022-06-23','20:00','test.jpg','60th fourth avenue St. Peters','Lets party like kings for my 20th birthday'),('1111113','Poker Night','2022-07-23','20:00','test.jpg','60th fourth avenue St. Peters','Test your lucky stars tonight and win big at poker night');
 /*!40000 ALTER TABLE `events` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -204,4 +204,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2022-05-28 11:26:20
+-- Dump completed on 2022-05-30  2:53:23

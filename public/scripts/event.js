@@ -23,11 +23,14 @@ var vueinst = new Vue({
         newDate: "",
     },
     methods: {
+        moment: function(item=undefined){
+            return moment(item).format("Do MMM YYYY h:mm a");
+        },
         test: function(){
             let reqBody = JSON.stringify({event_id: this.event.event_id,status: this.newStatus});
             let xhttp = new XMLHttpRequest();
             let vueReference = this;
-
+             
             xhttp.onreadystatechange = function() {
                 if (this.readyState == 4 && this.status == 500){
                     console.log("error");

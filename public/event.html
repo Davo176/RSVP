@@ -7,6 +7,7 @@
         <link rel="icon" type="image/x-icon" href="/images/favicon.ico">
         <script src="https://kit.fontawesome.com/849e072605.js" crossorigin="anonymous"></script>
         <script src="https://cdn.jsdelivr.net/npm/vue@2.6.12/dist/vue.js"></script>
+        <script src="//cdnjs.cloudflare.com/ajax/libs/moment.js/2.7.0/moment.min.js" type="text/javascript"></script>
         <script src="/scripts/global.js"></script>
         <script src="/scripts/event.js" defer></script>
     </head>
@@ -20,7 +21,8 @@
                     <img v-bind:src="imagePreURL + event.Image" style="width:20vw;"/>
                     <div class="eventInfoContainer">
                         <h1 class="title">{{event.Title}}</h1>
-                        <div class="datetime">On {{event.Date}} at {{event.Time}}</div>
+                        <div></div>
+                        <div class="datetime">On {{moment(event.Date + ' ' + event.Time)}}</div>
                         <div class="address">{{event.Address}}</div>
                     </div>
                     <div class="eventAttendingStatusContainer">
