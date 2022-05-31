@@ -12,7 +12,7 @@ var vueinst = new Vue({
     },
     methods: {
         formatTime: function(time){
-            return moment(time).format("h:mm A")
+            return moment.utc(time).format("h:mm A")
         },
         getMonth: function(month,year){
             let xhttp = new XMLHttpRequest();

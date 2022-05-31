@@ -33,7 +33,7 @@ var vueinst = new Vue({
     },
     methods: {
         moment: function(item=undefined){
-            return moment(item).format("Do MMM YYYY h:mm a");
+            return moment.utc(item).format("Do MMM YYYY h:mm a");
         },
         getNextFullAvailableTime: function(date=undefined,time=undefined){
             if (!date){
@@ -42,7 +42,7 @@ var vueinst = new Vue({
             if (!time){
                 time = this.event.Time;
             }
-            let currentEventTime = moment(date+' '+time);
+            let currentEventTime = moment.utc(date+' '+time);
             currentEventTime.add(30,'minutes');
             let xhttp = new XMLHttpRequest();
             let vueReference = this;
@@ -94,10 +94,6 @@ var vueinst = new Vue({
                 if (this.readyState == 4 && this.status == 200){
                     vueReference.event = JSON.parse(this.responseText)[0];
                     vueReference.newStatus = vueReference.event.AttendingStatus;
-                    vueReference.getUnavailabilities(vueReference.event.event_id,vueReference.event.Date,vueReference.event.Time,true);
-                    vueReference.searchFromDate = vueReference.event.Date;
-                    vueReference.searchFromTime = vueReference.event.Time;
-                    vueReference.getNextFullAvailableTime(vueReference.searchFromDate,vueReference.searchFromTime)
                 }
             };
             xhttp.open("GET",`/api/events/info?event_id=${eventID}`,true);
@@ -131,6 +127,11 @@ var vueinst = new Vue({
                         vueReference.areAdmin=true;
                         vueReference.adminInfo = JSON.parse(this.responseText).rows.map(e => e.admin_id.toLowerCase());
                         vueReference.yourUsername = JSON.parse(this.responseText).you;
+                        vueReference.getOtherFriends(eventID);
+                        vueReference.getUnavailabilities(vueReference.event.event_id,vueReference.event.Date,vueReference.event.Time,true);
+                        vueReference.searchFromDate = vueReference.event.Date;
+                        vueReference.searchFromTime = vueReference.event.Time;
+                        vueReference.getNextFullAvailableTime(vueReference.searchFromDate,vueReference.searchFromTime)
                     }
                 }
             };
@@ -314,7 +315,6 @@ var vueinst = new Vue({
             this.getEventInfo(eventID);
             this.getPeople(eventID);
             this.checkAdmin(eventID);
-            this.getOtherFriends(eventID);
         },
         getUnavailabilities: function(eventId,eventDate,eventTime, setValue){
             let xhttp = new XMLHttpRequest();
@@ -336,8 +336,8 @@ var vueinst = new Vue({
             xhttp.send();
         },
         setNewDateTime: function(){
-            this.newTime = moment(this.nextDateTime,"Do MMM YYYY h:mm a").format("HH:mm");
-            this.newDate = moment(this.nextDateTime,"Do MMM YYYY h:mm a").format("YYYY-MM-DD");
+            this.newTime = moment.utc(this.nextDateTime,"Do MMM YYYY h:mm a").format("HH:mm");
+            this.newDate = moment.utc(this.nextDateTime,"Do MMM YYYY h:mm a").format("YYYY-MM-DD");
             this.changeDate();
             this.changeTime();
         }

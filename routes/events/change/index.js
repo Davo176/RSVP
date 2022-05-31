@@ -2,12 +2,7 @@ var express = require('express');
 var router = express.Router();
 
 router.use(function (req, res, next) {
-    if (!("event_id" in req.body)) {
-        //for these routes, its in the params
-        if (req.path == "/uninvitedFriends" || req.path == "/unavailable" && !("event_id" in req.params)) {
-            next();
-            return;
-        }
+    if (!("event_id" in req.body) && !((req.path == "/uninvitedFriends" || req.path == "/unavailable") && ("event_id" in req.query))) {
         res.sendStatus(400);
         return;
     } else {
@@ -18,7 +13,7 @@ router.use(function (req, res, next) {
                 return;
             }
             let user = req.session.user_name;
-            let event = req.body.event_id
+            let event = req.body.event_id || req.query.event_id;
             let query = "select * from event_admins where admin_id = ? and event_id = ?";
             connection.query(query, [user, event], function (error, rows, fields) {
                 connection.release();
@@ -275,7 +270,6 @@ router.post('/makeAdmin', function (req, res, next) {
 
 //NOTE this endpoint doesnt change anything, but need event admin privledges to see
 router.get('/uninvitedFriends', function (req, res, next) {
-    console.log('hit');
     if (!('event_id' in req.query)) {
         res.sendStatus(400);
         return;
@@ -332,8 +326,7 @@ router.get('/unavailable', function (req, res, next) {
         let time=req.query.time;
         let date = req.query.date;
         let datetime = date+' '+time;
-        console.log(datetime);
-        let query = `   select
+        let query = `   select distinct
                             us.first_name,
                             us.last_name,
                             us.user_name
@@ -347,7 +340,7 @@ router.get('/unavailable', function (req, res, next) {
                         and
                             us.user_name in (select invitee_id from event_invitees where event_id=? and attending_status<>'Not Going')
                         and
-                            un.event_id<>?;
+                            (un.event_id <> ? or un.event_id is null);
                             `
         req.pool.getConnection(function (error, connection) {
             if (error) {

@@ -85,7 +85,9 @@
                         </div>
 
                         <div v-if="!event.Finalised && unavailable.length>=1">
+                            <strong>
                             {{unavailable.length}} {{unavailable.length==1 ? 'person' : 'people'}} cannot make the current time, they are:
+                        </strong>
                             <div v-for="person in unavailable">
                                 {{person.first_name}} {{person.last_name}}
                             </div>
