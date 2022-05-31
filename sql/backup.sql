@@ -1,8 +1,8 @@
--- MySQL dump 10.13  Distrib 8.0.28, for Linux (x86_64)
+-- MySQL dump 10.13  Distrib 8.0.29, for Linux (x86_64)
 --
 -- Host: 127.0.0.1    Database: production
 -- ------------------------------------------------------
--- Server version	8.0.28-0ubuntu0.20.04.3
+-- Server version	8.0.29-0ubuntu0.20.04.3
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
@@ -191,7 +191,7 @@ CREATE TABLE `users` (
 
 LOCK TABLES `users` WRITE;
 /*!40000 ALTER TABLE `users` DISABLE KEYS */;
-INSERT INTO `users` VALUES ('Harrison','Harrison','Stokes','hazzaj467@gmail.com','pale'),('Humshikan','Humshikan','Gill','Hgill@gmail.com','hummus22'),('Neil','Neil','Mazumdar','neil.k.mazumdar@gmail.com','curry'),('Seamus','Seamus','Pitcher','SPitcher@gmail.com','besttrim'),('Thomas','Thomas','Foo','tfue@gmail.com','fooey2002'),('will','will','davis','willdavis925@gmail.com','admin');
+INSERT INTO `users` VALUES ('Harrison','Harrison','Stokes','hazzaj467@gmail.com','af8325db585ac1d3a50c30462cffd07060bb13418435ad0f45fddedc'),('Humshikan','Humshikan','Gill','Hgill@gmail.com','6ebe25963c6462d67789bc2d6000bbfe6dcbe5c9941270e0b6ee5180'),('Neil','Neil','Mazumdar','neil.k.mazumdar@gmail.com','e964ebb08f8642e0be7be7418847be96114f401b8e64578ceba8e996'),('Seamus','Seamus','Pitcher','SPitcher@gmail.com','75fdb030ad83f58f3fba1f1ce52f077c50a85170fb829bd4d2ddf472'),('Thomas','Thomas','Foo','tfue@gmail.com','45b24c8a95d54ecc7d42ac6be9ea9f7f069e2930ee2d17c23adfd25e'),('will','will','davis','willdavis925@gmail.com','58acb7acccce58ffa8b953b12b5a7702bd42dae441c1ad85057fa70b');
 /*!40000 ALTER TABLE `users` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -204,4 +204,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2022-05-28 11:26:20
+-- Dump completed on 2022-05-31  4:21:00
