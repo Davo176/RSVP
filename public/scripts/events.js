@@ -18,7 +18,7 @@ var vueinst = new Vue({
     },
     methods: {
         moment: function(item=undefined){
-            return moment(item).format("Do MMM YYYY h:mm a");
+            return moment.utc(item).format("Do MMM YYYY h:mm a");
         },
         shiftNLeft: function(){
             if(this.n!==0){

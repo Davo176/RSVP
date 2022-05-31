@@ -48,7 +48,7 @@ app.post('/login', function(req, res, next) {
       let user_name = req.body.user_name;
       let password = req.body.password;
       console.log(req.body);
-      let query = "SELECT * FROM users WHERE user_name = ? and password_hash = SHA2(?,224)";
+      let query = "SELECT * FROM users WHERE user_name = ? and password_hash = SHA2(?,224);";
       connection.query(query,[user_name, password], function(error, rows, fields)
       {
         console.log("Got query");
