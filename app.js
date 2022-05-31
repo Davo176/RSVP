@@ -47,7 +47,8 @@ app.post('/login', function(req, res, next) {
       console.log("Connected to database");
       let user_name = req.body.user_name;
       let password = req.body.password;
-      let query = "SELECT * FROM users WHERE user_name = ? and password_hash = ?";
+      console.log(req.body);
+      let query = "SELECT * FROM users WHERE user_name = ? and password_hash = SHA2(?,224)";
       connection.query(query,[user_name, password], function(error, rows, fields)
       {
         console.log("Got query");
@@ -188,6 +189,7 @@ app.post('/signup', function(req, res, next) {
       let check = "SELECT * FROM users WHERE user_name = ?";
       connection.query(check,[user_name], function(error, rows, fields)
       {
+        console.log(rows);
         if (rows.length == 1)
         {
           console.log("User Exists");
@@ -195,7 +197,7 @@ app.post('/signup', function(req, res, next) {
           return;
         }
       });
-      let query = "INSERT INTO users (user_name, first_name, last_name, email, password_hash) VALUES (?,?,?,?,?)";
+      let query = "INSERT INTO users (user_name, first_name, last_name, email, password_hash) VALUES (?,?,?,?,SHA2(?,224))";
       connection.query(query,[user_name, first_name, last_name, email, password], function(error, rows, fields)
       {
         connection.release();

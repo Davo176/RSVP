@@ -14,3 +14,10 @@ SELECT
     (SELECT COUNT(event_invitees.invitee_id) FROM event_invitees WHERE events.event_id = event_invitees.event_id AND attending_status="not going") as Not_Going
 FROM
     events;
+
+UPDATE users SET password_hash = SHA2('curry',224) WHERE user_name = 'Neil';
+UPDATE users SET password_hash = SHA2('pale',224) WHERE user_name = 'Harrison';
+UPDATE users SET password_hash = SHA2('hummus22',224) WHERE user_name = 'Humshikan';
+UPDATE users SET password_hash = SHA2('besttrim',224) WHERE user_name = 'Seamus';
+UPDATE users SET password_hash = SHA2('fooey2002',224) WHERE user_name = 'Thomas';
+UPDATE users SET password_hash = SHA2('admin',224) WHERE user_name = 'will';
