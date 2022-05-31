@@ -86,8 +86,8 @@ app.post('/login', function(req, res, next) {
 });
 
 app.post('/loginGoogle', function(req, res, next) {
-  console.log(req.cookies.g_csrf_token);
-  console.log(req.body.g_csrf_token);
+  //console.log(req.cookies.g_csrf_token);
+  //console.log(req.body.g_csrf_token);
   var csrf_token_cookie = req.cookies.g_csrf_token;
   var csrf_token_body = req.body.g_csrf_token;
   if (csrf_token_body != csrf_token_cookie)
@@ -98,19 +98,72 @@ app.post('/loginGoogle', function(req, res, next) {
   }
   var token = req.body.credential;
   var url = `https://oauth2.googleapis.com/tokeninfo?id_token=${token}`;
-  console.log(url);
+  //console.log(url);
   requestify.get(url).then(function(response)
   {
     response.getBody();
-    console.log(response.body);
-    var info = JSON.parse(response.body)
-    console.log(info.email);
-    console.log(info.given_name);
-    console.log(info.family_name);
-    console.log(info.name);
-    //Check if user has signed up before
-    //If not sign up
-    //Else login
+    var info = JSON.parse(response.body);
+    console.log(info);
+    var email = info.email;
+    var first_name = info.given_name;
+    var last_name = info.family_name;
+    req.pool.getConnection(function(error, connection)
+    {
+      console.log("Connected to db");
+      if (error)
+      {
+        console.log(error);
+        res.sendStatus(500);
+        return;
+      }
+      //Check if user has signed up before
+      query1 = 'SELECT * FROM users WHERE email = ?'
+      connection.query(query1,[info.email], function(error, rows, fields)
+      {
+        console.log("Got query");
+        if (error)
+        {
+          console.log(error);
+          res.sendStatus(500);
+          return;
+        }
+        console.log(rows);
+        if (rows.length == 0)
+        {
+          //User doesnt exist so sign up
+          console.log("Signing Google user up");
+          var user_name = first_name + last_name + Math.floor(1000 + Math.random() * 9000);
+          query2 = "INSERT INTO users (user_name, first_name, last_name, email) VALUES (?,?,?,?)"
+          connection.query(query2,[user_name, first_name, last_name, email], function(error, rows, fields)
+          {
+            connection.release();
+            console.log("Signed up");
+            req.session.user_name = user_name;
+            req.session.first_name = first_name;
+            req.session.last_name = last_name;
+            req.session.email = email;
+            console.log(req.session);
+            res.sendStatus(200);
+          });
+          res.redirect('/events');
+          return;
+        }
+        else
+        {
+          connection.release();
+          //User exists so login
+          console.log("Logging Google user in");
+          console.log(rows[0]);
+          req.session.user_name = rows[0].user_name;
+          req.session.first_name = rows[0].first_name;
+          req.session.last_name = rows[0].last_name;
+          req.session.email = rows[0].email;
+          console.log(req.session);
+          res.redirect('/events');
+          return;
+        }
+      });
+    });
   });
 });
 
