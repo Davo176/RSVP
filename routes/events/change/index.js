@@ -268,6 +268,28 @@ router.post('/makeAdmin', function (req, res, next) {
     }
 });
 
+router.post('/delete', function (req, res, next) {
+    req.pool.getConnection(function (err, connection) {
+        if (err) {
+            console.log(err);
+            res.sendStatus(500);
+            return;
+        }
+        let event_id = req.body.event_id;
+        //theoretically need to check that they are invited first.
+        let query = "delete from events where event_id=?";
+        connection.query(query, [event_id], function (error, rows, fields) {
+            connection.release();
+            if (error) {
+                console.log(error);
+                res.sendStatus(500);
+                return;
+            }
+            res.sendStatus(200);
+        });
+    });
+})
+
 //NOTE this endpoint doesnt change anything, but need event admin privledges to see
 router.get('/uninvitedFriends', function (req, res, next) {
     if (!('event_id' in req.query)) {
@@ -286,9 +308,11 @@ router.get('/uninvitedFriends', function (req, res, next) {
                    where requestee=?
                    and
                    requester NOT IN (select event_invitees.invitee_id from event_invitees where event_invitees.event_id=?)
+                   and
+                   f.friendship_start_date is not null
                    union
                    select
-                    f.requester as user_name,
+                    f.requestee as user_name,
                     u.first_name,
                     u.last_name
                    from
@@ -296,7 +320,9 @@ router.get('/uninvitedFriends', function (req, res, next) {
                    left join users as u on u.user_name=f.requestee
                    where requester=?
                    and
-                   requester NOT IN (select event_invitees.invitee_id from event_invitees where event_invitees.event_id=?);`
+                   requester NOT IN (select event_invitees.invitee_id from event_invitees where event_invitees.event_id=?)
+                   and
+                   f.friendship_start_date is not null;`
         req.pool.getConnection(function (error, connection) {
             if (error) {
                 console.log(error);

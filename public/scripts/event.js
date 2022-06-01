@@ -257,6 +257,23 @@ var vueinst = new Vue({
             xhttp.setRequestHeader('Content-type', 'application/json; charset=UTF-8');
             xhttp.send(reqBody);
         },
+        deleteEvent: function(){
+            let reqBody = JSON.stringify({event_id: this.event.event_id});
+            let xhttp = new XMLHttpRequest();
+            let vueReference = this;
+
+            xhttp.onreadystatechange = function() {
+                if (this.readyState == 4 && this.status == 500){
+                    console.log("error");
+                }
+                if (this.readyState == 4 && this.status == 200){
+                    location.href = `/`;
+                }
+            };
+            xhttp.open("POST","/api/events/change/delete",true);
+            xhttp.setRequestHeader('Content-type', 'application/json; charset=UTF-8');
+            xhttp.send(reqBody);
+        },
         addFriend: function(user_id){
             console.log("Friend Request Sent to ", user_id);
         },
