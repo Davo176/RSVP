@@ -37,7 +37,7 @@
                             </select>
                         </form>
                         <div v-if="areAdmin" v-on:click.stop="toggleEditMode()" class="editContainer">
-                            <span v-if="!editMode">Edit Job</span><span v-if="editMode">Close Edit Mode</span> <i
+                            <span v-if="!editMode">Edit Event</span><span v-if="editMode">Close Edit Mode</span> <i
                                 class="edit fas fa-edit"></i>
                         </div>
                     </div>
@@ -114,6 +114,12 @@
                                 Finalise Date and Time (Cannot be Undone)<br> Make sure you press change before finalise
                             </div>
                             <button v-on:click="finalise">Finalise</button>
+                        </div>
+                        <div class="editGroupContainer" v-if="!event.Finalised">
+                            <strong>
+                                Delete Event. Permanent with no warning.
+                            </strong>
+                            <button v-on:click="deleteEvent">Delete</button>
                         </div>
                     </div>
                 </div>

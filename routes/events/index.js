@@ -118,7 +118,7 @@ router.post('/add', upload.single("eventImage"), function(req, res, next){
     if(req.file){
       fileName = req.file.filename;
     }
-    let query = "INSERT INTO events (event_id, event_title, event_date, event_time, event_image, event_address, event_description) VALUES (?, ?, ?, ?, ?, ?, ?)";
+    let query = "INSERT INTO events (event_id, event_title, event_date, event_time, event_image, event_address, event_description, finalised) VALUES (?, ?, ?, ?, ?, ?, ?, 0)";
     connection.query(query, [eventID, eventTitle, req.body.eventDate, req.body.eventTime, fileName, req.body.eventAddress, req.body.eventDescription], function(error, rows, fields){
       if(error){
         console.log(error);
