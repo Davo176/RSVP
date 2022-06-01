@@ -58,3 +58,11 @@ CREATE TABLE event_invitees (
     FOREIGN KEY (event_id) REFERENCES events(event_id) ON DELETE CASCADE,
     PRIMARY KEY (invitee_id,event_id)
 );
+
+create table user_email_settings (
+    user_name VARCHAR(36),
+    setting_name varchar(36),
+    setting_state tinyint,
+    FOREIGN KEY (user_name) REFERENCES users(user_name) ON DELETE CASCADE,
+    PRIMARY KEY (user_name,setting_name,setting_state)
+);
