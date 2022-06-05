@@ -84,8 +84,6 @@ router.get('/', function(req,res,next){
           //add each row to the object
           for (let row of rows){
             if (moment(row.unavailable_from).format("YYYY-MM-DD") == monthStart.format("YYYY-MM-DD")){
-              row.unavailable_from = moment(row.unavailable_from).format("HH:mm A");
-              row.unavailable_to = moment(row.unavailable_to).format("HH:mm A");
               currObj.events.push(row);
               rows.splice(rows.indexOf(row), 1);
             }

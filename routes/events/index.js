@@ -33,8 +33,10 @@ router.get('/invited', function(req,res,next){
                     WHERE
                         events.event_id IN (select event_invitees.event_id from event_invitees where event_invitees.invitee_id=?)
                         AND
+                        events.event_id NOT IN (select event_admins.event_id from event_admins where event_admins.admin_id=?)
+                        AND
                         i.invitee_id = ?;`;
-        connection.query(query, [user,user], function(error, rows, fields) {
+        connection.query(query, [user,user,user], function(error, rows, fields) {
           connection.release();
           if (error) {
             console.log(error);
@@ -116,7 +118,7 @@ router.post('/add', upload.single("eventImage"), function(req, res, next){
     if(req.file){
       fileName = req.file.filename;
     }
-    let query = "INSERT INTO events (event_id, event_title, event_date, event_time, event_image, event_address, event_description) VALUES (?, ?, ?, ?, ?, ?, ?)";
+    let query = "INSERT INTO events (event_id, event_title, event_date, event_time, event_image, event_address, event_description, finalised) VALUES (?, ?, ?, ?, ?, ?, ?, 0)";
     connection.query(query, [eventID, eventTitle, req.body.eventDate, req.body.eventTime, fileName, req.body.eventAddress, req.body.eventDescription], function(error, rows, fields){
       if(error){
         console.log(error);
@@ -191,6 +193,7 @@ router.get('/info', function(req,res,next){
                   e.event_time as Time,
                   e.event_address as Address,
                   e.event_description as Description,
+                  e.finalised as Finalised,
                   i.attending_status as AttendingStatus
               from event_invitees as i
               left join events as e on e.event_id = i.event_id
@@ -226,8 +229,13 @@ router.get('/people', function(req,res,next){
                   i.invitee_id,
                   i.attending_status,
                   u.first_name,
-                  u.last_name
-              from event_invitees as i
+                  u.last_name,
+                  CASE
+                    WHEN i.invitee_id IN (SELECT requestee from friends where friendship_start_date is not null and requester=?) then 'TRUE'
+                    WHEN i.invitee_id IN (SELECT requester from friends where friendship_start_date is not null and requestee=?) then 'TRUE'
+                    else FALSE
+                  end as areFriends
+                  from event_invitees as i
               left join users as u on i.invitee_id=u.user_name
               where event_id=?
               union
@@ -235,7 +243,12 @@ router.get('/people', function(req,res,next){
                   a.admin_id,
                   'Admin',
                   u.first_name,
-                  u.last_name
+                  u.last_name,
+                  CASE
+                    WHEN a.admin_id IN (SELECT requestee from friends where friendship_start_date is not null and requester=?) then 'TRUE'
+                    WHEN a.admin_id IN (SELECT requester from friends where friendship_start_date is not null and requestee=?) then 'TRUE'
+                    else 'FALSE'
+                  end as areFriends
               from event_admins as a
               left join users as u on a.admin_id=u.user_name
               where event_id=?;`
@@ -245,7 +258,7 @@ router.get('/people', function(req,res,next){
           res.sendStatus(500);
           return;
         }
-        connection.query(query, [event_id,event_id], function(error, rows, fields) {
+        connection.query(query, [user,user,event_id,user,user,event_id], function(error, rows, fields) {
           connection.release();
           if (error) {
             console.log(error);
@@ -269,26 +282,27 @@ router.get('/areAdmin', function(req,res,next){
                   admin_id
                  from
                   event_admins
-                 where event_id=? and admin_id=?;`
+                 where event_id=?;`
       req.pool.getConnection(function(error, connection){
         if(error){
           console.log(error);
           res.sendStatus(500);
           return;
         }
-        connection.query(query, [event_id,user], function(error, rows, fields) {
+        connection.query(query, [event_id], function(error, rows, fields) {
           connection.release();
           if (error) {
             console.log(error);
             res.sendStatus(500);
             return;
           }
-          if (rows.length>=1){
-            res.send(rows);
-          }else{
-            res.send("False");
+          for (let row of rows){
+            if (row.admin_id.toLowerCase() === user.toLowerCase()){
+              res.send({rows: rows, you: user});
+              return;
+            }
           }
-
+          res.send("False");
         });
       });
     }
@@ -324,5 +338,6 @@ router.post('/invite',function(req,res,next){
     res.sendStatus(400);
   }
 })
+
 
 module.exports = router;

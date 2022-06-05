@@ -1,8 +1,8 @@
--- MySQL dump 10.13  Distrib 8.0.28, for Linux (x86_64)
+-- MySQL dump 10.13  Distrib 8.0.29, for Linux (x86_64)
 --
 -- Host: 127.0.0.1    Database: production
 -- ------------------------------------------------------
--- Server version	8.0.28-0ubuntu0.20.04.3
+-- Server version	8.0.29-0ubuntu0.20.04.3
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
@@ -46,7 +46,7 @@ CREATE TABLE `event_admins` (
 
 LOCK TABLES `event_admins` WRITE;
 /*!40000 ALTER TABLE `event_admins` DISABLE KEYS */;
-INSERT INTO `event_admins` VALUES ('Will','1111111'),('Neil','1111112'),('Harrison','1111113'),('thomas','1111113'),('Will','1111113');
+INSERT INTO `event_admins` VALUES ('Neil','1111111'),('Will','1111111'),('Neil','1111112'),('Harrison','1111113'),('thomas','1111113'),('Will','1111113');
 /*!40000 ALTER TABLE `event_admins` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -74,7 +74,7 @@ CREATE TABLE `event_invitees` (
 
 LOCK TABLES `event_invitees` WRITE;
 /*!40000 ALTER TABLE `event_invitees` DISABLE KEYS */;
-INSERT INTO `event_invitees` VALUES ('Harrison','1111111','unsure'),('Harrison','1111112','unsure'),('Neil','1111111','going'),('Neil','1111113','going'),('Seamus','1111111','not going'),('Seamus','1111112','not going'),('Seamus','1111113','not going'),('thomas','1111111','not going'),('Will','1111112','going'),('Will','1111113','Going');
+INSERT INTO `event_invitees` VALUES ('Harrison','1111111','Unsure'),('Harrison','1111112','Unsure'),('Harrison','1111113','Unsure'),('Neil','1111111','Going'),('Neil','1111113','Going'),('Seamus','1111111','Not Going'),('Seamus','1111112','Not Going'),('Seamus','1111113','Not Going'),('thomas','1111111','Not Going'),('Thomas','1111113','Unsure'),('will','1111111','Unsure'),('Will','1111112','Going'),('Will','1111113','Going');
 /*!40000 ALTER TABLE `event_invitees` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -93,6 +93,7 @@ CREATE TABLE `events` (
   `event_image` varchar(500) DEFAULT NULL,
   `event_address` varchar(255) DEFAULT NULL,
   `event_description` varchar(255) DEFAULT NULL,
+  `finalised` tinyint NOT NULL,
   PRIMARY KEY (`event_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -103,7 +104,7 @@ CREATE TABLE `events` (
 
 LOCK TABLES `events` WRITE;
 /*!40000 ALTER TABLE `events` DISABLE KEYS */;
-INSERT INTO `events` VALUES ('1111111','Wills 20th Birthday','21/06/2022','7:00pm','test.jpg','60th fourth avenue St. Peters',NULL),('1111112','Neil 20th Birthday','23/06/2022','7:00pm','test.jpg','60th fourth avenue St. Peters','Lets party like kings for my 20th birthday'),('1111113','Poker Night','23/07/2022','8:00pm','test.jpg','60th fourth avenue St. Peters','Test your lucky stars tonight and win big at poker night');
+INSERT INTO `events` VALUES ('1111111','Wills 20th Birthday','2022-06-21','18:30','test.jpg','60th fourth avenue St. Peters','a description',0),('1111112','Neil 20th Birthday','2022-06-23','20:00','test.jpg','60th fourth avenue St. Peters','Lets party like kings for my 20th birthday',0),('1111113','Poker Night','2022-07-23','20:00','test.jpg','60th fourth avenue St. Peters','Test your lucky stars tonight and win big at poker night',0);
 /*!40000 ALTER TABLE `events` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -164,8 +165,33 @@ CREATE TABLE `unavailabilities` (
 
 LOCK TABLES `unavailabilities` WRITE;
 /*!40000 ALTER TABLE `unavailabilities` DISABLE KEYS */;
-INSERT INTO `unavailabilities` VALUES ('22222221','2022-06-23 18:00:00','2022-06-24 18:00:00','clashes with another event','Seamus','1111112'),('22222222','2022-05-23 18:00:00','2022-05-24 18:00:00','clashes with another event','Neil','1111113'),('61def84f-2f8f-4ac5-9d68-df9dce2382c2','2022-05-31 09:00:00','2022-05-31 11:00:00','Testing','will',NULL),('bdcca053-971f-47d2-b2fb-2a7b5a7b70d1','2022-05-23 10:00:00','2022-05-23 11:00:00','Party','will',NULL),('d6d6d04e-f5b1-401f-8921-c14401d72f37','2022-05-01 09:00:00','2022-05-01 11:00:00','Poker','will',NULL);
+INSERT INTO `unavailabilities` VALUES ('22222221','2022-06-23 18:00:00','2022-06-24 18:00:00','clashes with another event','Seamus','1111112'),('22222222','2022-05-23 18:00:00','2022-05-24 18:00:00','clashes with another event','Neil','1111113'),('22222223','2022-06-21 18:30:00','2022-06-21 19:40:00','TEST','neil',NULL),('2d21dd90-69b8-454b-ad66-583c9fea1358','2022-06-21 18:30:00','2022-06-21 19:30:00','clash','Neil',NULL),('3afe8e4d-babb-4f0a-ae7e-6dfc7754c32d','2022-06-20 18:30:00','2022-06-20 19:30:00','clashing','Neil',NULL),('61def84f-2f8f-4ac5-9d68-df9dce2382c2','2022-05-31 09:00:00','2022-05-31 11:00:00','Testing','will',NULL),('bdcca053-971f-47d2-b2fb-2a7b5a7b70d1','2022-05-23 10:00:00','2022-05-23 11:00:00','Party','will',NULL),('d6d6d04e-f5b1-401f-8921-c14401d72f37','2022-05-01 09:00:00','2022-05-01 11:00:00','Poker','will',NULL);
 /*!40000 ALTER TABLE `unavailabilities` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `user_email_settings`
+--
+
+DROP TABLE IF EXISTS `user_email_settings`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `user_email_settings` (
+  `user_name` varchar(36) NOT NULL,
+  `setting_name` varchar(36) NOT NULL,
+  `setting_state` tinyint NOT NULL,
+  PRIMARY KEY (`user_name`,`setting_name`,`setting_state`),
+  CONSTRAINT `user_email_settings_ibfk_1` FOREIGN KEY (`user_name`) REFERENCES `users` (`user_name`) ON DELETE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `user_email_settings`
+--
+
+LOCK TABLES `user_email_settings` WRITE;
+/*!40000 ALTER TABLE `user_email_settings` DISABLE KEYS */;
+/*!40000 ALTER TABLE `user_email_settings` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
@@ -191,7 +217,7 @@ CREATE TABLE `users` (
 
 LOCK TABLES `users` WRITE;
 /*!40000 ALTER TABLE `users` DISABLE KEYS */;
-INSERT INTO `users` VALUES ('Harrison','Harrison','Stokes','hazzaj467@gmail.com','pale'),('Humshikan','Humshikan','Gill','Hgill@gmail.com','hummus22'),('Neil','Neil','Mazumdar','neil.k.mazumdar@gmail.com','curry'),('Seamus','Seamus','Pitcher','SPitcher@gmail.com','besttrim'),('Thomas','Thomas','Foo','tfue@gmail.com','fooey2002'),('will','will','davis','willdavis925@gmail.com','admin');
+INSERT INTO `users` VALUES ('Harrison','Harrison','Stokes','hazzaj467@gmail.com','af8325db585ac1d3a50c30462cffd07060bb13418435ad0f45fddedc'),('Humshikan','Humshikan','Gill','Hgill@gmail.com','6ebe25963c6462d67789bc2d6000bbfe6dcbe5c9941270e0b6ee5180'),('Neil','Neil','Mazumdar','neil.k.mazumdar@gmail.com','e964ebb08f8642e0be7be7418847be96114f401b8e64578ceba8e996'),('Seamus','Seamus','Pitcher','SPitcher@gmail.com','75fdb030ad83f58f3fba1f1ce52f077c50a85170fb829bd4d2ddf472'),('Thomas','Thomas','Foo','tfue@gmail.com','45b24c8a95d54ecc7d42ac6be9ea9f7f069e2930ee2d17c23adfd25e'),('will','will','davis','willdavis925@gmail.com','58acb7acccce58ffa8b953b12b5a7702bd42dae441c1ad85057fa70b');
 /*!40000 ALTER TABLE `users` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -204,4 +230,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2022-05-28 11:26:20
+-- Dump completed on 2022-06-01 11:22:59

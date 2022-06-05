@@ -84,7 +84,7 @@
 }
 
 .halfEditContainer {
-    width: 30vw;
+    width: 60vw;
 }
 
 .editContainer {
@@ -106,4 +106,33 @@
 .externalUserContainer{
     display: flex;
     flex-direction: row;
+}
+.addFriend {
+    color: var(--secondary-color);
+    font-size: 1em;
+    cursor: pointer;
+}
+
+.unInvite {
+    color: var(--secondary-color);
+    font-size: 1em;
+    cursor: pointer;
+}
+
+.nameContainer{
+    display:flex;
+    justify-content: space-between;
+}
+
+.star{
+    color: var(--secondary-color);
+    font-size: 1em;
+    cursor: pointer;
+}
+
+
+.inviteFriend {
+    color: var(--secondary-color);
+    font-size: 1em;
+    cursor: pointer;
 }
