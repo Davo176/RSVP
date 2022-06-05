@@ -102,3 +102,8 @@
     display: flex;
     flex-direction: column;
 }
+
+.externalUserContainer{
+    display: flex;
+    flex-direction: row;
+}

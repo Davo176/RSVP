@@ -1,3 +1,49 @@
+function inviteExternal()
+{
+    let container = document.getElementsByClassName("externalUserContainer")[0];
+    if (container.style.display === "none") {
+        container.style.display = "block";
+      } else {
+        container.style.display = "none";
+      }
+}
+
+function generateLink()
+{
+    let firstname = document.getElementById("fname").value;
+    let lastname = document.getElementById("lname").value;
+    let signup = {
+        first_name: firstname,
+        last_name: lastname,
+    };
+    let link = document.getElementById("link");
+    let linkText = document.getElementById("linkText");
+    if (firstname == "" || lastname == "")
+    {
+        linkText.innerText = "Please enter a valid first and/or last name";
+        linkText.style.display = "block";
+        return;
+    }
+    var xhttp = new XMLHttpRequest();
+    xhttp.onreadystatechange = function()
+    {
+        if (this.readyState == 4 && this.status == 200)
+        {
+            console.log('Invited external user');
+            linkText.innerText = "Please send this code to the invitee so they can view the event and update their atending status:";
+            linkText.style.display = "block";
+            link.innerText = "Invite code: " + this.response;
+            link.style.display = "block";
+        }
+    };
+
+    xhttp.open("POST","/api/events/invite",true);
+    xhttp.setRequestHeader("Content-type","application/json")
+    xhttp.send(JSON.stringify(signup));
+
+    //Invite user to event
+}
+
 
 var vueinst = new Vue({
     el: '#app',

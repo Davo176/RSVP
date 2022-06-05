@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
     <head>
-        <title>Event Planning - Friends</title>
+        <title>Event Planning - Event</title>
         <link rel="stylesheet" href="/stylesheets/global.css">
         <link rel="stylesheet" href="/stylesheets/event.css">
         <link rel="icon" type="image/x-icon" href="/images/favicon.ico">
@@ -114,6 +114,21 @@
                         <i class="chevron fa-solid" v-bind:class="{ 'fa-chevron-up':friendOpen, 'fa-chevron-down':!friendOpen }" v-on:click="friendOpen=!friendOpen"></i>
                     </div>
                     <div v-if="friendOpen" v-for="name in notInvitedFriends">{{name.first_name}} {{name.last_name}}</div>
+                    <button onclick="inviteExternal()">Invite external person</button>
+                    <div class="externalUserContainer" style="display: none;">
+                        <div>
+                        <p>First Name</p>
+                        <input type="text" id="fname" placeholder="Enter First Name" name="fname" required>
+                        </div>
+                        <div>
+                        <p>Last Name</p>
+                        <input type="text" id="lname" placeholder="Enter Last Name" name="lname" required>
+                        </div>
+                        <button onclick="generateLink()">Generate link</button>
+                        <br/>
+                        <p id="linkText" style="display: none;"></p>
+                        <a id="link" style="display: none;"></a>
+                    </div>
                 </div>
             </div>
         </div>
