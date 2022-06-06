@@ -94,6 +94,8 @@ var vueinst = new Vue({
                 if (this.readyState == 4 && this.status == 200){
                     vueReference.event = JSON.parse(this.responseText)[0];
                     vueReference.newStatus = vueReference.event.AttendingStatus;
+                    vueReference.getPeople(eventID);
+                    vueReference.checkAdmin(eventID);
                 }
             };
             xhttp.open("GET",`/api/events/info?event_id=${eventID}`,true);
@@ -330,8 +332,7 @@ var vueinst = new Vue({
         },
         updateInfo: function(eventID){
             this.getEventInfo(eventID);
-            this.getPeople(eventID);
-            this.checkAdmin(eventID);
+
         },
         getUnavailabilities: function(eventId,eventDate,eventTime, setValue){
             let xhttp = new XMLHttpRequest();

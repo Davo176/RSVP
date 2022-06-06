@@ -27,7 +27,7 @@ const NOTIFICATIONS = [
         }
     }
 ]
-
+//FOR HARRISON STOKES TO COMPLETE
 var vueinst = new Vue({
     el: '#app',
     data: {

@@ -4,87 +4,12 @@
     <head>
         <title>Event Planning - Events</title>
         <link rel="stylesheet" href="/stylesheets/global.css">
-        <link rel="stylesheet" href="/stylesheets/events.css">
+        <link rel="stylesheet" href="/stylesheets/account.css">
         <link rel="icon" type="image/x-icon" href="/images/favicon.ico">
         <script src="https://kit.fontawesome.com/849e072605.js" crossorigin="anonymous"></script>
         <script src="https://cdn.jsdelivr.net/npm/vue@2.6.12/dist/vue.js"></script>
         <script src="/scripts/global.js" defer></script>
-
-        <!--Get user's info-->
-        <script>
-
-            //sets the maxlength attributes of the fields based on the max length specified in the database
-            let xhttp2 = new XMLHttpRequest();
-
-            xhttp2.onreadystatechange = function(req, res){
-                if(this.readyState == 4 && this.status == 200){
-
-                    //Formats the data into a JSON array
-                    object = JSON.parse(this.responseText);
-                    object = JSON.parse(object[0]["JSON_OBJECTAGG(COLUMN_NAME, CHARACTER_MAXIMUM_LENGTH)"]);
-
-                    user_nameMax = object["user_name"];
-                    first_nameMax = object["first_name"];
-                    last_nameMax = object["last_name"];
-                    emailMax = object["email"];
-
-                    document.getElementById("first_name").setAttribute("maxlength", first_nameMax);
-                    document.getElementById("last_name").setAttribute("maxlength", last_nameMax);
-                    document.getElementById("email").setAttribute("maxlength", emailMax);
-
-                    document.getElementById("maxLengthFirstName").innerText = "Max length: " + first_nameMax + " characters";
-                    document.getElementById("maxLengthLastName").innerText = "Max length: " + last_nameMax + " characters";
-                    document.getElementById("maxLengthEmail").innerText = "Max length: " + emailMax + " characters";
-
-                }
-            }
-
-            xhttp2.open("GET", 'api/account/getfieldlengths', true);
-            xhttp2.send();
-
-            //puts users current info into the appropriate fields
-            let xhttp = new XMLHttpRequest();
-
-            xhttp.onreadystatechange = function(req, res){
-                if(this.readyState == 4 && this.status == 200){
-
-                    let user = JSON.parse(this.responseText);
-
-                    document.getElementById("user_name").innerText = user[0]["user_name"];
-                    document.getElementById("first_name").value = user[0]["first_name"];
-                    document.getElementById("last_name").value = user[0]["last_name"];
-                    document.getElementById("email").value = user[0]["email"];
-
-                }
-            }
-
-            xhttp.open("GET", 'api/account/getuserinfo');
-
-            xhttp.send();
-
-            function updateUser(field){
-
-                console.log("updating");
-
-                let newFieldValue = document.getElementById(field).value;
-                let reqBody = JSON.stringify({"newFieldValue": newFieldValue, "field": field});
-
-                let xhttp2 = new XMLHttpRequest();
-
-                xhttp2.onreadystatechange = function(){
-
-                    if(this.readyState == 4 && this.status == 200){
-                        console.log("updated " + field + " to " + newFieldValue);
-                    }
-                }
-
-                xhttp2.open("POST", "api/account/updateinfo", true);
-                xhttp2.setRequestHeader('Content-type', 'application/json');
-                xhttp2.send(reqBody);
-
-            }
-
-        </script>
+        <script src="/scripts/account.js" defer></script>
     </head>
 
     <body>
@@ -94,30 +19,53 @@
             <header id="Nav"></header>
 
             </br>
+            <div class="accountPageContainer">
+                <label for="userName">Username: </label>
+                <p style="display: inline" id="user_name" name = "userName"></p>
 
-            <label for "userName">Username: </label>
-            <p style="display: inline" id="user_name" name = "userName"></p>
+                </br>
 
-            </br>
+                <label for="firstName">First name: </label>
+                <input type="text" name="firstName" id="first_name"> </input>
+                <button type="submit" v-on:click="updateUser(`first_name`)">Submit</button>
+                <p id="maxLengthFirstName"></p>
 
-            <label for "firstName">First name: </label>
-            <input type="text" name="firstName" id="first_name"> </input>
-            <button type="submit" onclick="updateUser(`first_name`)">Submit</button>
-            <p id="maxLengthFirstName"></p>
+                </br>
 
-            </br>
+                <label for="lastName">Last name: </label>
+                <input type="text" name="lastName" id="last_name"> </input>
+                <button type="submit" v-on:click="updateUser(`last_name`)">Submit</button>
+                <p id="maxLengthLastName"></p>
 
-            <label for "lastName">Last name: </label>
-            <input type="text" name="lastName" id="last_name"> </input>
-            <button type="submit" onclick="updateUser(`last_name`)">Submit</button>
-            <p id="maxLengthLastName"></p>
+                </br>
 
-            </br>
+                <label for="email">Email: </label>
+                <input type="text" name="email" id="email"> </input>
+                <button type="submit" v-on:click="updateUser(`email`)">Submit</button>
+                <p id="maxLengthEmail"></p>
 
-            <label for "email">Email: </label>
-            <input type="text" name="email" id="email"> </input>
-            <button type="submit" onclick="updateUser(`email`)">Submit</button>
-            <p id="maxLengthEmail"></p>
+                </br>
+                <p>Email Settings</p>
+                </br>
+                <div>
+                    <p>Receive an Email when an event is finalised:</p>
+                    <button v-if="!currentEmailSettingFinalise" v-on:click="updateEmailSettings(`finalise`,1)">Opt in</button>
+                    <button v-if="currentEmailSettingFinalise" v-on:click="updateEmailSettings(`finalise`,0)">Opt out</button>
+                </div>
+                <div>
+                    <p>Receive an Email when an event is cancelled:</p>
+                    <button v-if="!currentEmailSettingCancel" v-on:click="updateEmailSettings(`cancel`,1)">Opt in</button>
+                    <button v-if="currentEmailSettingCancel" v-on:click="updateEmailSettings(`cancel`,0)">Opt out</button>
+                </div>
+                <div>
+                    <p>Receive an Email when someone updates their status:</p>
+                    <button v-if="!currentEmailSettingResponse" v-on:click="updateEmailSettings(`response`,1)">Opt in</button>
+                    <button v-if="currentEmailSettingResponse" v-on:click="updateEmailSettings(`response`,0)">Opt out</button>
+                </div>
+            </div>
+
+
+
 
 
         </div>
