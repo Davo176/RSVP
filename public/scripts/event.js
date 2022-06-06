@@ -77,9 +77,19 @@ var vueinst = new Vue({
         intervalOptions: ""
     },
     methods: {
+        /**
+         * method for formatting datetimes
+         * takes in iso date, returns formatted date
+         */
         moment: function(item=undefined){
             return moment.utc(item).format("Do MMM YYYY h:mm a");
         },
+        /**
+         * method for getting the next time everyone invited is available.
+         * takes in a date and time
+         * returns nothing.
+         * updates nextDateTime
+         */
         getNextFullAvailableTime: function(date=undefined,time=undefined){
             if (!date){
                 date=this.event.Date;
@@ -110,6 +120,9 @@ var vueinst = new Vue({
             xhttp.open("GET",`/api/events/change/unavailable?event_id=${this.event.event_id}&date=${currentEventTime.format("YYYY-MM-DD")}&time=${currentEventTime.format("HH:mm")}`,true);
             xhttp.send();
         },
+        /**
+         *  sends a post request to update someones attending status
+         */
         test: function(){
             let reqBody = JSON.stringify({event_id: this.event.event_id,status: this.newStatus});
             let xhttp = new XMLHttpRequest();
@@ -129,6 +142,9 @@ var vueinst = new Vue({
             xhttp.setRequestHeader('Content-type', 'application/json; charset=UTF-8');
             xhttp.send(reqBody);
         },
+        /**
+         *  gets all event info, on complete calls more functions that get more info
+         */
         getEventInfo: function(eventID){
             let xhttp = new XMLHttpRequest();
             let vueReference = this;
@@ -146,6 +162,10 @@ var vueinst = new Vue({
             xhttp.open("GET",`/api/events/info?event_id=${eventID}`,true);
             xhttp.send();
         },
+        /**
+         *  gets people attending
+         *  and also people who are admins.
+         */
         getPeople: function(eventID){
             let xhttp = new XMLHttpRequest();
             let vueReference = this;
@@ -160,6 +180,10 @@ var vueinst = new Vue({
             xhttp.open("GET",`/api/events/people?event_id=${eventID}`,true);
             xhttp.send();
         },
+        /**
+         *  checks if you are an admin.
+         *  if you are, returns info about all admins.
+         */
         checkAdmin: function(eventID){
             let xhttp = new XMLHttpRequest();
             let vueReference = this;
@@ -185,6 +209,10 @@ var vueinst = new Vue({
             xhttp.open("GET",`/api/events/areAdmin?event_id=${eventID}`,true);
             xhttp.send();
         },
+        /**
+         *  if you are an admin
+         *  gets all of your uninvited friends, so u can invite them (if wanted)
+         */
         getOtherFriends: function(eventID){
             let xhttp = new XMLHttpRequest();
             let vueReference = this;
@@ -199,9 +227,15 @@ var vueinst = new Vue({
             xhttp.open("GET",`/api/events/change/uninvitedFriends?event_id=${eventID}`,true);
             xhttp.send();
         },
+        /**
+         *  Allows admins to edit an event
+         */
         toggleEditMode: function(){
             this.editMode = !this.editMode;
         },
+        /**
+         *  below this are all functions for updating various parts
+         */
         changeTitle: function(){
             let reqBody = JSON.stringify({event_id: this.event.event_id,title: this.newTitle});
             let xhttp = new XMLHttpRequest();
@@ -321,6 +355,7 @@ var vueinst = new Vue({
             xhttp.setRequestHeader('Content-type', 'application/json; charset=UTF-8');
             xhttp.send(reqBody);
         },
+        //WAITING FOR HARRISON TO IMPLEMENT ENDPOINT
         addFriend: function(user_id){
             console.log("Friend Request Sent to ", user_id);
         },
@@ -375,10 +410,12 @@ var vueinst = new Vue({
             xhttp.setRequestHeader('Content-type', 'application/json; charset=UTF-8');
             xhttp.send(reqBody);
         },
+        //called on create, to update all necessary info (used to be more functions in here)
         updateInfo: function(eventID){
             this.getEventInfo(eventID);
 
         },
+        //get list of people who are invited and not not going but arent available
         getUnavailabilities: function(eventId,eventDate,eventTime, setValue){
             let xhttp = new XMLHttpRequest();
             let vueReference = this;
@@ -398,6 +435,7 @@ var vueinst = new Vue({
             xhttp.open("GET",`/api/events/change/unavailable?event_id=${eventId}&date=${eventDate}&time=${eventTime}`,true);
             xhttp.send();
         },
+        //set event time to suggested time
         setNewDateTime: function(){
             this.newTime = moment.utc(this.nextDateTime,"Do MMM YYYY h:mm a").format("HH:mm");
             this.newDate = moment.utc(this.nextDateTime,"Do MMM YYYY h:mm a").format("YYYY-MM-DD");
@@ -406,6 +444,7 @@ var vueinst = new Vue({
         }
     },
     created: function(){
+        //get event id from params
         let queryString = window.location.search;
         let urlParams = new URLSearchParams(queryString);
         let eventID = urlParams.get('id');

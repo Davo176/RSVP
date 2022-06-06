@@ -2,7 +2,7 @@ var vueinst = new Vue({
     el: '#app',
     data: {
         calendar: {},
-        month: 5,
+        month: 6,
         year: 2022,
         showForm: false,
         addUnavailabilityDate: null,
@@ -12,9 +12,11 @@ var vueinst = new Vue({
     },
     methods: {
         formatTime: function(time){
+            //return the time as a formatted string
             return moment.utc(time).format("h:mm A")
         },
         getMonth: function(month,year){
+            //get the calendar for displayed month
             let xhttp = new XMLHttpRequest();
             let vueReference = this;
             xhttp.onreadystatechange = function() {
@@ -29,6 +31,7 @@ var vueinst = new Vue({
             xhttp.send();
         },
         nextMonth: function(){
+            //increment month and update calendar
             if (this.month!=12){
                 this.month+=1;
             }else{
@@ -38,6 +41,7 @@ var vueinst = new Vue({
             this.getMonth();
         },
         prevMonth: function(){
+            //decrement the month by 1 and update calendar
             if (this.month!=1){
                 this.month-=1;
             }else{
@@ -47,12 +51,14 @@ var vueinst = new Vue({
             this.getMonth();
         },
         addUnavailability: function(date){
+            //show a form to add a new unavailability time
             if(!date.blank){
                 this.showForm = true;
                 this.addUnavailabilityDate = parseInt(date.date);
             }
         },
         submitUnavailability: function(){
+            //send unavailability into the database
             if (this.unavailableFrom===null || this.reason===null||this.unavailableTo===null){
                 return;
             }
@@ -78,6 +84,7 @@ var vueinst = new Vue({
             xhttp.send(reqBody);
         },
         deleteEvent: function(event){
+            //delete an unavailability
             let reqBody = JSON.stringify({id: event.unavailability_id});
             let xhttp = new XMLHttpRequest();
             let vueReference = this;
@@ -100,6 +107,7 @@ var vueinst = new Vue({
         }
     },
     created: function(){
+        //on page create get the current month
         this.getMonth()
     }
 });

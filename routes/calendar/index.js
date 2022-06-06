@@ -106,6 +106,7 @@ router.get('/', function(req,res,next){
   }
 });
 
+//Add another unavailability
 router.post('/add', function(req,res,next){
   if (!('date' in req.body) || !('unavailable_from' in req.body) || !('unavailable_to' in req.body) || !('reason' in req.body)){
     res.sendStatus(400);
@@ -137,6 +138,7 @@ router.post('/add', function(req,res,next){
   }
 });
 
+//delete an unavailability
 router.post('/delete', function(req,res,next){
   if (!('id' in req.body)){
     res.sendStatus(400);

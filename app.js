@@ -11,7 +11,7 @@ const apiRouter = require('./routes/api');
 var usersRouter = require('./routes/users');
 
 var app = express();
-
+//give access to db connection pool
 var dbConnectionPool = mysql.createPool({ host: 'localhost',database: 'production'});
 
 app.use(logger('dev'));

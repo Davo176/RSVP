@@ -1,7 +1,3 @@
-//sets the maxlength attributes of the fields based on the max length specified in the database
-
-
-
 var vueInst = new Vue({
     el: '#app',
     data: {
@@ -14,7 +10,7 @@ var vueInst = new Vue({
     },
     methods: {
         updateUser: function(field){
-
+            //send a request to update a users fields
             let newFieldValue = document.getElementById(field).value;
             let reqBody = JSON.stringify({"newFieldValue": newFieldValue, "field": field});
 
@@ -32,7 +28,7 @@ var vueInst = new Vue({
             xhttp2.send(reqBody);
         },
         updateEmailSettings: function(field,newValue){
-
+            //send a request to update email settings
             let reqBody = JSON.stringify({"newState": newValue, "setting": field});
 
             let xhttp2 = new XMLHttpRequest();
@@ -48,6 +44,7 @@ var vueInst = new Vue({
             xhttp2.send(reqBody);
         },
         getEmailSettings: function(){
+            //get users current email settings
             let xhttp = new XMLHttpRequest();
             let vueReference = this;
             xhttp.onreadystatechange = function() {
@@ -73,6 +70,7 @@ var vueInst = new Vue({
         }
     },
     created: function(){
+        //sets the maxlength attributes of the fields based on the max length specified in the database
         this.getEmailSettings();
         let xhttp2 = new XMLHttpRequest();
         let vueReference = this;

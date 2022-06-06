@@ -3,7 +3,7 @@ var router = express.Router();
 const moment = require('moment');
 const Uuid = require('uuid');
 
-
+//will set up blanks for harrison to fill out
 //get friends
 router.get('/', function(req,res,next){
   if (req.query.month == undefined || req.query.year==undefined){
