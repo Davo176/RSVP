@@ -72,5 +72,35 @@ function signup()
     xhttp.open("POST","/signup");
     xhttp.setRequestHeader("Content-type","application/json")
     xhttp.send(JSON.stringify(signup));
+}
 
+function codeLogin()
+{
+    console.log('Event code login');
+    let code = document.getElementById("invite_code").value;
+    let param = `?event_code=${code}`;
+    let code_result = document.getElementById("code_result");
+    if (code == "")
+    {
+        code_result.innerText = "Please Enter A Code";
+        return;
+    }
+    else
+    {
+        var xhttp = new XMLHttpRequest();
+        xhttp.onreadystatechange = function()
+        {
+            if (this.readyState == 4 && this.status == 200) {
+                location.href = this.response;
+            }
+            else if (this.status == 403) {
+                code_result.innerText = "Incorrect Code";
+            }
+            else if (this.status == 400) {
+                code_result.innerText = "Please Enter A Code";
+            }
+        };
+        xhttp.open("GET", "/externalInvitee"+param, true);
+        xhttp.send();
+    }
 }

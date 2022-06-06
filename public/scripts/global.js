@@ -44,23 +44,17 @@ window.onclick = function(event){
 
 function updateNav () {
   var nav = document.getElementById('Nav');
-  if (user_name == "")
+  if (user_name == "GUEST")
   {
     nav.innerHTML += `
   <nav>
     <ul class="navBar">
         <li class="navBarElementContainerText"><button >RSVP</button></li>
-        <li class="navBarElementContainerText"><a href="/events" class="navBarElement">Home</a></li>
-        <li class="navBarElementContainerText"><a href="/friends" class="navBarElement">Friends</a></li>
     </ul>
   </nav>
   <nav>
     <ul class="navBar">
-        <li class="navBarElementContainer" style="padding-right: 0;"><input class="search" type="text" placeholder="Search.."></li>
-        <li class="navBarElementContainer"><a href="/newevent"><i href="#" class="icon fa-solid fa-plus"></i></a></li>
-        <li class="navBarElementContainer"><a href="/notifications"><i class="icon fa-solid fa-bell"></i></a></li>
-        <li class="navBarElementContainer"><a href="/calendar"><i class="icon fa-solid fa-calendar-days"></i></a></li>
-        <li class="navBarElementContainer"><button onclick="loginButton()">Login</button></li>
+        <li class="navBarElementContainer"><button onclick="loginButton()">Sign Up</button></li>
     </ul>
   </nav>`;
   }

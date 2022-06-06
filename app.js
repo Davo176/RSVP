@@ -172,14 +172,14 @@ app.post('/signup', function(req, res, next) {
 
   if ('user_name' in req.body && 'email' in req.body && 'password' in req.body && 'first_name' in req.body && 'last_name' in req.body)
   {
-    req.pool.getConnection(function(error, connection)
-    {
-      if (error)
+      req.pool.getConnection(function(error, connection)
       {
-        console.log(error);
-        res.sendStatus(500);
-        return;
-      }
+        if (error)
+        {
+          console.log(error);
+          res.sendStatus(500);
+          return;
+        }
       console.log("Connected to database");
       let user_name = req.body.user_name;
       let email = req.body.email;
@@ -220,9 +220,49 @@ app.post('/signup', function(req, res, next) {
 
 app.get('/externalInvitee', function(req, res, next) {
   //Check code
-  //Session stuff
-  //Find event invited to
-  //Change location to that page
+  console.log(req.query);
+  if (req.query.event_code != "")
+  {
+    req.pool.getConnection(function(error, connection)
+    {
+      if (error)
+      {
+        console.log(error);
+        res.sendStatus(500);
+        return;
+      }
+      //Check if valid code
+      let query = "SELECT * FROM users WHERE user_name = ?";
+      connection.query(query,[req.query.event_code], function(error, rows, fields)
+      {
+        if (rows.length == 0)
+        {
+          console.log("Invalid code");
+          res.sendStatus(403);
+          res.end;
+          return;
+        }
+        console.log("Code exists");
+        //Session stuff
+        console.log(rows);
+        req.session.first_name = "GUEST";
+        req.session.user_name = rows[0].user_name;
+        //Find event invited to
+        let query2 = "SELECT * FROM event_invitees WHERE invitee_id = ?";
+        let id = "";
+        connection.query(query2,[req.query.event_code], function(error, rows, fields)
+        {
+          console.log(rows);
+          //Change location to that page
+          res.send('/event?id='+rows[0].event_id);
+        });
+      });
+    });
+  }
+  else
+  {
+    res.sendStatus(400)
+  }
 });
 
 app.get('/login', function(req, res, next) {

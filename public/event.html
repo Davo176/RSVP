@@ -29,7 +29,7 @@
 
                         <form action="/action_page.php">
                             <label for="Attending_Status"></label>
-                            <select id="Attending_Status" v-on:change="test()" v-model="newStatus">
+                            <select id="Attending_Status" v-on:change="updateStatus()" v-model="newStatus">
                                 <option v-for="option in options" v-bind:value="option"
                                     v-bind:selected="option == event.AttendingStatus">{{option}}</option>
                             </select>
@@ -195,7 +195,7 @@
                         <i v-on:click="invite(name.user_name)" class="inviteFriend fa-solid fa-calendar-check"></i>
                     </div>
                     <div v-if="friendOpen" v-for="name in notInvitedFriends">{{name.first_name}} {{name.last_name}}</div>
-                    <button onclick="inviteExternal()">Invite external person</button>
+                    <button v-on:click="inviteExternal()">Invite external person</button>
                     <div class="externalUserContainer" style="display: none;">
                         <div>
                         <p>First Name</p>
@@ -205,7 +205,7 @@
                         <p>Last Name</p>
                         <input type="text" id="lname" placeholder="Enter Last Name" name="lname" required>
                         </div>
-                        <button onclick="generateLink()">Generate link</button>
+                        <button v-on:click="generateLink()">Generate Invite Code:</button>
                         <br/>
                         <p id="linkText" style="display: none;"></p>
                         <a id="link" style="display: none;"></a>
