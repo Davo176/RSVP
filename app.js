@@ -8,7 +8,6 @@ var requestify = require('requestify');
 
 var indexRouter = require('./routes/index');
 const apiRouter = require('./routes/api');
-var usersRouter = require('./routes/users');
 
 var app = express();
 //give access to db connection pool
@@ -149,8 +148,8 @@ app.post('/loginGoogle', function(req, res, next) {
 app.post('/signup', function(req, res, next) {
   if ('user_name' in req.body && 'email' in req.body && 'password' in req.body && 'first_name' in req.body && 'last_name' in req.body)
   {
-      req.pool.getConnection(function(error, connection)
-      {
+      req.pool.getConnection(function(error, connection){
+      if (error){
         console.log(error);
         res.sendStatus(500);
         return;
@@ -250,6 +249,5 @@ app.use(function(req,res,next){
 
 app.use('/', indexRouter);
 app.use('/api', apiRouter);
-app.use('/users', usersRouter);
 
 module.exports = app;
