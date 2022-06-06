@@ -64,5 +64,5 @@ create table user_email_settings (
     setting_name varchar(36),
     setting_state tinyint,
     FOREIGN KEY (user_name) REFERENCES users(user_name) ON DELETE CASCADE,
-    PRIMARY KEY (user_name,setting_name,setting_state)
+    PRIMARY KEY (user_name,setting_name)
 );

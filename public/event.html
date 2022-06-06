@@ -126,22 +126,22 @@
             </div>
             <div class="inviteeContainer">
                 <div class="groupContainer">
-                    <div class="groupTitleContainer">
+                    <div class="groupTitleContainer" v-on:click="adminOpen=!adminOpen">
                         <h4>Admin</h4>
                         <i class="chevron fa-solid"
                             v-bind:class="{ 'fa-chevron-up':adminOpen, 'fa-chevron-down':!adminOpen }"
-                            v-on:click="adminOpen=!adminOpen"></i>
+                            ></i>
                     </div>
                     <div v-if="adminOpen && name.attending_status==='Admin'" v-for="name in people">
                         <div>{{name.first_name}} {{name.last_name}}</div>
                     </div>
                 </div>
                 <div class="groupContainer">
-                    <div class="groupTitleContainer">
+                    <div class="groupTitleContainer" v-on:click="goingOpen=!goingOpen">
                         <h4>Going</h4>
                         <i class="chevron fa-solid"
                             v-bind:class="{ 'fa-chevron-up':goingOpen, 'fa-chevron-down':!goingOpen }"
-                            v-on:click="goingOpen=!goingOpen"></i>
+                            ></i>
                     </div>
                     <div class="nameContainer" v-if="goingOpen && name.attending_status==='Going'"
                         v-for="name in people">
@@ -154,11 +154,11 @@
                     </div>
                 </div>
                 <div class="groupContainer">
-                    <div class="groupTitleContainer">
+                    <div class="groupTitleContainer" v-on:click="pendingOpen=!pendingOpen">
                         <h4>Pending</h4>
                         <i class="chevron fa-solid"
                             v-bind:class="{ 'fa-chevron-up':pendingOpen, 'fa-chevron-down':!pendingOpen }"
-                            v-on:click="pendingOpen=!pendingOpen"></i>
+                            ></i>
                     </div>
                     <div class="nameContainer" v-if="pendingOpen && name.attending_status==='Unsure'" v-for="name in people">
                         <div>{{name.first_name}} {{name.last_name}}</div>
@@ -170,11 +170,11 @@
                     </div>
                 </div>
                 <div class="groupContainer">
-                    <div class="groupTitleContainer">
+                    <div class="groupTitleContainer" v-on:click="notGoingOpen=!notGoingOpen">
                         <h4>Not Going</h4>
                         <i class="chevron fa-solid"
                             v-bind:class="{ 'fa-chevron-up':notGoingOpen, 'fa-chevron-down':!notGoingOpen }"
-                            v-on:click="notGoingOpen=!notGoingOpen"></i>
+                            ></i>
                     </div>
                     <div class="nameContainer" v-if="notGoingOpen && name.attending_status==='Not Going'" v-for="name in people">
                         <div>{{name.first_name}} {{name.last_name}}</div>
@@ -186,11 +186,11 @@
                     </div>
                 </div>
                 <div v-if="areAdmin" class="groupContainer">
-                    <div class="groupTitleContainer">
+                    <div class="groupTitleContainer" v-on:click="friendOpen=!friendOpen">
                         <h4>Other Friends</h4>
                         <i class="chevron fa-solid"
                             v-bind:class="{ 'fa-chevron-up':friendOpen, 'fa-chevron-down':!friendOpen }"
-                            v-on:click="friendOpen=!friendOpen"></i>
+                            ></i>
                     </div>
                     <div class="nameContainer" v-if="friendOpen" v-for="name in otherFriends">
                         <div>{{name.first_name}} {{name.last_name}}</div>
