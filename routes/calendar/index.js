@@ -106,14 +106,13 @@ router.get('/', function(req,res,next){
   }
 });
 
+//Add another unavailability
 router.post('/add', function(req,res,next){
   if (!('date' in req.body) || !('unavailable_from' in req.body) || !('unavailable_to' in req.body) || !('reason' in req.body)){
     res.sendStatus(400);
     return;
   }else{
     let user = req.session.user_name;
-    //console.log(req.session);
-    //console.log(user);
     let unavailableFrom = moment(req.body.date + ' ' + req.body.unavailable_from,"YYYY-MM-DD HH:mm");
     let unavailableTo = moment(req.body.date + ' ' + req.body.unavailable_to,"YYYY-MM-DD HH:mm");
     let reason = req.body.reason;
@@ -139,6 +138,7 @@ router.post('/add', function(req,res,next){
   }
 });
 
+//delete an unavailability
 router.post('/delete', function(req,res,next){
   if (!('id' in req.body)){
     res.sendStatus(400);

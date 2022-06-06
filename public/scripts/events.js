@@ -9,6 +9,7 @@ var vueinst = new Vue({
         imagePreURL: '/images/userUploads/'
     },
     computed: {
+        //creates slices of 3 events for each
         myEvents: function(){
             return this.myEventsBase.slice(this.n,this.n+3);
         },
@@ -17,9 +18,11 @@ var vueinst = new Vue({
         },
     },
     methods: {
+        //method for formatting dates
         moment: function(item=undefined){
             return moment.utc(item).format("Do MMM YYYY h:mm a");
         },
+        //increment and decrement to see more events
         shiftNLeft: function(){
             if(this.n!==0){
                 this.n-=1;
@@ -46,6 +49,7 @@ var vueinst = new Vue({
                 this.m+=1;
             }
         },
+        //change whether or not you are going to an event.
         changeStatus: function(eventId,newStatus){
             let reqBody = JSON.stringify({event_id: eventId,status: newStatus});
             let xhttp = new XMLHttpRequest();
@@ -64,10 +68,12 @@ var vueinst = new Vue({
             xhttp.setRequestHeader('Content-type', 'application/json; charset=UTF-8')
             xhttp.send(reqBody);
         },
+        //get all events
         getEvents: function(){
             this.getInvited();
             this.getAdmin();
         },
+        //get events your invited too (but not an admin on)
         getInvited: function(){
             let xhttp = new XMLHttpRequest();
             let vueReference = this;
@@ -82,6 +88,7 @@ var vueinst = new Vue({
             xhttp.open("GET",`/api/events/invited`,true);
             xhttp.send();
         },
+        //get events your an admin on
         getAdmin: function(){
             let xhttp = new XMLHttpRequest();
             let vueReference = this;
@@ -96,10 +103,12 @@ var vueinst = new Vue({
             xhttp.open("GET",`/api/events/admin`,true);
             xhttp.send();
         },
+        //redirect to an event
         goToEvent: function(eventId){
             location.href = `/event?id=${eventId}`
         }
     },
+    //on create get events
     created: function(){
         this.getEvents();
     }

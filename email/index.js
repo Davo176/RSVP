@@ -1,20 +1,23 @@
 const emailTypes = require('./email_types');
 const nodemailer = require('nodemailer');
 
-async function sendMail(mailName,mailArgs,emailReceivers){
-    console.log('hit');
+//General idea is this makes it a lot easier to send emails.
+//can probably create transporter as middleware.
 
+async function sendMail(mailName,mailArgs,emailReceivers){
+    //create the transporter
     let transporter = nodemailer.createTransport({
         host: "smtp-mail.outlook.com",
         port: 587,
-        secure: false, // true for 465, false for other ports
+        secure: false,
         auth: {
-            user: 'No_Reply_RSVP_WDC_2022@outlook.com', // generated ethereal user
-            pass: 'IanKnight', // generated ethereal password
+            user: 'No_Reply_RSVP_WDC_2022@outlook.com', // email sent from
+            pass: 'IanKnight', // super secure having password sitting in code... Ideally would set up Vault or something
         },
     });
-
+    //convert receivers into string
     emailReceivers = emailReceivers.join(', ')
+    //set up default mail options
     let mailOptions = {
         from: "No_Reply_RSVP_WDC_2022@outlook.com",
         to: emailReceivers,
@@ -22,20 +25,18 @@ async function sendMail(mailName,mailArgs,emailReceivers){
         text: "Failed to Load Email Contents",
         html: "<b>Failed to Load Email Contents</b>"
     }
-
+    //replace text and email based off supplied type and args
     let newMailOptions = emailTypes[mailName](mailArgs)
-
+    //update mail options
     mailOptions.subject = newMailOptions.subject;
     mailOptions.text = newMailOptions.text;
     mailOptions.html = newMailOptions.html;
-    console.log('sending');
-    console.log(mailOptions);
+    //send mail
     let info = await transporter.sendMail(mailOptions);
-    console.log("Message sent: %s", info.messageId);
-    // Message sent: <b658f8ca-6296-ccf4-8306-87d57a0b4321@example.com>
+    //CAN TURN BELOW ON TO GET EMAIL PREVIEWS WHEN USING TEST ACCOUNT.
+    //console.log("Message sent: %s", info.messageId);
 
-    // Preview only available when sending through an Ethereal account
-    console.log("Preview URL: %s", nodemailer.getTestMessageUrl(info));
+    //console.log("Preview URL: %s", nodemailer.getTestMessageUrl(info));
 };
 
 module.exports = sendMail;

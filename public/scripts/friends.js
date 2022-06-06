@@ -63,7 +63,7 @@ const MYFRIENDREQUESTS = [
     "Harvir Peacock",
     "Amanda Cartwright",
 ]
-
+//Will created base, waiting for harrison to implement ajax and routes
 var vueinst = new Vue({
     el: '#app',
     data: {
@@ -83,6 +83,7 @@ var vueinst = new Vue({
         decline: function(friend){
             this.friendRequests.splice(this.friendRequests.indexOf(friend), 1);
         },
+        //send a search for users who match search term, if more than 3 chars.
         searchForNewFriends: function(){
             if (this.searchTerm.length > 3){
                 let xhttp = new XMLHttpRequest();

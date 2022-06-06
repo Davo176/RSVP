@@ -3,6 +3,7 @@ var router = express.Router();
 
 var sendMail = require('../../../email')
 
+//middleware to make sure an admin is making the request
 router.use(function (req, res, next) {
     if (!("event_id" in req.body) && !((req.path == "/uninvitedFriends" || req.path == "/unavailable") && ("event_id" in req.query))) {
         res.sendStatus(400);
@@ -34,6 +35,7 @@ router.use(function (req, res, next) {
     }
 });
 
+//change title
 router.post('/title', function (req, res, next) {
     if (!('title' in req.body)) {
         res.sendStatus(400);
@@ -61,6 +63,7 @@ router.post('/title', function (req, res, next) {
     }
 });
 
+//change date
 router.post('/date', function (req, res, next) {
     if (!('date' in req.body)) {
         res.sendStatus(400);
@@ -88,6 +91,7 @@ router.post('/date', function (req, res, next) {
     }
 });
 
+//change time
 router.post('/time', function (req, res, next) {
     if (!('time' in req.body)) {
         res.sendStatus(400);
@@ -115,6 +119,7 @@ router.post('/time', function (req, res, next) {
     }
 });
 
+//finalise an event
 router.post('/finalise', function (req, res, next) {
     req.pool.getConnection(function (err, connection) {
         if (err) {
@@ -144,6 +149,7 @@ router.post('/finalise', function (req, res, next) {
                 return;
             }
             res.sendStatus(200);
+            //get event info to include in email
             connection.query(query2, [event_id], function (error, rows, fields) {
                 if (error) {
                     console.log(error);
@@ -151,6 +157,7 @@ router.post('/finalise', function (req, res, next) {
                 }
                 let dateTime=rows[0].event_date + " " + rows[0].event_time;
                 let eventTitle = rows[0].event_title
+                //get emails to send email too
                 connection.query(query3, [event_id], function (error, rows, fields) {
                     connection.release();
                     if (error) {
@@ -166,6 +173,7 @@ router.post('/finalise', function (req, res, next) {
     });
 });
 
+//change address
 router.post('/address', function (req, res, next) {
     if (!('address' in req.body)) {
         res.sendStatus(400);
@@ -192,6 +200,7 @@ router.post('/address', function (req, res, next) {
     }
 });
 
+//change description
 router.post('/description', function (req, res, next) {
     if (!('description' in req.body)) {
         res.sendStatus(400);
@@ -218,7 +227,7 @@ router.post('/description', function (req, res, next) {
         });
     }
 });
-
+//invite someone
 router.post('/invite', function (req, res, next) {
     if (!('user_id' in req.body)) {
         res.sendStatus(400);
@@ -245,7 +254,7 @@ router.post('/invite', function (req, res, next) {
         });
     }
 });
-
+//uninvite someone
 router.post('/uninvite', function (req, res, next) {
     if (!('user_id' in req.body)) {
         res.sendStatus(400);
@@ -273,7 +282,7 @@ router.post('/uninvite', function (req, res, next) {
         });
     }
 });
-
+//make someone an admin
 router.post('/makeAdmin', function (req, res, next) {
     if (!('user_id' in req.body)) {
         res.sendStatus(400);
@@ -300,7 +309,7 @@ router.post('/makeAdmin', function (req, res, next) {
         });
     }
 });
-
+//delete the event
 router.post('/delete', function (req, res, next) {
     req.pool.getConnection(function (err, connection) {
         if (err) {
@@ -352,6 +361,7 @@ router.post('/delete', function (req, res, next) {
 })
 
 //NOTE this endpoint doesnt change anything, but need event admin privledges to see
+//get friends that arent invited
 router.get('/uninvitedFriends', function (req, res, next) {
     if (!('event_id' in req.query)) {
         res.sendStatus(400);
@@ -403,7 +413,7 @@ router.get('/uninvitedFriends', function (req, res, next) {
         });
     }
 })
-
+//get people who arent available.
 router.get('/unavailable', function (req, res, next) {
     if (!('event_id' in req.query) && !('date' in req.query) && !('time' in req.query)) {
         res.sendStatus(400);

@@ -53,7 +53,7 @@ router.get('/event', function(req, res, next) {
     });
   }
 });
-
+//allow pages to be accessed without the .html
 router.get('/calendar', function(req, res, next) {
   res.sendFile('/public/calendar.html', { root: __dirname+"/.." });
 });

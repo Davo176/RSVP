@@ -1,4 +1,4 @@
-
+//create functions that return the new mailoptions.
 function Cancel(mailOptions) {
     return {
         subject: "Event Cancelled",

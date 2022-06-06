@@ -6,9 +6,9 @@ var upload = multer({ des: 'public/images/userUploads'});
 const Uuid = require('uuid');
 const changeRouter = require('./change');
 var sendMail = require('../../email')
-
+//if change then send to change router
 router.use('/change', changeRouter);
-
+//get people who are invited
 router.get('/invited', function(req,res,next){
     let user = req.session.user_name;
     req.pool.getConnection(function(error, connection){
@@ -17,7 +17,8 @@ router.get('/invited', function(req,res,next){
           res.sendStatus(500);
           return;
         }
-
+        //can this query be improved??
+        //select from event_invitees then left join
         let query = `SELECT
                         events.event_id,
                         event_title as Title,
@@ -49,6 +50,7 @@ router.get('/invited', function(req,res,next){
       });
     })
 
+//get admins
 router.get('/admin', function(req,res,next){
   let user = req.session.user_name;
   req.pool.getConnection(function(error, connection){
@@ -151,7 +153,7 @@ router.post('/add', upload.single("eventImage"), function(req, res, next){
     res.redirect('/newevent');
   })
 });
-
+//update your attending status (and send emails out)
 router.post('/updateStatus', function(req,res,next){
   let user = req.session.user_name;
   if (!('status' in req.body) || !('event_id' in req.body)){
@@ -204,7 +206,7 @@ router.post('/updateStatus', function(req,res,next){
     });
   }
 })
-
+//get event info
 router.get('/info', function(req,res,next){
   if (!('event_id' in req.query)){
     res.sendStatus(400);
@@ -245,7 +247,7 @@ router.get('/info', function(req,res,next){
     });
   }
 })
-
+//get people attending event (and admins)
 router.get('/people', function(req,res,next){
   if (!('event_id' in req.query)){
       res.sendStatus(400);
@@ -298,7 +300,7 @@ router.get('/people', function(req,res,next){
       });
     }
 })
-
+//check if you are an admin
 router.get('/areAdmin', function(req,res,next){
   if (!('event_id' in req.query)){
       res.sendStatus(400);
@@ -335,7 +337,7 @@ router.get('/areAdmin', function(req,res,next){
       });
     }
 })
-
+//invite someone to an event who doesnt have an account
 router.post('/invite',function(req,res,next){
   if ('first_name' in req.body && 'last_name' in req.body && 'event_id' in req.body)
   {
@@ -347,30 +349,23 @@ router.post('/invite',function(req,res,next){
         res.sendStatus(500);
         return;
       }
-      console.log("Connected to database");
       let first_name = req.body.first_name;
       let last_name = req.body.last_name;
       let username = Uuid.v4();
       let query = "INSERT INTO users (user_name, first_name, last_name) VALUES (?,?,?)";
-      connection.query(query,[username, first_name, last_name], function(error, rows, fields)
-      {
-        console.log("Signed up external");
-
-      });
+      connection.query(query,[username, first_name, last_name], function(error, rows, fields){});
       let event_id = req.body.event_id;
       let query2 = "INSERT INTO event_invitees (invitee_id, event_id, attending_status) VALUES (?,?,?)";
       connection.query(query2,[username,event_id,'Unsure'], function(error, rows, fields)
       {
         connection.release();
         console.log("Added user to event table");
-
       });
       res.send(username);
     });
   }
   else
   {
-    console.log('bad request');
     res.sendStatus(400);
   }
 })
