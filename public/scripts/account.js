@@ -69,7 +69,6 @@ var vueInst = new Vue({
                             vueReference.currentEmailSettingResponse = setting.setting_state
                         }
                     }
-                    console.log();
                 }
             };
             xhttp.open("GET",`/api/account/emailSettings`,true);
