@@ -171,4 +171,40 @@ router.post('/sendRequest', function(req,res,next){
     }
   })
 
+  router.get('/search', function(req,res,next){
+    if (req.query.searchTerm == undefined){
+      res.sendStatus(400);
+    }else{
+      let searchTerm = '%' + req.query.searchTerm + '%';
+      let user = req.session.user_name
+      req.pool.getConnection(function(error, connection){
+        if(error){
+          console.log(error);
+          res.sendStatus(500);
+          return;
+        }
+
+        let query = `SELECT user_name, first_name, last_name FROM users
+                     where
+                     (user_name LIKE ?
+                     OR first_name like ?
+                     OR last_name like ?
+                     OR concat(first_name, ' ', last_name) like ?)
+                     AND
+                     user_name NOT IN (select requester from friends where requestee = ? UNION select requestee from friends where requester=?)
+                     order by first_name, last_name, user_name;
+                    `;
+        connection.query(query, [searchTerm,searchTerm,searchTerm,searchTerm,user,user], function(error, rows, fields) {
+          connection.release();
+          if (error) {
+            console.log(error);
+            res.sendStatus(500);
+            return;
+          }
+          res.json(rows)
+        });
+      });
+    }
+  });
+
 module.exports = router;

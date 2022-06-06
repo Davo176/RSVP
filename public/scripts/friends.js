@@ -69,6 +69,8 @@ var vueinst = new Vue({
     data: {
         friends: MYFRIENDS,
         friendRequests: MYFRIENDREQUESTS,
+        searchTerm: "",
+        searchResults: [],
     },
     methods: {
         remove: function(friend){
@@ -81,5 +83,23 @@ var vueinst = new Vue({
         decline: function(friend){
             this.friendRequests.splice(this.friendRequests.indexOf(friend), 1);
         },
+        searchForNewFriends: function(){
+            if (this.searchTerm.length > 3){
+                let xhttp = new XMLHttpRequest();
+                let vueReference = this;
+                xhttp.onreadystatechange = function() {
+                    if (this.readyState == 4 && this.status == 500){
+                        console.log("error");
+                    }
+                    if (this.readyState == 4 && this.status == 200){
+                        vueReference.searchResults = JSON.parse(this.responseText);
+                    }
+                };
+                xhttp.open("GET",`/api/friends/search?searchTerm=${this.searchTerm}`,true);
+                xhttp.send();
+            }else{
+                this.searchTerm=""
+            }
+        }
     }
 });
