@@ -104,6 +104,10 @@
     flex-direction: column;
 }
 
+.externalUserContainer{
+    display: flex;
+    flex-direction: row;
+}
 .addFriend {
     color: var(--secondary-color);
     font-size: 1em;

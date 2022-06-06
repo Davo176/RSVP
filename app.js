@@ -218,6 +218,13 @@ app.post('/signup', function(req, res, next) {
   }
 });
 
+app.get('/externalInvitee', function(req, res, next) {
+  //Check code
+  //Session stuff
+  //Find event invited to
+  //Change location to that page
+});
+
 app.get('/login', function(req, res, next) {
   res.sendFile('/public/login.html', { root: __dirname });
 });

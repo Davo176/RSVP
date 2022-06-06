@@ -336,5 +336,36 @@ router.get('/areAdmin', function(req,res,next){
     }
 })
 
+router.post('/invite',function(req,res,next){
+  if ('first_name' in req.body && 'last_name' in req.body)
+  {
+    req.pool.getConnection(function(error, connection)
+    {
+      if (error)
+      {
+        console.log(error);
+        res.sendStatus(500);
+        return;
+      }
+      console.log("Connected to database");
+      let first_name = req.body.first_name;
+      let last_name = req.body.last_name;
+      let username = Uuid.v4();
+      let query = "INSERT INTO users (user_name, first_name, last_name) VALUES (?,?,?)";
+      connection.query(query,[username, first_name, last_name], function(error, rows, fields)
+      {
+        connection.release();
+        console.log("Signed up external");
+        res.send(username);
+      });
+    });
+  }
+  else
+  {
+    console.log('bad request');
+    res.sendStatus(400);
+  }
+})
+
 
 module.exports = router;
