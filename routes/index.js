@@ -80,7 +80,7 @@ router.get('/account', function(req, res, next){
 
 router.get('/logout', function(req, res, next){
   console.log(req.session);
-  delete req.session;
+  req.session.destroy();
   console.log(req.session);
   res.redirect('/login');
 })
