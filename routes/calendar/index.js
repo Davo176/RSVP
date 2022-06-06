@@ -112,8 +112,6 @@ router.post('/add', function(req,res,next){
     return;
   }else{
     let user = req.session.user_name;
-    //console.log(req.session);
-    //console.log(user);
     let unavailableFrom = moment(req.body.date + ' ' + req.body.unavailable_from,"YYYY-MM-DD HH:mm");
     let unavailableTo = moment(req.body.date + ' ' + req.body.unavailable_to,"YYYY-MM-DD HH:mm");
     let reason = req.body.reason;

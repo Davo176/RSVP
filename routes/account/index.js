@@ -41,8 +41,6 @@ router.get('/getfieldlengths', function(req, res, next){
         let query = "SELECT JSON_OBJECTAGG(COLUMN_NAME, CHARACTER_MAXIMUM_LENGTH) FROM INFORMATION_SCHEMA.COLUMNS WHERE TABLE_SCHEMA = 'production' AND TABLE_NAME = 'users' AND (COLUMN_NAME = 'first_name' OR COLUMN_NAME = 'last_name' OR COLUMN_NAME = 'email' OR COLUMN_NAME = 'user_name')";
         connection.query(query, [req.body.field], function(error, rows, fields){
             connection.release();
-            console.log(rows);
-            console.log(fields);
             if(error){
                 console.log(error);
                 res.sendStatus(500);
@@ -59,8 +57,6 @@ router.get('/getfieldlengths', function(req, res, next){
 router.post('/updateinfo', function(req, res, next){
 
     req.pool.getConnection(function(err, connection){
-
-        console.log("trying to make query");
 
         if(err){
             console.log(err);
@@ -85,8 +81,6 @@ router.post('/updateinfo', function(req, res, next){
 router.post('/updateEmailSettings', function(req, res, next){
 
     req.pool.getConnection(function(err, connection){
-
-        console.log("trying to make query");
 
         if(err){
             console.log(err);
@@ -128,8 +122,7 @@ router.get('/emailSettings', function(req, res, next){
         let query = "select setting_name,setting_state from user_email_settings where user_name=?";
         connection.query(query, [req.session.user_name], function(error, rows, fields){
             connection.release();
-            console.log(rows);
-            console.log(fields);
+
             if(error){
                 console.log(error);
                 res.sendStatus(500);

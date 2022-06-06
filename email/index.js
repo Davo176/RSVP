@@ -2,8 +2,6 @@ const emailTypes = require('./email_types');
 const nodemailer = require('nodemailer');
 
 async function sendMail(mailName,mailArgs,emailReceivers){
-    console.log('hit');
-
     let transporter = nodemailer.createTransport({
         host: "smtp-mail.outlook.com",
         port: 587,
@@ -28,8 +26,7 @@ async function sendMail(mailName,mailArgs,emailReceivers){
     mailOptions.subject = newMailOptions.subject;
     mailOptions.text = newMailOptions.text;
     mailOptions.html = newMailOptions.html;
-    console.log('sending');
-    console.log(mailOptions);
+
     let info = await transporter.sendMail(mailOptions);
     console.log("Message sent: %s", info.messageId);
     // Message sent: <b658f8ca-6296-ccf4-8306-87d57a0b4321@example.com>

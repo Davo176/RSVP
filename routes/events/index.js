@@ -347,7 +347,6 @@ router.post('/invite',function(req,res,next){
         res.sendStatus(500);
         return;
       }
-      console.log("Connected to database");
       let first_name = req.body.first_name;
       let last_name = req.body.last_name;
       let username = Uuid.v4();
@@ -355,14 +354,12 @@ router.post('/invite',function(req,res,next){
       connection.query(query,[username, first_name, last_name], function(error, rows, fields)
       {
         connection.release();
-        console.log("Signed up external");
         res.send(username);
       });
     });
   }
   else
   {
-    console.log('bad request');
     res.sendStatus(400);
   }
 })

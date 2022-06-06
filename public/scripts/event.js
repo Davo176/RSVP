@@ -29,7 +29,6 @@ function generateLink()
     {
         if (this.readyState == 4 && this.status == 200)
         {
-            console.log('Invited external user');
             linkText.innerText = "Please send this code to the invitee so they can view the event and update their atending status:";
             linkText.style.display = "block";
             link.innerText = "Invite code: " + this.response;
