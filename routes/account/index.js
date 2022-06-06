@@ -143,18 +143,3 @@ router.get('/emailSettings', function(req, res, next){
 })
 
 module.exports = router;
-
-/*
-
-insert into user_email_settings (user_name,setting_name,setting_state) values ('will','cancel',0)
-ON DUPLICATE KEY UPDATE setting_state=0;
-
-IF SELECT (IF EXISTS (SELECT * from user_email_settings where user_name='will' and setting_name='cancel')
-                    BEGIN
-                        update user_email_settings set setting_state='cancel' where user_name='will' and setting_name='cancel'
-                    END
-                    ELSE
-                    BEGIN
-
-                    END
-*/
