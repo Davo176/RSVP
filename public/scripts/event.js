@@ -1,49 +1,3 @@
-function inviteExternal()
-{
-    let container = document.getElementsByClassName("externalUserContainer")[0];
-    if (container.style.display === "none") {
-        container.style.display = "block";
-      } else {
-        container.style.display = "none";
-      }
-}
-
-function generateLink()
-{
-    let firstname = document.getElementById("fname").value;
-    let lastname = document.getElementById("lname").value;
-    let signup = {
-        first_name: firstname,
-        last_name: lastname,
-    };
-    let link = document.getElementById("link");
-    let linkText = document.getElementById("linkText");
-    if (firstname == "" || lastname == "")
-    {
-        linkText.innerText = "Please enter a valid first and/or last name";
-        linkText.style.display = "block";
-        return;
-    }
-    var xhttp = new XMLHttpRequest();
-    xhttp.onreadystatechange = function()
-    {
-        if (this.readyState == 4 && this.status == 200)
-        {
-            linkText.innerText = "Please send this code to the invitee so they can view the event and update their atending status:";
-            linkText.style.display = "block";
-            link.innerText = "Invite code: " + this.response;
-            link.style.display = "block";
-        }
-    };
-
-    xhttp.open("POST","/api/events/invite",true);
-    xhttp.setRequestHeader("Content-type","application/json")
-    xhttp.send(JSON.stringify(signup));
-
-    //Invite user to event
-}
-
-
 var vueinst = new Vue({
     el: '#app',
     data: {
@@ -120,10 +74,11 @@ var vueinst = new Vue({
             xhttp.open("GET",`/api/events/change/unavailable?event_id=${this.event.event_id}&date=${currentEventTime.format("YYYY-MM-DD")}&time=${currentEventTime.format("HH:mm")}`,true);
             xhttp.send();
         },
+
         /**
          *  sends a post request to update someones attending status
          */
-        test: function(){
+        updateStatus: function(){
             let reqBody = JSON.stringify({event_id: this.event.event_id,status: this.newStatus});
             let xhttp = new XMLHttpRequest();
             let vueReference = this;
@@ -441,7 +396,54 @@ var vueinst = new Vue({
             this.newDate = moment.utc(this.nextDateTime,"Do MMM YYYY h:mm a").format("YYYY-MM-DD");
             this.changeDate();
             this.changeTime();
+        },
+        inviteExternal: function(){
+            let container = document.getElementsByClassName("externalUserContainer")[0];
+            if (container.style.display === "none") {
+                container.style.display = "block";
+            } else {
+                container.style.display = "none";
+            }
+        },
+        generateLink: function(eventID){
+            let vueReference = this;
+            let eventID2 = vueReference.event.event_id
+            let firstname = document.getElementById("fname").value;
+            let lastname = document.getElementById("lname").value;
+            let signup = {
+                first_name: firstname,
+                last_name: lastname,
+                event_id: eventID2,
+            };
+            let link = document.getElementById("link");
+            let linkText = document.getElementById("linkText");
+            if (firstname == "" || lastname == "")
+            {
+                linkText.innerText = "Please enter a valid first and/or last name";
+                linkText.style.display = "block";
+                return;
+            }
+            var xhttp = new XMLHttpRequest();
+            xhttp.onreadystatechange = function()
+            {
+                if (this.readyState == 4 && this.status == 200)
+                {
+                    console.log('Invited external user');
+                    linkText.innerText = "Please send this code to the invitee so they can view the event and update their atending status:";
+                    linkText.style.display = "block";
+                    link.innerText = "Invite code: " + this.response;
+                    link.style.display = "block";
+                    vueReference.getPeople(vueReference.event.event_id);
+                }
+            };
+
+            xhttp.open("POST","/api/events/invite",true);
+            xhttp.setRequestHeader("Content-type","application/json")
+            xhttp.send(JSON.stringify(signup));
+
+            //Invite user to event
         }
+
     },
     created: function(){
         //get event id from params

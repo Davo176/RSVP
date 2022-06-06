@@ -339,7 +339,7 @@ router.get('/areAdmin', function(req,res,next){
 })
 //invite someone to an event who doesnt have an account
 router.post('/invite',function(req,res,next){
-  if ('first_name' in req.body && 'last_name' in req.body)
+  if ('first_name' in req.body && 'last_name' in req.body && 'event_id' in req.body)
   {
     req.pool.getConnection(function(error, connection)
     {
@@ -353,11 +353,15 @@ router.post('/invite',function(req,res,next){
       let last_name = req.body.last_name;
       let username = Uuid.v4();
       let query = "INSERT INTO users (user_name, first_name, last_name) VALUES (?,?,?)";
-      connection.query(query,[username, first_name, last_name], function(error, rows, fields)
+      connection.query(query,[username, first_name, last_name], function(error, rows, fields){});
+      let event_id = req.body.event_id;
+      let query2 = "INSERT INTO event_invitees (invitee_id, event_id, attending_status) VALUES (?,?,?)";
+      connection.query(query2,[username,event_id,'Unsure'], function(error, rows, fields)
       {
         connection.release();
-        res.send(username);
+        console.log("Added user to event table");
       });
+      res.send(username);
     });
   }
   else
