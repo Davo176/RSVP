@@ -79,8 +79,67 @@ router.post('/updateinfo', function(req, res, next){
             }
         })
     })
+    res.sendStatus(200);
+})
 
-    res.send();
+router.post('/updateEmailSettings', function(req, res, next){
+
+    req.pool.getConnection(function(err, connection){
+
+        console.log("trying to make query");
+
+        if(err){
+            console.log(err);
+            res.sendStatus(500);
+            return;
+        }
+        let setting = req.body.setting;
+        let newState = req.body.newState;
+        let user = req.session.user_name;
+
+
+        let query = `insert into user_email_settings (user_name,setting_name,setting_state)
+                    values (?,?,?)
+                    ON DUPLICATE KEY UPDATE setting_state=?;
+                    `;
+        //query will look like: UPDATE users SET user_name = "Seamus" WHERE user_name = "name"
+        connection.query(query, [user,setting,newState,newState], function(error, rows, fields){
+            connection.release();
+            if(error){
+                console.log(error);
+                res.sendStatus(500);
+                return;
+            }
+        })
+    })
+    res.sendStatus(200);
+})
+
+router.get('/emailSettings', function(req, res, next){
+
+    //Checks if user has entered something in a field that is longer than we have allocated space for
+    req.pool.getConnection(function(err, connection){
+
+        if(err){
+            console.log(err);
+            res.sendStatus(500);
+            return;
+        }
+        let query = "select setting_name,setting_state from user_email_settings where user_name=?";
+        connection.query(query, [req.session.user_name], function(error, rows, fields){
+            connection.release();
+            console.log(rows);
+            console.log(fields);
+            if(error){
+                console.log(error);
+                res.sendStatus(500);
+                return;
+
+            }
+            res.json(rows);
+        })
+    })
+
 })
 
 module.exports = router;

@@ -70,7 +70,6 @@ function updateNav () {
   </nav>
   <nav>
     <ul class="navBar">
-        <li class="navBarElementContainer" style="padding-right: 0;"><input class="search" type="text" placeholder="Search.."></li>
         <li class="navBarElementContainer"><a href="/newevent"><i href="#" class="icon fa-solid fa-plus"></i></a></li>
         <li class="navBarElementContainer"><a href="/notifications"><i class="icon fa-solid fa-bell"></i></a></li>
         <li class="navBarElementContainer"><a href="/calendar"><i class="icon fa-solid fa-calendar-days"></i></a></li>

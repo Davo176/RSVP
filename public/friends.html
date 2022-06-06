@@ -1,19 +1,31 @@
 <!DOCTYPE html>
 <html lang="en">
-    <head>
-        <title>Event Planning - Friends</title>
-        <link rel="stylesheet" href="/stylesheets/global.css">
-        <link rel="stylesheet" href="/stylesheets/friends.css">
-        <link rel="icon" type="image/x-icon" href="/images/favicon.ico">
-        <script src="https://kit.fontawesome.com/849e072605.js" crossorigin="anonymous"></script>
-        <script src="https://cdn.jsdelivr.net/npm/vue@2.6.12/dist/vue.js"></script>
-        <script src="/scripts/global.js"></script>
-        <script src="/scripts/friends.js" defer></script>
-    </head>
-    <body>
+
+<head>
+    <title>Event Planning - Friends</title>
+    <link rel="stylesheet" href="/stylesheets/global.css">
+    <link rel="stylesheet" href="/stylesheets/friends.css">
+    <link rel="icon" type="image/x-icon" href="/images/favicon.ico">
+    <script src="https://kit.fontawesome.com/849e072605.js" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.6.12/dist/vue.js"></script>
+    <script src="/scripts/global.js"></script>
+    <script src="/scripts/friends.js" defer></script>
+</head>
+
+<body>
     <div id="app">
         <header id="Nav"></header>
-        </header>
+        <div class="friendFinderContainer">
+            <div class="searchContainer">Enter {{Math.max(4-searchTerm.length,0)}} more characters</div>
+            <div class="searchContainer">
+                <input class="search" type="text" placeholder="Search.." v-model="searchTerm"></input>
+                <button v-on:click="searchForNewFriends">Search</button>
+            </div>
+            <div class="searchResultContainer" v-for="person in searchResults">
+                <div>{{person.first_name}} {{person.last_name}} ({{person.user_name}})</div>
+                <i v-on:click="addFriend(name.invitee_id)" class="addFriend fa-solid fa-user-plus"></i>
+            </div>
+        </div>
         <div class="friendsColSeperator">
             <div class="friendCol">
                 <strong>Your Friends</strong>
@@ -22,20 +34,21 @@
                     <button class="friendReqButton" v-on:click="remove(friend)">Remove</button>
                 </div>
             </div>
-            <div class="friendCol" >
+            <div class="friendCol">
                 <strong>Friends Requests</strong>
                 <div v-for="friend in friendRequests">
                     <div class="friendRequestContainer">
                         <span> {{friend}}</span>
                         <div>
-                          <button class="friendReqButton" v-on:click="accept(friend)">Accept</button>
-                          <button class="friendReqButton" v-on:click="decline(friend)">Decline</button>
+                            <button class="friendReqButton" v-on:click="accept(friend)">Accept</button>
+                            <button class="friendReqButton" v-on:click="decline(friend)">Decline</button>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-    </div>
-    </body>
-</html>
 
+    </div>
+</body>
+
+</html>

@@ -5,6 +5,7 @@ var multer = require('multer');
 var upload = multer({ des: 'public/images/userUploads'});
 const Uuid = require('uuid');
 const changeRouter = require('./change');
+var sendMail = require('../../email')
 
 router.use('/change', changeRouter);
 
@@ -158,6 +159,17 @@ router.post('/updateStatus', function(req,res,next){
     return;
   }else{
     let query="update event_invitees set attending_status=? where event_id=? and invitee_id=?"
+    let query2 = "select event_title from events where event_id=?;"
+    let query3 = `select users.email from events
+                left join event_admins on events.event_id = event_admins.event_id
+                left join users on event_admins.admin_id = users.user_name
+                left join user_email_settings on users.user_name = user_email_settings.user_name
+                where
+                events.event_id=?
+                and
+                user_email_settings.setting_name='response'
+                and
+                user_email_settings.setting_state=1;`
     req.pool.getConnection(function(error, connection){
       if(error){
         console.log(error);
@@ -165,13 +177,29 @@ router.post('/updateStatus', function(req,res,next){
         return;
       }
       connection.query(query, [req.body.status,req.body.event_id,user], function(error, rows, fields) {
-        connection.release();
         if (error) {
           console.log(error);
           res.sendStatus(500);
           return;
         }
         res.sendStatus(200);
+        connection.query(query2, [req.body.event_id], function(error, rows, fields) {
+          if (error) {
+            console.log(error);
+            return;
+          }
+          let eventTitle = rows[0].event_title;
+          connection.query(query3, [req.body.event_id], function(error, rows, fields) {
+            connection.release();
+            if (error) {
+              console.log(error);
+              return;
+            }
+            let emailReceivers=rows;
+            emailReceivers=emailReceivers.map(e => e.email);
+            sendMail("Response",{eventTitle: eventTitle, newStatus:req.body.status, user:user},emailReceivers);
+          });
+        });
       });
     });
   }

@@ -29,3 +29,32 @@
     margin: 0px 5px;
     padding: 2px;
 }
+
+.friendFinderContainer{
+    background-color: white;
+    border-radius: 20px;
+    padding: 20px;
+    margin: 2.5vh 2.5vw ;
+    width: 95vw;
+    display:flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.searchContainer{
+    display: flex;
+    justify-content: center;
+}
+
+.searchResultContainer{
+    display: flex;
+    justify-content: space-between;
+    width:40vw;
+    margin-top: 1vh;
+}
+
+.addFriend {
+    color: var(--secondary-color);
+    font-size: 1em;
+    cursor: pointer;
+}

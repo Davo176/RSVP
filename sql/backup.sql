@@ -46,7 +46,7 @@ CREATE TABLE `event_admins` (
 
 LOCK TABLES `event_admins` WRITE;
 /*!40000 ALTER TABLE `event_admins` DISABLE KEYS */;
-INSERT INTO `event_admins` VALUES ('Neil','1111111'),('Will','1111111'),('Neil','1111112'),('Harrison','1111113'),('thomas','1111113'),('Will','1111113');
+INSERT INTO `event_admins` VALUES ('Neil','1111111'),('Seamus','1111111'),('Will','1111111'),('Neil','1111112'),('Harrison','1111113'),('thomas','1111113'),('Will','1111113');
 /*!40000 ALTER TABLE `event_admins` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -104,7 +104,7 @@ CREATE TABLE `events` (
 
 LOCK TABLES `events` WRITE;
 /*!40000 ALTER TABLE `events` DISABLE KEYS */;
-INSERT INTO `events` VALUES ('1111111','Wills 20th Birthday','2022-06-21','18:30','test.jpg','60th fourth avenue St. Peters','a description',0),('1111112','Neil 20th Birthday','2022-06-23','20:00','test.jpg','60th fourth avenue St. Peters','Lets party like kings for my 20th birthday',0),('1111113','Poker Night','2022-07-23','20:00','test.jpg','60th fourth avenue St. Peters','Test your lucky stars tonight and win big at poker night',0);
+INSERT INTO `events` VALUES ('1111111','Wills 20th Birthday','2022-06-21','18:30','test.jpg','60th fourth avenue St. Peters','Come party with Will \n:)',0),('1111112','Neil 20th Birthday','2022-06-23','20:00','test.jpg','60th fourth avenue St. Peters','Lets party like kings for my 20th birthday',0),('1111113','Poker Night','2022-07-23','20:00','test.jpg','60th fourth avenue St. Peters','Test your lucky stars tonight and win big at poker night',0);
 /*!40000 ALTER TABLE `events` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -180,7 +180,7 @@ CREATE TABLE `user_email_settings` (
   `user_name` varchar(36) NOT NULL,
   `setting_name` varchar(36) NOT NULL,
   `setting_state` tinyint NOT NULL,
-  PRIMARY KEY (`user_name`,`setting_name`,`setting_state`),
+  PRIMARY KEY (`user_name`,`setting_name`),
   CONSTRAINT `user_email_settings_ibfk_1` FOREIGN KEY (`user_name`) REFERENCES `users` (`user_name`) ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -191,6 +191,7 @@ CREATE TABLE `user_email_settings` (
 
 LOCK TABLES `user_email_settings` WRITE;
 /*!40000 ALTER TABLE `user_email_settings` DISABLE KEYS */;
+INSERT INTO `user_email_settings` VALUES ('harrison','response',1),('neil','cancel',1),('thomas','finalise',0),('will','cancel',1),('will','finalise',1),('will','response',1);
 /*!40000 ALTER TABLE `user_email_settings` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -217,7 +218,7 @@ CREATE TABLE `users` (
 
 LOCK TABLES `users` WRITE;
 /*!40000 ALTER TABLE `users` DISABLE KEYS */;
-INSERT INTO `users` VALUES ('Harrison','Harrison','Stokes','hazzaj467@gmail.com','af8325db585ac1d3a50c30462cffd07060bb13418435ad0f45fddedc'),('Humshikan','Humshikan','Gill','Hgill@gmail.com','6ebe25963c6462d67789bc2d6000bbfe6dcbe5c9941270e0b6ee5180'),('Neil','Neil','Mazumdar','neil.k.mazumdar@gmail.com','e964ebb08f8642e0be7be7418847be96114f401b8e64578ceba8e996'),('Seamus','Seamus','Pitcher','SPitcher@gmail.com','75fdb030ad83f58f3fba1f1ce52f077c50a85170fb829bd4d2ddf472'),('Thomas','Thomas','Foo','tfue@gmail.com','45b24c8a95d54ecc7d42ac6be9ea9f7f069e2930ee2d17c23adfd25e'),('will','will','davis','willdavis925@gmail.com','58acb7acccce58ffa8b953b12b5a7702bd42dae441c1ad85057fa70b');
+INSERT INTO `users` VALUES ('Harrison','Harrison','Stokes','hazzaj467@gmail.com','af8325db585ac1d3a50c30462cffd07060bb13418435ad0f45fddedc'),('Humshikan','Humshikan','Gill','Hgill@gmail.com','6ebe25963c6462d67789bc2d6000bbfe6dcbe5c9941270e0b6ee5180'),('Neil','Neil','Mazumdar','neil.k.mazumdar@gmail.com','e964ebb08f8642e0be7be7418847be96114f401b8e64578ceba8e996'),('Seamus','Seamus','Pitcher','SPitcher@gmail.com','75fdb030ad83f58f3fba1f1ce52f077c50a85170fb829bd4d2ddf472'),('Thomas','Thomas','Foo','tfue@gmail.com','45b24c8a95d54ecc7d42ac6be9ea9f7f069e2930ee2d17c23adfd25e'),('will','Will','Davis','willdavis925@gmail.com','58acb7acccce58ffa8b953b12b5a7702bd42dae441c1ad85057fa70b');
 /*!40000 ALTER TABLE `users` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -230,4 +231,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2022-06-01 11:22:59
+-- Dump completed on 2022-06-06  3:04:32

@@ -1,6 +1,8 @@
 var express = require('express');
 var router = express.Router();
 
+var sendMail = require('../../../email')
+
 router.use(function (req, res, next) {
     if (!("event_id" in req.body) && !((req.path == "/uninvitedFriends" || req.path == "/unavailable") && ("event_id" in req.query))) {
         res.sendStatus(400);
@@ -18,7 +20,7 @@ router.use(function (req, res, next) {
             connection.query(query, [user, event], function (error, rows, fields) {
                 connection.release();
                 if (error) {
-                    console.log(error);
+                    console.log(error);se
                     res.sendStatus(500);
                     return;
                 }
@@ -122,14 +124,44 @@ router.post('/finalise', function (req, res, next) {
         }
         let event_id = req.body.event_id;
         let query = "update events set finalised = 1 where event_id = ?";
+        let query2 = "select event_title,event_date,event_time from events where event_id=?;"
+        let query3 = `select * from events
+                    left join event_invitees on events.event_id = event_invitees.event_id
+                    left join users on event_invitees.invitee_id = users.user_name
+                    left join user_email_settings on users.user_name = user_email_settings.user_name
+                    where
+                    events.event_id=?
+                    and
+                    user_email_settings.setting_name='finalise'
+                    and
+                    user_email_settings.setting_state=1;`
+
+
         connection.query(query, [event_id], function (error, rows, fields) {
-            connection.release();
             if (error) {
                 console.log(error);
                 res.sendStatus(500);
                 return;
             }
             res.sendStatus(200);
+            connection.query(query2, [event_id], function (error, rows, fields) {
+                if (error) {
+                    console.log(error);
+                    return;
+                }
+                let dateTime=rows[0].event_date + " " + rows[0].event_time;
+                let eventTitle = rows[0].event_title
+                connection.query(query3, [event_id], function (error, rows, fields) {
+                    connection.release();
+                    if (error) {
+                        console.log(error);
+                        return;
+                    }
+                    let emailReceivers=rows;
+                    emailReceivers=emailReceivers.map(e => e.email);
+                    sendMail('Finalise',{dateTime:dateTime,eventTitle:eventTitle},emailReceivers);
+                });
+            });
         });
     });
 });
@@ -227,6 +259,7 @@ router.post('/uninvite', function (req, res, next) {
             let event_id = req.body.event_id;
             let user_id = req.body.user_id
             let query = "delete from event_invitees where event_id = ? and invitee_id = ?";
+
             connection.query(query, [event_id, user_id], function (error, rows, fields) {
                 connection.release();
                 if (error) {
@@ -277,15 +310,43 @@ router.post('/delete', function (req, res, next) {
         }
         let event_id = req.body.event_id;
         //theoretically need to check that they are invited first.
-        let query = "delete from events where event_id=?";
+        let query  = "select event_title from events where event_id=?;"
+        let query2 = `select users.email from events
+                left join event_invitees on events.event_id = event_invitees.event_id
+                left join users on event_invitees.invitee_id = users.user_name
+                left join user_email_settings on users.user_name = user_email_settings.user_name
+                where
+                events.event_id=?
+                and
+                user_email_settings.setting_name='cancel'
+                and
+                user_email_settings.setting_state=1;`
+        let query3 = "delete from events where event_id=?";
         connection.query(query, [event_id], function (error, rows, fields) {
-            connection.release();
             if (error) {
                 console.log(error);
                 res.sendStatus(500);
                 return;
             }
-            res.sendStatus(200);
+            let eventTitle = rows[0].event_title
+            connection.query(query2, [event_id], function (error, rows, fields) {
+                if (error) {
+                    console.log(error);
+                    res.sendStatus(500);
+                    return;
+                }
+                let emailReceivers=rows;
+                emailReceivers=emailReceivers.map(e => e.email);
+                connection.query(query3, [event_id], function (error, rows, fields) {
+                    connection.release();
+                    if (error) {
+                        console.log(error);
+                        return;
+                    }
+                    res.sendStatus(200);
+                    sendMail('Cancel',{eventTitle:eventTitle},emailReceivers);
+                });
+            });
         });
     });
 })
@@ -336,6 +397,7 @@ router.get('/uninvitedFriends', function (req, res, next) {
                     res.sendStatus(500);
                     return;
                 }
+
                 res.send(rows);
             });
         });
