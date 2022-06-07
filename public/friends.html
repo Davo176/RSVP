@@ -23,25 +23,25 @@
             </div>
             <div class="searchResultContainer" v-for="person in searchResults">
                 <div>{{person.first_name}} {{person.last_name}} ({{person.user_name}})</div>
-                <i v-on:click="addFriend(name.invitee_id)" class="addFriend fa-solid fa-user-plus" title="Send friend request"></i>
+                <i v-on:click="addFriend(person.first_name)" class="addFriend fa-solid fa-user-plus" title="Send friend request"></i>
             </div>
         </div>
         <div class="friendsColSeperator">
             <div class="friendCol">
                 <strong>Your Friends</strong>
-                <div v-for="friend in friends" class="friendContainer">
-                    <span> {{friend}}</span>
-                    <button class="friendReqButton" v-on:click="remove(friend)">Remove</button>
+                <div v-for="person in friends" class="friendContainer">
+                    <span> {{person.first_name}} {{person.last_name}} ({{person.user_name}})</span>
+                    <button class="friendReqButton" v-on:click="remove(person.user_name)">Remove</button>
                 </div>
             </div>
             <div class="friendCol">
                 <strong>Friends Requests</strong>
-                <div v-for="friend in friendRequests">
+                <div v-for="person in friendRequests">
                     <div class="friendRequestContainer">
-                        <span> {{friend}}</span>
+                        <span> {{person.first_name}} {{person.last_name}} ({{person.user_name}})</span>
                         <div>
-                            <button class="friendReqButton" v-on:click="accept(friend)">Accept</button>
-                            <button class="friendReqButton" v-on:click="decline(friend)">Decline</button>
+                            <button class="friendReqButton" v-on:click="accept(person.user_name)">Accept</button>
+                            <button class="friendReqButton" v-on:click="decline(person.user_name)">Decline</button>
                         </div>
                     </div>
                 </div>

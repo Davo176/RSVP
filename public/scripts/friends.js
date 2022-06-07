@@ -1,122 +1,123 @@
-const MYFRIENDS = [
-    "Joseph Gorden",
-    "Matei Sherman",
-    "Mathilda Walsh",
-    "Elyas Sweeney",
-    "Anjali Drake",
-    "Arley Forrest",
-    "Kole Mckeown",
-    "Kwabena Felix",
-    "Ira Searle",
-    "Shannen Turner",
-    "Rimsha Crawford",
-    "Kabir Currie",
-    "Darnell Donald",
-    "Dominick Poole",
-    "Tyra Pruitt",
-    "Halle Paterson",
-    "Chelsy Boyle",
-    "Zeshan Sanderson",
-    "Keeva Morgan",
-    "Luna Wallace",
-    "Ayden Buchanan",
-    "Faris Daugherty",
-    "Menachem Blackburn",
-    "Kendra Swan",
-    "Lillie Coombes",
-    "Rhys Hill",
-    "Abdullah Cotton",
-    "Eryn Glass",
-    "Umar Houston",
-    "Emmanuella Wilks",
-];
-
-const MYFRIENDREQUESTS = [
-    "Brittney Crosby",
-    "Bushra O'Quinn",
-    "Jaspal Guevara",
-    "Coral Roach",
-    "Kaya Wilkins",
-    "Ned Watson",
-    "Etienne Lindsay",
-    "Marlie Mcarthur",
-    "Thierry Espinoza",
-    "Amalia Neale",
-    "Eiliyah Stanton",
-    "Raheel Orozco",
-    "Aurora Cousins",
-    "Suzanna Collins",
-    "Fatima Metcalfe",
-    "Adaline Morris",
-    "Ebonie Ho",
-    "Camden Blackmore",
-    "Safa Senior",
-    "Gillian Bass",
-    "Neave Carlson",
-    "Alaya Lindsey",
-    "Zofia Rennie",
-    "Shanai Whitley",
-    "Irfan White",
-    "Eileen Salter",
-    "Michelle Dunlap",
-    "Elis Wagner",
-    "Harvir Peacock",
-    "Amanda Cartwright",
-];
 //Will created base, waiting for harrison to implement ajax and routes
 var vueinst = new Vue({
     el: '#app',
     data: {
-        friends: MYFRIENDS,
-        friendRequests: MYFRIENDREQUESTS,
+        friends: [],
+        friendRequests: [],
         searchTerm: "",
         searchResults: [],
     },
     methods: {
-        remove: function(friend){
+        updateFriends: function (){
+            let vueReference = this;
+            console.log("updating friend");
             var xhttp = new XMLHttpRequest();
             xhttp.onreadystatechange = function() {
                 if (this.readyState == 4 && this.status == 500) {
                     console.log("error");
                 }
                 if (this.readyState == 4 && this.status == 200) {
-                    this.friends.splice(this.friends.indexOf(friend), 1);
+                    vueReference.friends = JSON.parse(this.responseText);
                 }
             };
 
-            xhttp.open("GET", "/friends/removeFriend", true);
+            xhttp.open("GET", "/api/friends", true);
             xhttp.send();
-
         },
-        accept: function(friend){
+        updateFriendRequests: function (){
+            let vueReference = this;
+            console.log("updating friend request");
             var xhttp = new XMLHttpRequest();
             xhttp.onreadystatechange = function() {
                 if (this.readyState == 4 && this.status == 500) {
                     console.log("error");
                 }
                 if (this.readyState == 4 && this.status == 200) {
-                    this.friendRequests.splice(this.friendRequests.indexOf(friend), 1);
-                    this.friends.push(friend);
+                    vueReference.friendRequests = JSON.parse(this.responseText);
                 }
             };
 
-            xhttp.open("GET", "/friends/acceptRequest", true);
+            xhttp.open("GET", "api/friends/requests", true);
             xhttp.send();
-
         },
-        decline: function(friend){
+        addFriend: function (invitee){
+            let vueReference = this;
+            let requestee = invitee;
+            let add_friend = {requestee: requestee};
+            console.log(requestee)
+            console.log("making friend request");
             var xhttp = new XMLHttpRequest();
             xhttp.onreadystatechange = function() {
                 if (this.readyState == 4 && this.status == 500) {
                     console.log("error");
                 }
                 if (this.readyState == 4 && this.status == 200) {
-                    this.friendRequests.splice(this.friendRequests.indexOf(friend), 1);
+                    console.log("working");
                 }
             };
 
-            xhttp.open("GET", "/friends/declineRequest", true);
-            xhttp.send();
+            xhttp.open("POST", "api/friends/sendRequest", true);
+            xhttp.setRequestHeader("Content-type","application/json")
+            xhttp.send(JSON.stringify(add_friend));
+        },
+        remove: function(friend2){
+            let vueReference = this;
+            let friend = friend2;
+            let remove_friend = {friend: friend};
+            console.log("removing friend");
+            var xhttp = new XMLHttpRequest();
+            xhttp.onreadystatechange = function() {
+                if (this.readyState == 4 && this.status == 500) {
+                    console.log("error");
+                }
+                if (this.readyState == 4 && this.status == 200) {
+                   vueReference.updateFriends();
+                }
+            };
+
+            xhttp.open("POST", "api/friends/removeFriend", true);
+            xhttp.setRequestHeader("Content-type","application/json")
+            xhttp.send(JSON.stringify(remove_friend));
+        },
+        accept: function(friend2){
+            let vueReference = this;
+            let friend = friend2;
+            let remove_friend = {friend: friend};
+            console.log("removing friend");
+            var xhttp = new XMLHttpRequest();
+            xhttp.onreadystatechange = function() {
+                if (this.readyState == 4 && this.status == 500) {
+                    console.log("error");
+                }
+                if (this.readyState == 4 && this.status == 200) {
+                   vueReference.updateFriendRequests();
+                   vueReference.updateFriends();
+                }
+            };
+
+            xhttp.open("POST", "api/friends/acceptRequest", true);
+            xhttp.setRequestHeader("Content-type","application/json")
+            xhttp.send(JSON.stringify(remove_friend));
+        },
+
+        decline: function(friend2){
+            let vueReference = this;
+            let friend = friend2;
+            let remove_friend = {friend: friend};
+            console.log("removing friend");
+            var xhttp = new XMLHttpRequest();
+            xhttp.onreadystatechange = function() {
+                if (this.readyState == 4 && this.status == 500) {
+                    console.log("error");
+                }
+                if (this.readyState == 4 && this.status == 200) {
+                   vueReference.updateFriendRequests();
+                }
+            };
+
+            xhttp.open("POST", "api/friends/declineRequest", true);
+            xhttp.setRequestHeader("Content-type","application/json")
+            xhttp.send(JSON.stringify(remove_friend));
         },
         //send a search for users who match search term, if more than 3 chars.
         searchForNewFriends: function(){
@@ -137,5 +138,9 @@ var vueinst = new Vue({
                 this.searchTerm=""
             }
         }
+    },
+    created: function(){
+        this.updateFriends()
+        this.updateFriendRequests()
     }
 });

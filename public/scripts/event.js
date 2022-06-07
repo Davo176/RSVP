@@ -312,7 +312,24 @@ var vueinst = new Vue({
         },
         //WAITING FOR HARRISON TO IMPLEMENT ENDPOINT
         addFriend: function(user_id){
-            console.log("Friend Request Sent to ", user_id);
+            let vueReference = this;
+            let requestee = user_id;
+            let add_friend = {requestee: requestee};
+            console.log(requestee)
+            console.log("making friend request");
+            var xhttp = new XMLHttpRequest();
+            xhttp.onreadystatechange = function() {
+                if (this.readyState == 4 && this.status == 500) {
+                    console.log("error");
+                }
+                if (this.readyState == 4 && this.status == 200) {
+                    console.log("working");
+                }
+            };
+
+            xhttp.open("POST", "api/friends/sendRequest", true);
+            xhttp.setRequestHeader("Content-type","application/json")
+            xhttp.send(JSON.stringify(add_friend));
         },
         addAdmin: function(user_id){
             let reqBody = JSON.stringify({event_id: this.event.event_id,user_id: user_id});

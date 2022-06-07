@@ -44,7 +44,7 @@ router.get('/', function(req,res,next){
         res.sendStatus(500);
         return;
       }
-      res.send(rows);
+      res.json(rows);
     });
   });
 });
@@ -69,18 +69,7 @@ router.get('/requests', function(req,res,next){
    left join users as u on u.user_name=f.requester
    where f.requestee=?
    and
-      f.friendship_start_date is null
-   union
-   select
-    f.requestee as user_name,
-    u.first_name,
-    u.last_name
-   from
-    friends as f
-   left join users as u on u.user_name=f.requestee
-   where requester=?
-   and
-   f.friendship_start_date is null;`;
+      f.friendship_start_date is null`;
     connection.query(query, [user,user], function(error, rows, fields) {
       connection.release();
       if (error) {
@@ -88,21 +77,19 @@ router.get('/requests', function(req,res,next){
         res.sendStatus(500);
         return;
       }
-      res.send(rows);
+      res.json(rows);
     });
   });
 });
 
 router.post('/acceptRequest', function(req,res,next){
-  if (!('requester' in req.body) || !('requestee' in req.body)){
+  if (!('friend' in req.body)){
     res.sendStatus(400);
     return;
   }else{
     let user = req.session.user_name;
-    let requester = req.body.requester;
-    let requestee = req.body.requestee;
-    let friendshipStartDate = moment(req.body.date + ' ' + req.body.friendship_start_date,"YYYY-MM-DD HH:mm");
-    const ID = Uuid.v4();
+    let friend = req.body.friend;
+    let friendshipStartDate = moment();
     req.pool.getConnection(function(error, connection){
       if(error){
         console.log(error);
@@ -110,8 +97,8 @@ router.post('/acceptRequest', function(req,res,next){
         return;
       }
 
-      let query = "update friends set friendship_start_date=? where requester=? and requestee=? or requestee=? and reqester=?";
-      connection.query(query, [friendshipStartDate.format(),requester,requestee,requestee,requester], function(error, rows, fields) {
+      let query = "update friends set friendship_start_date=? where requester=? and requestee=?";
+      connection.query(query, [friendshipStartDate.format(),friend,user], function(error, rows, fields) {
         connection.release();
         if (error) {
           console.log(error);
@@ -125,13 +112,12 @@ router.post('/acceptRequest', function(req,res,next){
 });
 
 router.post('/declineRequest', function(req,res,next){
-  if (!('requester' in req.body) || !('requestee' in req.body)){
+  if (!('friend' in req.body)){
     res.sendStatus(400);
     return;
   }else{
     let user = req.session.user_name;
-    let requester = req.body.requester;
-    let requestee = req.body.requestee;
+    let friend = req.body.friend;
     req.pool.getConnection(function(error, connection){
       if(error){
         console.log(error);
@@ -139,8 +125,8 @@ router.post('/declineRequest', function(req,res,next){
         return;
       }
       let unavailabilityID = req.body.id;
-      let query = "delete from friends where requester=? and resquestee=?";
-      connection.query(query, [requester, requestee], function(error, rows, fields) {
+      let query = "delete from friends where requester=? and requestee=?";
+      connection.query(query, [friend, user], function(error, rows, fields) {
         connection.release();
         if (error) {
           console.log(error);
@@ -154,14 +140,14 @@ router.post('/declineRequest', function(req,res,next){
 });
 
 router.post('/sendRequest', function(req,res,next){
-  if (!('requester' in req.body) || !('requestee' in req.body)){
+  console.log(req.body)
+  if (!('requestee' in req.body)){
     res.sendStatus(400);
     return;
   }else{
-    let user = req.session.user_name;
-    let requester = req.body.requester;
+    let requester = req.session.user_name;
     let requestee = req.body.requestee;
-    let requestDate = moment(req.body.date + ' ' + req.body.request_date,"YYYY-MM-DD HH:mm");
+    let requestDate = moment();
     const unavailabilityID = Uuid.v4();
     req.pool.getConnection(function(error, connection){
       if(error){
@@ -185,13 +171,12 @@ router.post('/sendRequest', function(req,res,next){
 });
 
 router.post('/removeFriend', function(req,res,next){
-  if (!('requester' in req.body) || !('requestee' in req.body)){
+  if (!('friend' in req.body)){
     res.sendStatus(400);
     return;
   }else{
     let user = req.session.user_name;
-    let requester = req.body.requester;
-    let requestee = req.body.requestee;
+    let friend = req.body.friend;
     req.pool.getConnection(function(error, connection){
       if(error){
         console.log(error);
@@ -199,14 +184,16 @@ router.post('/removeFriend', function(req,res,next){
         return;
       }
       let unavailabilityID = req.body.id;
-      let query = "delete from friends where requester=? and resquestee=?";
-      connection.query(query, [requester,requestee], function(error, rows, fields) {
+      console.log(user, friend)
+      let query = "delete from friends where requester=? and requestee=? or requestee=? and requester=? ";
+      connection.query(query, [user,friend,user,friend], function(error, rows, fields) {
         connection.release();
         if (error) {
           console.log(error);
           res.sendStatus(500);
           return;
         }
+        console.log(rows)
         res.sendStatus(200);
       });
     });
