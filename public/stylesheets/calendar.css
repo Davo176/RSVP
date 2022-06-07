@@ -42,3 +42,8 @@
     display: flex;
     justify-content: space-between;
 }
+
+.monthInfoContainer {
+    display: flex;
+    justify-content: space-between;
+}
