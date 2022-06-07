@@ -46,7 +46,7 @@ CREATE TABLE `event_admins` (
 
 LOCK TABLES `event_admins` WRITE;
 /*!40000 ALTER TABLE `event_admins` DISABLE KEYS */;
-INSERT INTO `event_admins` VALUES ('Neil','1111111'),('Seamus','1111111'),('will','1111111'),('Neil','1111112'),('Harrison','1111113'),('thomas','1111113'),('will','1111113');
+INSERT INTO `event_admins` VALUES ('Neil','1111111'),('Seamus','1111111'),('Will','1111111'),('Neil','1111112'),('Harrison','1111113'),('thomas','1111113'),('Will','1111113');
 /*!40000 ALTER TABLE `event_admins` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -74,7 +74,7 @@ CREATE TABLE `event_invitees` (
 
 LOCK TABLES `event_invitees` WRITE;
 /*!40000 ALTER TABLE `event_invitees` DISABLE KEYS */;
-INSERT INTO `event_invitees` VALUES ('Harrison','1111111','Unsure'),('Harrison','1111112','Unsure'),('Harrison','1111113','Unsure'),('Neil','1111111','Going'),('Neil','1111113','Going'),('Seamus','1111111','Not Going'),('Seamus','1111112','Not Going'),('Seamus','1111113','Not Going'),('thomas','1111111','Not Going'),('Thomas','1111113','Unsure'),('will','1111111','Unsure'),('will','1111112','Going'),('will','1111113','Going');
+INSERT INTO `event_invitees` VALUES ('54832645-44dc-4510-b818-2fc1dab04a2d','1111111','Unsure'),('Harrison','1111111','Unsure'),('Harrison','1111112','Unsure'),('Harrison','1111113','Unsure'),('Neil','1111111','Going'),('Neil','1111113','Going'),('Seamus','1111111','Not Going'),('Seamus','1111112','Not Going'),('Seamus','1111113','Not Going'),('thomas','1111111','Not Going'),('Thomas','1111113','Unsure'),('will','1111111','Going'),('Will','1111112','Going'),('Will','1111113','Going');
 /*!40000 ALTER TABLE `event_invitees` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -104,7 +104,7 @@ CREATE TABLE `events` (
 
 LOCK TABLES `events` WRITE;
 /*!40000 ALTER TABLE `events` DISABLE KEYS */;
-INSERT INTO `events` VALUES ('1111111','wills 20th Birthday','2022-06-21','18:30','test.jpg','60th fourth avenue St. Peters','Come party with will \n:)',0),('1111112','Neil 20th Birthday','2022-06-23','20:00','test.jpg','60th fourth avenue St. Peters','Lets party like kings for my 20th birthday',0),('1111113','Poker Night','2022-07-23','20:00','test.jpg','60th fourth avenue St. Peters','Test your lucky stars tonight and win big at poker night',0);
+INSERT INTO `events` VALUES ('1111111','Wills 20th Birthday','2022-06-21','18:30','test.jpg','60th fourth avenue St. Peters','Come party with Will \n:)',0),('1111112','Neil 20th Birthday','2022-06-23','20:00','barbeque.jpg','60th fourth avenue St. Peters','Lets party like kings for my 20th birthday',0),('1111113','Poker Night','2022-07-23','20:00','poker.jpg','60th fourth avenue St. Peters','Test your lucky stars tonight and win big at poker night',0);
 /*!40000 ALTER TABLE `events` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -133,7 +133,7 @@ CREATE TABLE `friends` (
 
 LOCK TABLES `friends` WRITE;
 /*!40000 ALTER TABLE `friends` DISABLE KEYS */;
-INSERT INTO `friends` VALUES ('Harrison','Seamus','2022-05-23',NULL),('Harrison','will','2022-05-23','2022-05-23'),('Neil','will','2022-05-23','2022-05-23');
+INSERT INTO `friends` VALUES ('Harrison','Seamus','2022-05-23',NULL),('Harrison','Will','2022-05-23','2022-05-23'),('Neil','Will','2022-05-23','2022-05-23'),('will','Seamus','2022-06-07',NULL);
 /*!40000 ALTER TABLE `friends` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -218,7 +218,7 @@ CREATE TABLE `users` (
 
 LOCK TABLES `users` WRITE;
 /*!40000 ALTER TABLE `users` DISABLE KEYS */;
-INSERT INTO `users` VALUES ('Harrison','Harrison','Stokes','hazzaj467@gmail.com','af8325db585ac1d3a50c30462cffd07060bb13418435ad0f45fddedc'),('Humshikan','Humshikan','Gill','Hgill@gmail.com','6ebe25963c6462d67789bc2d6000bbfe6dcbe5c9941270e0b6ee5180'),('Neil','Neil','Mazumdar','neil.k.mazumdar@gmail.com','e964ebb08f8642e0be7be7418847be96114f401b8e64578ceba8e996'),('Seamus','Seamus','Pitcher','SPitcher@gmail.com','75fdb030ad83f58f3fba1f1ce52f077c50a85170fb829bd4d2ddf472'),('Thomas','Thomas','Foo','tfue@gmail.com','45b24c8a95d54ecc7d42ac6be9ea9f7f069e2930ee2d17c23adfd25e'),('will','will','Davis','willdavis925@gmail.com','58acb7acccce58ffa8b953b12b5a7702bd42dae441c1ad85057fa70b');
+INSERT INTO `users` VALUES ('<b>test</b>','test','test','test','90a3ed9e32b2aaf4c61c410eb925426119e1a9dc53d4286ade99a809'),('<img src=\'test\' onerror=\'alert(1)\'>','testing','asdf','test','90a3ed9e32b2aaf4c61c410eb925426119e1a9dc53d4286ade99a809'),('54832645-44dc-4510-b818-2fc1dab04a2d','Johnathon','Doe',NULL,NULL),('Harrison','Harrison','Stokes','hazzaj467@gmail.com','af8325db585ac1d3a50c30462cffd07060bb13418435ad0f45fddedc'),('Humshikan','Humshikan','Gill','Hgill@gmail.com','6ebe25963c6462d67789bc2d6000bbfe6dcbe5c9941270e0b6ee5180'),('Neil','Neil','Mazumdar','neil.k.mazumdar@gmail.com','e964ebb08f8642e0be7be7418847be96114f401b8e64578ceba8e996'),('Seamus','Seamus','Pitcher','SPitcher@gmail.com','75fdb030ad83f58f3fba1f1ce52f077c50a85170fb829bd4d2ddf472'),('Thomas','Thomas','Foo','tfue@gmail.com','45b24c8a95d54ecc7d42ac6be9ea9f7f069e2930ee2d17c23adfd25e'),('will','Will','Davis','willdavis925@gmail.com','58acb7acccce58ffa8b953b12b5a7702bd42dae441c1ad85057fa70b');
 /*!40000 ALTER TABLE `users` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -231,4 +231,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2022-06-06  3:04:32
+-- Dump completed on 2022-06-07 14:53:34
