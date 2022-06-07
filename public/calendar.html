@@ -15,10 +15,12 @@
     <div id="app">
         <header id="Nav"></header>
         <div class="calendarPageContainer">
-          <div>
-            <strong>{{calendar.month}} {{calendar.year}}</strong>
-            <button v-on:click="prevMonth()">Last Month</button>
-            <button v-on:click="nextMonth()">Next Month</button>
+          <div class="monthInfoContainer">
+            <h3>{{calendar.month}} {{calendar.year}}</h3>
+            <div>
+              <button v-on:click="prevMonth()">Last Month</button>
+              <button v-on:click="nextMonth()">Next Month</button>
+            </div>
           </div>
           <div  class="columnContainer">
             <div v-for="day in calendar.days">

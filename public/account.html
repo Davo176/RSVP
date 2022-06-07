@@ -20,7 +20,8 @@
 
             </br>
             <div class="accountPageContainer">
-                <h2>Account Settings</h2>
+                <h3>Your Settings</h3>
+
                 <label for="userName">Username: </label>
                 <p style="display: inline" id="user_name" name = "userName"></p>
 
@@ -46,19 +47,19 @@
                 <p id="maxLengthEmail"></p>
 
                 </br>
-                <h2>Email Settings</h2>
+                <h3>Email Settings</h3>
                 </br>
-                <div>
+                <div class="emailSettingsContainer">
                     <p>Receive an Email when an event is finalised:</p>
                     <button v-if="!currentEmailSettingFinalise" v-on:click="updateEmailSettings(`finalise`,1)">Opt in</button>
                     <button v-if="currentEmailSettingFinalise" v-on:click="updateEmailSettings(`finalise`,0)">Opt out</button>
                 </div>
-                <div>
+                <div class="emailSettingsContainer">
                     <p>Receive an Email when an event is cancelled:</p>
                     <button v-if="!currentEmailSettingCancel" v-on:click="updateEmailSettings(`cancel`,1)">Opt in</button>
                     <button v-if="currentEmailSettingCancel" v-on:click="updateEmailSettings(`cancel`,0)">Opt out</button>
                 </div>
-                <div>
+                <div class="emailSettingsContainer">
                     <p>Receive an Email when someone updates their status:</p>
                     <button v-if="!currentEmailSettingResponse" v-on:click="updateEmailSettings(`response`,1)">Opt in</button>
                     <button v-if="currentEmailSettingResponse" v-on:click="updateEmailSettings(`response`,0)">Opt out</button>

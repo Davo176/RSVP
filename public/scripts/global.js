@@ -49,7 +49,7 @@ function updateNav () {
     nav.innerHTML += `
   <nav>
     <ul class="navBar">
-        <li class="navBarElementContainerText"><h1>RSVP</button></h1>
+        <li class="navBarElementContainerText">RSVP</li>
     </ul>
   </nav>
   <nav>
@@ -63,9 +63,10 @@ function updateNav () {
     nav.innerHTML += `
   <nav>
     <ul class="navBar">
-        <li class="navBarElementContainerText"><h1>RSVP</h1></li>
-        <li class="navBarElementContainerText"><a href="/events" class="navBarElement" title="Go to home page">Home</a></li>
-        <li class="navBarElementContainerText"><a href="/friends" class="navBarElement" title="Go to friends page">Friends</a></li>
+        <li class="navBarElementContainerText">RSVP</li>
+        <li class="navBarElementContainerText"><a href="/events" class="navBarElement">Home</a></li>
+        <li class="navBarElementContainerText"><a href="/friends" class="navBarElement">Friends</a></li>
+
     </ul>
   </nav>
   <nav>
@@ -74,7 +75,7 @@ function updateNav () {
         <li class="navBarElementContainer"><a href="/notifications" title="Go to notifications page"><i class="icon fa-solid fa-bell"></i></a></li>
         <li class="navBarElementContainer"><a href="/calendar" title="Go to calendar"><i class="icon fa-solid fa-calendar-days"></i></a></li>
         <li class="navBarElementContainerText" style="padding-right: 5px"><p>${user_name}</p></li>
-        <li class="navBarElementContainer dropdown" style="padding-left: 0px"><button class="dropbtn dropdown" title="Account" onclick="dropdown()"><i class="fa-solid fa-circle-user dropdown"></i></a></li>
+        <li class="navBarElementContainer dropdown" style="padding-left: 0px"><i onclick="dropdown()" class="pointer fa-solid fa-circle-user dropdown"></i></a></li>
     </ul>
   </nav>
   <ul style="list-style-type: none" id="dropdownContent" class="dropdown-content dropdown">

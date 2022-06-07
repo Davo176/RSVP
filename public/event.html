@@ -45,6 +45,7 @@
                 </div>
                 <div v-if="editMode" class="editModeContainer">
                     <div class="halfEditContainer">
+                        <h3>Edit the Event</h3>
                         <div class="editGroupContainer">
                             <div class="labelContainer">
                                 Title
@@ -83,15 +84,15 @@
                         </div>
 
                         <div v-if="!event.Finalised && unavailable.length>=1">
-                            <strong>
+                            <h3>
                             {{unavailable.length}} {{unavailable.length==1 ? 'person' : 'people'}} cannot make the current time, they are:
-                        </strong>
+                            </h3>
                             <div v-for="person in unavailable">
                                 {{person.first_name}} {{person.last_name}}
                             </div>
                             <div class="editGroupContainer">
                                 <div>
-                                    We suggest you move it to {{nextDateTime}}
+                                    We suggest you move it to <strong>{{nextDateTime}}</strong>
                                 </div>
                                 <button v-on:click="getNextFullAvailableTime(searchFromDate,searchFromTime)">Suggest Next Time</button>
                                 <button v-on:click="setNewDateTime()">Set this as Time</button>
@@ -109,13 +110,13 @@
                         </div>
                         <div class="editGroupContainer" v-if="!event.Finalised">
                             <div class="labelContainer">
-                                Finalise Date and Time (Cannot be Undone)<br> Make sure you press change before finalise
+                                Finalise Event Date and Time. Permanent.
                             </div>
                             <button v-on:click="finalise">Finalise</button>
                         </div>
                         <div class="editGroupContainer" v-if="!event.Finalised">
                             <strong>
-                                Delete Event. Permanent with no warning.
+                                Delete Event. Permanent.
                             </strong>
                             <button v-on:click="deleteEvent">Delete</button>
                         </div>
