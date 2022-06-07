@@ -23,7 +23,7 @@
             </div>
             <div class="searchResultContainer" v-for="person in searchResults">
                 <div>{{person.first_name}} {{person.last_name}} ({{person.user_name}})</div>
-                <i v-on:click="addFriend(person.first_name)" class="addFriend fa-solid fa-user-plus" title="Send friend request"></i>
+                <i v-on:click="addFriend(person.user_name)" class="addFriend fa-solid fa-user-plus" title="Send friend request"></i>
             </div>
         </div>
         <div class="friendsColSeperator">
