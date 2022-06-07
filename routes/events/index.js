@@ -261,8 +261,9 @@ router.get('/people', function(req,res,next){
                   u.first_name,
                   u.last_name,
                   CASE
-                    WHEN i.invitee_id IN (SELECT requestee from friends where friendship_start_date is not null and requester=?) then 'TRUE'
-                    WHEN i.invitee_id IN (SELECT requester from friends where friendship_start_date is not null and requestee=?) then 'TRUE'
+                    WHEN i.invitee_id IN (SELECT requestee from friends where requester=?) then 'TRUE'
+                    WHEN i.invitee_id IN (SELECT requester from friends where requestee=?) then 'TRUE'
+                    WHEN i.invitee_id = ? then 'TRUE'
                     else FALSE
                   end as areFriends
                   from event_invitees as i
@@ -275,8 +276,9 @@ router.get('/people', function(req,res,next){
                   u.first_name,
                   u.last_name,
                   CASE
-                    WHEN a.admin_id IN (SELECT requestee from friends where friendship_start_date is not null and requester=?) then 'TRUE'
-                    WHEN a.admin_id IN (SELECT requester from friends where friendship_start_date is not null and requestee=?) then 'TRUE'
+                    WHEN a.admin_id IN (SELECT requestee from friends where requester=?) then 'TRUE'
+                    WHEN a.admin_id IN (SELECT requester from friends where requestee=?) then 'TRUE'
+                    WHEN a.admin_id = ? then 'TRUE'
                     else 'FALSE'
                   end as areFriends
               from event_admins as a
@@ -288,7 +290,7 @@ router.get('/people', function(req,res,next){
           res.sendStatus(500);
           return;
         }
-        connection.query(query, [user,user,event_id,user,user,event_id], function(error, rows, fields) {
+        connection.query(query, [user,user,user,event_id,user,user,user,event_id], function(error, rows, fields) {
           connection.release();
           if (error) {
             console.log(error);
