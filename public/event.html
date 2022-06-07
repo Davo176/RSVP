@@ -126,8 +126,8 @@
             <div class="inviteeContainer">
                 <div class="groupContainer">
                     <div class="groupTitleContainer" v-on:click="adminOpen=!adminOpen">
-                        <h4>Admin</h4>
-                        <i class="chevron fa-solid"
+                        <h4>Admins:</h4>
+                        <i class="chevron fa-solid" title="Show/Hide admins"
                             v-bind:class="{ 'fa-chevron-up':adminOpen, 'fa-chevron-down':!adminOpen }"
                             ></i>
                     </div>
@@ -137,8 +137,8 @@
                 </div>
                 <div class="groupContainer">
                     <div class="groupTitleContainer" v-on:click="goingOpen=!goingOpen">
-                        <h4>Going</h4>
-                        <i class="chevron fa-solid"
+                        <h4>Going:</h4>
+                        <i class="chevron fa-solid" title="Show/Hide going"
                             v-bind:class="{ 'fa-chevron-up':goingOpen, 'fa-chevron-down':!goingOpen }"
                             ></i>
                     </div>
@@ -146,41 +146,41 @@
                         v-for="name in people">
                         <div>{{name.first_name}} {{name.last_name}}</div>
                         <div>
-                            <i v-on:click="addFriend(name.invitee_id)" v-if="name.areFriends=='0' && yourUsername.toLowerCase()!=name.invitee_id.toLowerCase()" class="addFriend fa-solid fa-user-plus"></i>
-                            <i v-on:click="addAdmin(name.invitee_id)" v-if="areAdmin && !(adminInfo.includes(name.invitee_id.toLowerCase()))" class="star fa-solid fa-star"></i>
-                            <i v-on:click="uninvite(name.invitee_id)" v-if="areAdmin && yourUsername.toLowerCase()!=name.invitee_id.toLowerCase() && !(adminInfo.includes(name.invitee_id.toLowerCase()))" class="unInvite fa-solid fa-calendar-xmark"></i>
+                            <i title="Send friend request" v-on:click="addFriend(name.invitee_id)" v-if="name.areFriends=='0' && yourUsername.toLowerCase()!=name.invitee_id.toLowerCase()" class="addFriend fa-solid fa-user-plus"></i>
+                            <i title="Make admin" v-on:click="addAdmin(name.invitee_id)" v-if="areAdmin && !(adminInfo.includes(name.invitee_id.toLowerCase()))" class="star fa-solid fa-star"></i>
+                            <i title="Uninvite from event" v-on:click="uninvite(name.invitee_id)" v-if="areAdmin && yourUsername.toLowerCase()!=name.invitee_id.toLowerCase() && !(adminInfo.includes(name.invitee_id.toLowerCase()))" class="unInvite fa-solid fa-calendar-xmark"></i>
                         </div>
                     </div>
                 </div>
                 <div class="groupContainer">
                     <div class="groupTitleContainer" v-on:click="pendingOpen=!pendingOpen">
-                        <h4>Pending</h4>
-                        <i class="chevron fa-solid"
+                        <h4>Pending:</h4>
+                        <i class="chevron fa-solid" title="Show/Hide pending"
                             v-bind:class="{ 'fa-chevron-up':pendingOpen, 'fa-chevron-down':!pendingOpen }"
                             ></i>
                     </div>
                     <div class="nameContainer" v-if="pendingOpen && name.attending_status==='Unsure'" v-for="name in people">
                         <div>{{name.first_name}} {{name.last_name}}</div>
                         <div>
-                            <i v-on:click="addFriend(name.invitee_id)" v-if="name.areFriends=='0' && yourUsername.toLowerCase()!=name.invitee_id.toLowerCase()" class="addFriend fa-solid fa-user-plus"></i>
-                            <i v-on:click="addAdmin(name.invitee_id)" v-if="areAdmin && !(adminInfo.includes(name.invitee_id.toLowerCase()))" class="star fa-solid fa-star"></i>
-                            <i v-on:click="uninvite(name.invitee_id)" v-if="areAdmin && yourUsername.toLowerCase()!=name.invitee_id.toLowerCase() && !(adminInfo.includes(name.invitee_id.toLowerCase()))" class="unInvite fa-solid fa-calendar-xmark"></i>
+                            <i title="Send friend request" v-on:click="addFriend(name.invitee_id)" v-if="name.areFriends=='0' && yourUsername.toLowerCase()!=name.invitee_id.toLowerCase()" class="addFriend fa-solid fa-user-plus"></i>
+                            <i title="Make admin" v-on:click="addAdmin(name.invitee_id)" v-if="areAdmin && !(adminInfo.includes(name.invitee_id.toLowerCase()))" class="star fa-solid fa-star"></i>
+                            <i title="Uninvite from event" v-on:click="uninvite(name.invitee_id)" v-if="areAdmin && yourUsername.toLowerCase()!=name.invitee_id.toLowerCase() && !(adminInfo.includes(name.invitee_id.toLowerCase()))" class="unInvite fa-solid fa-calendar-xmark"></i>
                         </div>
                     </div>
                 </div>
                 <div class="groupContainer">
                     <div class="groupTitleContainer" v-on:click="notGoingOpen=!notGoingOpen">
-                        <h4>Not Going</h4>
-                        <i class="chevron fa-solid"
+                        <h4>Not Going:</h4>
+                        <i class="chevron fa-solid" title="Show/Hide not going"
                             v-bind:class="{ 'fa-chevron-up':notGoingOpen, 'fa-chevron-down':!notGoingOpen }"
                             ></i>
                     </div>
                     <div class="nameContainer" v-if="notGoingOpen && name.attending_status==='Not Going'" v-for="name in people">
                         <div>{{name.first_name}} {{name.last_name}}</div>
                         <div>
-                            <i v-on:click="addFriend(name.invitee_id)" v-if="name.areFriends=='0' && yourUsername.toLowerCase()!=name.invitee_id.toLowerCase()" class="addFriend fa-solid fa-user-plus"></i>
-                            <i v-on:click="addAdmin(name.invitee_id)" v-if="areAdmin && !(adminInfo.includes(name.invitee_id.toLowerCase()))" class="star fa-solid fa-star"></i>
-                            <i v-on:click="uninvite(name.invitee_id)" v-if="areAdmin && yourUsername.toLowerCase()!=name.invitee_id.toLowerCase() && !(adminInfo.includes(name.invitee_id.toLowerCase()))" class="unInvite fa-solid fa-calendar-xmark"></i>
+                            <i title="Send friend request" v-on:click="addFriend(name.invitee_id)" v-if="name.areFriends=='0' && yourUsername.toLowerCase()!=name.invitee_id.toLowerCase()" class="addFriend fa-solid fa-user-plus"></i>
+                            <i title="Make admin" v-on:click="addAdmin(name.invitee_id)" v-if="areAdmin && !(adminInfo.includes(name.invitee_id.toLowerCase()))" class="star fa-solid fa-star"></i>
+                            <i title="Uninvite from event" v-on:click="uninvite(name.invitee_id)" v-if="areAdmin && yourUsername.toLowerCase()!=name.invitee_id.toLowerCase() && !(adminInfo.includes(name.invitee_id.toLowerCase()))" class="unInvite fa-solid fa-calendar-xmark"></i>
                         </div>
                     </div>
                 </div>

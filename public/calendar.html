@@ -26,13 +26,13 @@
             <div v-for="day in calendar.days">
               <strong>{{day.dayName}}</strong>
               <div class="column">
-                <div v-on:click="addUnavailability(date)" v-bind:class="{ activeBlock:!date.blank, inactiveBlock:date.blank }" v-for="date in day.dates">
+                <div title="Add unavailability" v-on:click="addUnavailability(date)" v-bind:class="{ activeBlock:!date.blank, inactiveBlock:date.blank }" v-for="date in day.dates">
                   {{date.date}}
                   <div v-for="event in date.events" class="miniEvent">
                     <div>
                       {{formatTime(event.unavailable_from)}} <strong>{{event.reason}}</strong>
                     </div>
-                    <div v-on:click.stop="deleteEvent(event)">
+                    <div title="Delete unavailability" v-on:click.stop="deleteEvent(event)">
                       <i class="fa-solid fa-trash-can" style="font-size:14px;"></i>
                     </div>
                   </div>
