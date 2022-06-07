@@ -1,6 +1,7 @@
 :root {
-  --primary-color: #FAF1CF;
-  --secondary-color: #3F6844;
+  --primary-color: #F0F2F4;
+  --secondary-color: #214D74;
+  --accent-color: #28A745;
 }
 
 * {
@@ -44,12 +45,14 @@ button {
   font-weight: 500;
   font-size: 16px;
   color: white;
-  background-color: var(--secondary-color);
+  background-color: var(--accent-color);
   text-decoration: none;
   border: none;
   height: 100%;
   line-height:calc(5vh*0.6);
   cursor: pointer;
+  border-radius: 20px;
+  padding: 0px 5px;
 }
 
 i {
@@ -64,7 +67,6 @@ header {
   display: flex;
   justify-content: space-between;
   align-items:center;
-  padding:30px, 10%;
   background-color: var(--secondary-color);
   height: 5vh;
   color: white!important;
@@ -95,8 +97,8 @@ header {
 .dropdown-content {
   display: none;
   position: absolute;
-  color: black;
-  background-color:#3F6844;
+  color: white;
+  background-color:var(--secondary-color);;
   right: 0.5em;
   top: 3em;
 }
@@ -110,4 +112,12 @@ header {
 /*for dropdown*/
 .show{
   display: block;
+}
+
+h3 {
+  color: var(--secondary-color);
+}
+
+.pointer {
+  cursor: pointer;
 }
