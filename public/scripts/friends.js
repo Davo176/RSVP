@@ -29,7 +29,7 @@ const MYFRIENDS = [
     "Eryn Glass",
     "Umar Houston",
     "Emmanuella Wilks",
-]
+];
 
 const MYFRIENDREQUESTS = [
     "Brittney Crosby",
@@ -62,7 +62,7 @@ const MYFRIENDREQUESTS = [
     "Elis Wagner",
     "Harvir Peacock",
     "Amanda Cartwright",
-]
+];
 //Will created base, waiting for harrison to implement ajax and routes
 var vueinst = new Vue({
     el: '#app',
@@ -74,14 +74,49 @@ var vueinst = new Vue({
     },
     methods: {
         remove: function(friend){
-            this.friends.splice(this.friends.indexOf(friend), 1);
+            var xhttp = new XMLHttpRequest();
+            xhttp.onreadystatechange = function() {
+                if (this.readyState == 4 && this.status == 500) {
+                    console.log("error");
+                }
+                if (this.readyState == 4 && this.status == 200) {
+                    this.friends.splice(this.friends.indexOf(friend), 1);
+                }
+            };
+
+            xhttp.open("GET", "/friends/removeFriend", true);
+            xhttp.send();
+
         },
         accept: function(friend){
-            this.friendRequests.splice(this.friendRequests.indexOf(friend), 1);
-            this.friends.push(friend);
+            var xhttp = new XMLHttpRequest();
+            xhttp.onreadystatechange = function() {
+                if (this.readyState == 4 && this.status == 500) {
+                    console.log("error");
+                }
+                if (this.readyState == 4 && this.status == 200) {
+                    this.friendRequests.splice(this.friendRequests.indexOf(friend), 1);
+                    this.friends.push(friend);
+                }
+            };
+
+            xhttp.open("GET", "/friends/acceptRequest", true);
+            xhttp.send();
+
         },
         decline: function(friend){
-            this.friendRequests.splice(this.friendRequests.indexOf(friend), 1);
+            var xhttp = new XMLHttpRequest();
+            xhttp.onreadystatechange = function() {
+                if (this.readyState == 4 && this.status == 500) {
+                    console.log("error");
+                }
+                if (this.readyState == 4 && this.status == 200) {
+                    this.friendRequests.splice(this.friendRequests.indexOf(friend), 1);
+                }
+            };
+
+            xhttp.open("GET", "/friends/declineRequest", true);
+            xhttp.send();
         },
         //send a search for users who match search term, if more than 3 chars.
         searchForNewFriends: function(){
