@@ -28,14 +28,14 @@
         </div>
         <div class="friendsColSeperator">
             <div class="friendCol">
-                <h3>Friends Requests</h3>
+                <h3>Friends</h3>
                 <div v-for="person in friends" class="friendContainer">
                     <span> {{person.first_name}} {{person.last_name}} ({{person.user_name}})</span>
                     <button class="friendReqButton" v-on:click="remove(person.user_name)">Remove</button>
                 </div>
             </div>
             <div class="friendCol">
-                <strong>Friends Requests</strong>
+                <h3>Friends Requests</h3>
                 <div v-for="person in friendRequests">
 
                     <div class="friendRequestContainer">

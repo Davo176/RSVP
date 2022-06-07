@@ -219,9 +219,10 @@ router.get('/search', function (req, res, next) {
                      OR concat(first_name, ' ', last_name) like ?)
                      AND
                      user_name NOT IN (select requester from friends where requestee = ? UNION select requestee from friends where requester=?)
+                     AND user_name <> ?
                      order by first_name, last_name, user_name;
                     `;
-      connection.query(query, [searchTerm, searchTerm, searchTerm, searchTerm, user, user], function (error, rows, fields) {
+      connection.query(query, [searchTerm, searchTerm, searchTerm, searchTerm, user, user, user], function (error, rows, fields) {
         connection.release();
         if (error) {
           console.log(error);
