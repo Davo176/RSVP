@@ -49,7 +49,7 @@ function updateNav () {
     nav.innerHTML += `
   <nav>
     <ul class="navBar">
-        <li class="navBarElementContainerText"><button >RSVP</button></li>
+        <li class="navBarElementContainerText"><h1>RSVP</button></h1>
     </ul>
   </nav>
   <nav>
@@ -63,18 +63,18 @@ function updateNav () {
     nav.innerHTML += `
   <nav>
     <ul class="navBar">
-        <li class="navBarElementContainerText"><button >RSVP</button></li>
-        <li class="navBarElementContainerText"><a href="/events" class="navBarElement">Home</a></li>
-        <li class="navBarElementContainerText"><a href="/friends" class="navBarElement">Friends</a></li>
+        <li class="navBarElementContainerText"><h1>RSVP</h1></li>
+        <li class="navBarElementContainerText"><a href="/events" class="navBarElement" title="Go to home page">Home</a></li>
+        <li class="navBarElementContainerText"><a href="/friends" class="navBarElement" title="Go to friends page">Friends</a></li>
     </ul>
   </nav>
   <nav>
     <ul class="navBar">
-        <li class="navBarElementContainer"><a href="/newevent"><i href="#" class="icon fa-solid fa-plus"></i></a></li>
-        <li class="navBarElementContainer"><a href="/notifications"><i class="icon fa-solid fa-bell"></i></a></li>
-        <li class="navBarElementContainer"><a href="/calendar"><i class="icon fa-solid fa-calendar-days"></i></a></li>
+        <li class="navBarElementContainer"><a href="/newevent" title="Create new event"><i href="#" class="icon fa-solid fa-plus"></i></a></li>
+        <li class="navBarElementContainer"><a href="/notifications" title="Go to notifications page"><i class="icon fa-solid fa-bell"></i></a></li>
+        <li class="navBarElementContainer"><a href="/calendar" title="Go to calendar"><i class="icon fa-solid fa-calendar-days"></i></a></li>
         <li class="navBarElementContainerText" style="padding-right: 5px"><p>${user_name}</p></li>
-        <li class="navBarElementContainer dropdown" style="padding-left: 0px"><button class="dropbtn dropdown" onclick="dropdown()"><i class="fa-solid fa-circle-user dropdown"></i></a></li>
+        <li class="navBarElementContainer dropdown" style="padding-left: 0px"><button class="dropbtn dropdown" title="Account" onclick="dropdown()"><i class="fa-solid fa-circle-user dropdown"></i></a></li>
     </ul>
   </nav>
   <ul style="list-style-type: none" id="dropdownContent" class="dropdown-content dropdown">

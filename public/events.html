@@ -22,7 +22,7 @@
                         <div class="arrowButtonContainer">
                             <button class="arrowButton" v-on:click="shiftNLeft">&lt;</button>
                         </div>
-                        <div v-for="event in myEvents" class="eventContainer" v-on:click="goToEvent(event.event_id)">
+                        <div v-for="event in myEvents" class="eventContainer" v-on:click="goToEvent(event.event_id)" title="Go to event page">
                             <img v-bind:src="imagePreURL + event.Image" style="width:20vw;"/>
                             <div class="eventTextContainer">
                                 <strong class="eventName">{{event.Title}}</strong>
@@ -55,7 +55,7 @@
                         <div class="arrowButtonContainer">
                             <button class="arrowButton" v-on:click="shiftMLeft">&lt;</button>
                         </div>
-                        <div v-for="event in invitedEvents" class="eventContainer" v-on:click="goToEvent(event.event_id)">
+                        <div v-for="event in invitedEvents" class="eventContainer" v-on:click="goToEvent(event.event_id)" title="Go to event page">
                             <img v-bind:src="imagePreURL + event.Image" style="width:20vw;"/>
                             <div class="eventTextContainer">
                                 <strong class="eventName">{{event.Title}}</strong>
@@ -64,15 +64,15 @@
                                 <span class="eventText">{{event.Status}}, Change Status Below</span>
                                 <div class="eventAttendeeInfoContainer">
                                     <div>
-                                        <div class="center"><i style="color:green" href="#" class="icon fa-solid fa-check" v-on:click.stop="changeStatus(event.event_id,'Going')"></i></div>
+                                        <div class="center"><i style="color:green" title="Accept invite" href="#" class="icon fa-solid fa-check" v-on:click.stop="changeStatus(event.event_id,'Going')"></i></div>
                                         <div class="center">Accept Invite</div>
                                     </div>
                                     <div>
-                                        <div class="center"><i style="color:orange" href="#" class="icon fa-solid fa-question" v-on:click.stop="changeStatus(event.event_id,'Unsure')"></i></div>
+                                        <div class="center"><i style="color:orange" title="Set status to pending" href="#" class="icon fa-solid fa-question" v-on:click.stop="changeStatus(event.event_id,'Unsure')"></i></div>
                                         <div class="center">Maybe</div>
                                     </div>
                                     <div>
-                                        <div class="center"><i style="color:red" href="#" class="icon fa-solid fa-xmark" v-on:click.stop="changeStatus(event.event_id,'Not Going')"></i></div>
+                                        <div class="center"><i style="color:red" title="Decline invite" href="#" class="icon fa-solid fa-xmark" v-on:click.stop="changeStatus(event.event_id,'Not Going')"></i></div>
                                         <div class="center">Decline Invite</div>
                                     </div>
                                 </div>
