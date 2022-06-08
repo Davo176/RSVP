@@ -1,3 +1,140 @@
+/* exported gapiLoaded */
+/* exported gisLoaded */
+/* exported handleAuthClick */
+/* exported handleSignoutClick */
+
+// TODO(developer): Set to client ID and API key from the Developer Console
+const CLIENT_ID = '<YOUR_CLIENT_ID>';
+const API_KEY = '<YOUR_API_KEY>';
+
+// Discovery doc URL for APIs used by the quickstart
+const DISCOVERY_DOC = 'https://www.googleapis.com/discovery/v1/apis/calendar/v3/rest';
+
+// Authorization scopes required by the API; multiple scopes can be
+// included, separated by spaces.
+const SCOPES = 'https://www.googleapis.com/auth/calendar.readonly';
+
+let tokenClient;
+let gapiInited = false;
+let gisInited = false;
+
+document.getElementById('authorize_button').style.visibility = 'hidden';
+document.getElementById('signout_button').style.visibility = 'hidden';
+
+/**
+ * Callback after api.js is loaded.
+ */
+function gapiLoaded() {
+    gapi.load('client', intializeGapiClient);
+}
+
+/**
+ * Callback after the API client is loaded. Loads the
+ * discovery doc to initialize the API.
+ */
+async function intializeGapiClient() {
+    await gapi.client.init({
+        apiKey: API_KEY,
+        discoveryDocs: [DISCOVERY_DOC],
+    });
+    gapiInited = true;
+    maybeEnableButtons();
+}
+
+/**
+ * Callback after Google Identity Services are loaded.
+ */
+function gisLoaded() {
+    tokenClient = google.accounts.oauth2.initTokenClient({
+        client_id: CLIENT_ID,
+        scope: SCOPES,
+        callback: '', // defined later
+    });
+    gisInited = true;
+    maybeEnableButtons();
+}
+
+/**
+ * Enables user interaction after all libraries are loaded.
+ */
+function maybeEnableButtons() {
+    if (gapiInited && gisInited) {
+        document.getElementById('authorize_button').style.visibility = 'visible';
+    }
+}
+
+/**
+ *  Sign in the user upon button click.
+ */
+function handleAuthClick() {
+    tokenClient.callback = async (resp) => {
+        if (resp.error !== undefined) {
+            throw (resp);
+        }
+        document.getElementById('signout_button').style.visibility = 'visible';
+        document.getElementById('authorize_button').innerText = 'Refresh';
+        await listUpcomingEvents();
+    };
+
+    if (gapi.client.getToken() === null) {
+        // Prompt the user to select a Google Account and ask for consent to share their data
+        // when establishing a new session.
+        tokenClient.requestAccessToken({ prompt: 'consent' });
+    } else {
+        // Skip display of account chooser and consent dialog for an existing session.
+        tokenClient.requestAccessToken({ prompt: '' });
+    }
+}
+
+/**
+ *  Sign out the user upon button click.
+ */
+function handleSignoutClick() {
+    const token = gapi.client.getToken();
+    if (token !== null) {
+        google.accounts.oauth2.revoke(token.access_token);
+        gapi.client.setToken('');
+        document.getElementById('content').innerText = '';
+        document.getElementById('authorize_button').innerText = 'Authorize';
+        document.getElementById('signout_button').style.visibility = 'hidden';
+    }
+}
+
+/**
+ * Print the summary and start datetime/date of the next ten events in
+ * the authorized user's calendar. If no events are found an
+ * appropriate message is printed.
+ */
+async function listUpcomingEvents() {
+    let response;
+    try {
+        const request = {
+            'calendarId': 'primary',
+            'timeMin': (new Date()).toISOString(),
+            'showDeleted': false,
+            'singleEvents': true,
+            'maxResults': 10,
+            'orderBy': 'startTime',
+        };
+        response = await gapi.client.calendar.events.list(request);
+    } catch (err) {
+        document.getElementById('content').innerText = err.message;
+        return;
+    }
+
+    const events = response.result.items;
+    if (!events || events.length == 0) {
+        document.getElementById('content').innerText = 'No events found.';
+        return;
+    }
+    // Flatten to string to display
+    const output = events.reduce(
+        (str, event) => `${str}${event.summary} (${event.start.dateTime || event.start.date})\n`,
+        'Events:\n');
+    document.getElementById('content').innerText = output;
+}
+
+
 var vueinst = new Vue({
     el: '#app',
     data: {
@@ -11,102 +148,102 @@ var vueinst = new Vue({
         reason: null,
     },
     methods: {
-        formatTime: function(time){
+        formatTime: function (time) {
             //return the time as a formatted string
             return moment.utc(time).format("h:mm A")
         },
-        getMonth: function(month,year){
+        getMonth: function (month, year) {
             //get the calendar for displayed month
             let xhttp = new XMLHttpRequest();
             let vueReference = this;
-            xhttp.onreadystatechange = function() {
-                if (this.readyState == 4 && this.status == 500){
+            xhttp.onreadystatechange = function () {
+                if (this.readyState == 4 && this.status == 500) {
                     console.log("error");
                 }
-                if (this.readyState == 4 && this.status == 200){
+                if (this.readyState == 4 && this.status == 200) {
                     vueReference.calendar = JSON.parse(this.responseText);
                 }
             };
-            xhttp.open("GET",`/api/calendar?month=${this.month}&year=${this.year}`,true);
+            xhttp.open("GET", `/api/calendar?month=${this.month}&year=${this.year}`, true);
             xhttp.send();
         },
-        nextMonth: function(){
+        nextMonth: function () {
             //increment month and update calendar
-            if (this.month!=12){
-                this.month+=1;
-            }else{
-                this.year+=1;
-                this.month=1;
+            if (this.month != 12) {
+                this.month += 1;
+            } else {
+                this.year += 1;
+                this.month = 1;
             }
             this.getMonth();
         },
-        prevMonth: function(){
+        prevMonth: function () {
             //decrement the month by 1 and update calendar
-            if (this.month!=1){
-                this.month-=1;
-            }else{
-                this.year-=1;
-                this.month=12;
+            if (this.month != 1) {
+                this.month -= 1;
+            } else {
+                this.year -= 1;
+                this.month = 12;
             }
             this.getMonth();
         },
-        addUnavailability: function(date){
+        addUnavailability: function (date) {
             //show a form to add a new unavailability time
-            if(!date.blank){
+            if (!date.blank) {
                 this.showForm = true;
                 this.addUnavailabilityDate = parseInt(date.date);
             }
         },
-        submitUnavailability: function(){
+        submitUnavailability: function () {
             //send unavailability into the database
-            if (this.unavailableFrom===null || this.reason===null||this.unavailableTo===null){
+            if (this.unavailableFrom === null || this.reason === null || this.unavailableTo === null) {
                 return;
             }
-            let reqBody = JSON.stringify({date: `${this.year}-${this.month}-${this.addUnavailabilityDate}`,unavailable_from: this.unavailableFrom, unavailable_to:this.unavailableTo,reason:this.reason});
+            let reqBody = JSON.stringify({ date: `${this.year}-${this.month}-${this.addUnavailabilityDate}`, unavailable_from: this.unavailableFrom, unavailable_to: this.unavailableTo, reason: this.reason });
             let xhttp = new XMLHttpRequest();
             let vueReference = this;
 
-            xhttp.onreadystatechange = function() {
-                if (this.readyState == 4 && this.status == 500){
+            xhttp.onreadystatechange = function () {
+                if (this.readyState == 4 && this.status == 500) {
                     console.log("error");
                 }
-                if (this.readyState == 4 && this.status == 200){
+                if (this.readyState == 4 && this.status == 200) {
                     vueReference.getMonth();
                     vueReference.showForm = false;
                     vueReference.reason = null;
-                    vueReference.unavailableFrom=null;
-                    vueReference.unavailableTo=null;
+                    vueReference.unavailableFrom = null;
+                    vueReference.unavailableTo = null;
                 }
             };
 
-            xhttp.open("POST","/api/calendar/add",true);
+            xhttp.open("POST", "/api/calendar/add", true);
             xhttp.setRequestHeader('Content-type', 'application/json; charset=UTF-8')
             xhttp.send(reqBody);
         },
-        deleteEvent: function(event){
+        deleteEvent: function (event) {
             //delete an unavailability
-            let reqBody = JSON.stringify({id: event.unavailability_id});
+            let reqBody = JSON.stringify({ id: event.unavailability_id });
             let xhttp = new XMLHttpRequest();
             let vueReference = this;
 
-            xhttp.onreadystatechange = function() {
-                if (this.readyState == 4 && this.status == 500){
+            xhttp.onreadystatechange = function () {
+                if (this.readyState == 4 && this.status == 500) {
                     console.log("error");
                 }
-                if (this.readyState == 4 && this.status == 200){
+                if (this.readyState == 4 && this.status == 200) {
                     vueReference.getMonth();
                     vueReference.reason = null;
-                    vueReference.unavailableFrom=null;
-                    vueReference.unavailableTo=null;
+                    vueReference.unavailableFrom = null;
+                    vueReference.unavailableTo = null;
                 }
             };
 
-            xhttp.open("POST","/api/calendar/delete",true);
+            xhttp.open("POST", "/api/calendar/delete", true);
             xhttp.setRequestHeader('Content-type', 'application/json; charset=UTF-8')
             xhttp.send(reqBody);
-        }
+        },
     },
-    created: function(){
+    created: function () {
         //on page create get the current month
         this.getMonth()
     }
