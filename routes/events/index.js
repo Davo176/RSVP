@@ -150,7 +150,7 @@ router.post('/add', upload.single("eventImage"), function(req, res, next){
       }
     });
 
-    res.redirect('/newevent');
+    res.redirect('/event?id='+eventID);
   })
 });
 //update your attending status (and send emails out)
