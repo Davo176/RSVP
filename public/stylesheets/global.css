@@ -116,8 +116,34 @@ header {
 
 h3 {
   color: var(--secondary-color);
+  margin-bottom: 1em;
+}
+
+input.error{
+  border-color: red;
 }
 
 .pointer {
   cursor: pointer;
+}
+
+/*no background-color here because alert div spans whole screen*/
+.alert {
+  display: none;
+  position: absolute;
+  justify-content: center;
+  top: 3em;
+  width: 100vw;
+}
+
+#alertContent {
+  display: flex;
+  background-color: white;
+  border:solid;
+  border-color: lightgrey;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  height: 3em;
+  width: 50%;
 }

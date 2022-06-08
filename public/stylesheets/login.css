@@ -70,5 +70,11 @@ h1 {
     text-align: center;
 }
 
-
+.passwordContainer{
+    display: flex;
+    justify-content:left;
+}
+/* input {
+    width: 100%;
+} */
 

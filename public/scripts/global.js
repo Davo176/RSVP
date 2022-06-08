@@ -25,7 +25,29 @@ function loginButton ()
 
 }
 
+function showAlert(argAlert){
+
+  console.log(argAlert);
+  let alert = document.getElementById("alert");
+
+  alert.querySelector("#alertContent").innerText = argAlert;
+  alert.style.display = "flex";
+
+}
+
+function removeError(){
+
+  let fields = document.querySelectorAll(".error");
+  if(fields.length != 0){
+    for(let i = 0; i<fields.length; i++){ //fields[fields.length] is not an html element
+      fields[i].classList.remove("error");
+    }
+  }
+
+}
+
 var first_name = "";
+
 var loggedIn = false;
 function getUser()
 {
@@ -36,7 +58,8 @@ function getUser()
       {
         first_name=this.responseText;
         loggedIn = true;
-        updateNav()
+        addAlertDiv();
+        updateNav();
       }
   };
   xhttp.open("GET","/user");
@@ -48,13 +71,31 @@ function dropdown(){ //tutorial from https://www.w3schools.com/howto/howto_js_dr
 }
 
 window.onclick = function(event){
-  if(!event.target.matches('.dropdown')){
+  if(document.querySelector(".dropdown") && !event.target.matches('.dropdown')){
       document.getElementById("dropdownContent").classList.remove("show");
+  }
+  if(document.querySelector("button[type='submit]") && !event.target.matches("button[type='submit']")){
+      document.getElementById("alert").style.display = "none";
   }
 }
 
+function addAlertDiv() {
+
+  let div = document.createElement("DIV");
+  div.id = "alert";
+  div.classList.add("alert");
+
+  div.innerHTML = `
+  <div id="alertContent"></div>
+  `;
+
+  var body = document.querySelector("body");
+  body.prepend(div);
+}
+
 function updateNav () {
-  var nav = document.getElementById('Nav');
+  if(document.body.contains(document.querySelector("header"))){
+    var nav = document.getElementById('Nav');
   if (first_name == "GUEST")
   {
     nav.innerHTML += `
@@ -96,5 +137,7 @@ function updateNav () {
   let placeholder = document.getElementById("user_name_placeholder");
   placeholder.innerText = `${first_name}`;
   };
+  }
+
 }
 window.addEventListener("load", getUser);

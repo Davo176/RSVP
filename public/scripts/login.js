@@ -26,23 +26,32 @@ function login()
         var xhttp = new XMLHttpRequest();
         xhttp.onreadystatechange = function()
         {
-            if (this.readyState == 4 && this.status == 200)
+            if(this.readyState == 4){
+            if (this.status == 200)
             {
-                //If sucessful login display logged in and then redirect them to home page
-                login_result.innerText = "Logged in"
-                location.href = "/"
+                console.log('Logged in');
+                login_result.innerText = "Logged in";
+                location.href = "/";
             }
             else if (this.status == 401)
             {
-                //Error code 401 denotes there is no user in the database with matching credentials
-                login_result.innerText = "Incorrect username/password"
+                showAlert("Incorrect username and/or password");
+                login_result.innerText = "Incorrect username and/or password";
+
+                //Makes them go red
+                document.getElementById("l_username").classList.add("error");
+                document.getElementById("l_password").classList.add("error");
             }
             else if (this.status == 400)
             {
-                //Error code 400 denotes there was an improper login form
-                //This should not occur due to the previous check
-                login_result.innerText = "Improper Login Form"
+                showAlert('Improper Login Form');
+                login_result.innerText = "Improper Login Form";
+
+                //Makes them go red
+                document.getElementById("l_username").classList.add("error");
+                document.getElementById("l_password").classList.add("error");
             }
+        }
         };
         xhttp.open("POST","/login");
         xhttp.setRequestHeader("Content-type","application/json")
