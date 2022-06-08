@@ -15,9 +15,11 @@ SELECT
 FROM
     events;
 
-UPDATE users SET password_hash = SHA2('curry',224) WHERE user_name = 'Neil';
-UPDATE users SET password_hash = SHA2('pale',224) WHERE user_name = 'Harrison';
-UPDATE users SET password_hash = SHA2('hummus22',224) WHERE user_name = 'Humshikan';
-UPDATE users SET password_hash = SHA2('besttrim',224) WHERE user_name = 'Seamus';
-UPDATE users SET password_hash = SHA2('fooey2002',224) WHERE user_name = 'Thomas';
-UPDATE users SET password_hash = SHA2('admin',224) WHERE user_name = 'will';
+UPDATE users SET password_hash = SHA2('curryRSVPWDC',224) WHERE user_name = 'Neil';
+UPDATE users SET password_hash = SHA2('paleRSVPWDC',224) WHERE user_name = 'Harrison';
+UPDATE users SET password_hash = SHA2('hummus22RSVPWDC',224) WHERE user_name = 'Humshikan';
+UPDATE users SET password_hash = SHA2('besttrimRSVPWDC',224) WHERE user_name = 'Seamus';
+UPDATE users SET password_hash = SHA2('fooey2002RSVPWDC',224) WHERE user_name = 'Thomas';
+UPDATE users SET password_hash = SHA2('adminRSVPWDC',224) WHERE user_name = 'will';
+UPDATE users SET password_hash = SHA2('testRSVPWDC',224) WHERE user_name = '<b>test</b>';
+UPDATE users SET password_hash = SHA2('testRSVPWDC',224) WHERE user_name = "<img src='test' onerror='alert(1)'>";
