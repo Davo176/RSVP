@@ -22,7 +22,7 @@ router.get('/', function (req, res, next) {
         return;
       }
       //get users availability
-      let query = "select unavailability_id, unavailable_from, unavailable_to, reason from unavailabilities where user= ? AND MONTH(unavailable_from)=? AND MONTH(unavailable_to)=? AND YEAR(unavailable_from)=? AND YEAR(unavailable_to)=?";
+      let query = "select unavailability_id, unavailable_from, unavailable_to, reason,origin from unavailabilities where user= ? AND MONTH(unavailable_from)=? AND MONTH(unavailable_to)=? AND YEAR(unavailable_from)=? AND YEAR(unavailable_to)=? order by unavailable_from";
       connection.query(query, [user, month, month, year, year], function (error, rows, fields) {
         connection.release();
         if (error) {
@@ -75,6 +75,7 @@ router.get('/', function (req, res, next) {
             },
           ]
         }
+
         //loop until end of month and a sunday
         while (!(reachedEndOfMonth && monthStart.day() == 0)) {
           let currObj = {
@@ -87,11 +88,13 @@ router.get('/', function (req, res, next) {
           }
           //add each row to the object
           for (let row of rows) {
-            if (moment(row.unavailable_from).format("YYYY-MM-DD") == monthStart.format("YYYY-MM-DD")) {
+            //console.log(moment(row.unavailable_from).format("YYYY-MM-DD"), monthStart.format("YYYY-MM-DD"),moment(row.unavailable_from).format("YYYY-MM-DD") == monthStart.format("YYYY-MM-DD"))
+            if (moment(row.unavailable_from).format("YYYY-MM-DD") == monthStart.format("YYYY-MM-DD")&&!row.included) {
+              row.included = true;
               currObj.events.push(row);
-              rows.splice(rows.indexOf(row), 1);
             }
           }
+
           calendar.days[monthStart.day()].dates.push(currObj);
           //increment days and check if in month / out of month
           monthStart.add(1, 'days');
@@ -103,6 +106,7 @@ router.get('/', function (req, res, next) {
           }
 
         }
+
         //Reply calendar
         res.json(calendar);
       });
@@ -112,7 +116,7 @@ router.get('/', function (req, res, next) {
 
 //Add another unavailability
 router.post('/add', function (req, res, next) {
-  if (!('date' in req.body) || !('unavailable_from' in req.body) || !('unavailable_to' in req.body) || !('reason' in req.body)) {
+  if (!('date' in req.body) || !('unavailable_from' in req.body) || !('unavailable_to' in req.body) || !('reason' in req.body) || !('origin' in req.body)) {
     res.sendStatus(400);
     return;
   } else {
@@ -120,6 +124,7 @@ router.post('/add', function (req, res, next) {
     let unavailableFrom = moment(req.body.date + ' ' + req.body.unavailable_from, "YYYY-MM-DD HH:mm");
     let unavailableTo = moment(req.body.date + ' ' + req.body.unavailable_to, "YYYY-MM-DD HH:mm");
     let reason = req.body.reason;
+    let origin = req.body.origin;
     const unavailabilityID = Uuid.v4();
     req.pool.getConnection(function (error, connection) {
       if (error) {
@@ -128,8 +133,8 @@ router.post('/add', function (req, res, next) {
         return;
       }
 
-      let query = "insert into unavailabilities (unavailability_id,unavailable_from,unavailable_to,reason,user,event_id) values (?,?,?,?,?,?)";
-      connection.query(query, [unavailabilityID, unavailableFrom.format(), unavailableTo.format(), reason, user, null], function (error, rows, fields) {
+      let query = "insert into unavailabilities (unavailability_id,unavailable_from,unavailable_to,reason,user,event_id,origin) values (?,?,?,?,?,?,?)";
+      connection.query(query, [unavailabilityID, unavailableFrom.format(), unavailableTo.format(), reason, user, null,origin], function (error, rows, fields) {
         connection.release();
         if (error) {
           console.log(error);
@@ -170,81 +175,126 @@ router.post('/delete', function (req, res, next) {
   }
 })
 
-const SCOPES = ['https://www.googleapis.com/auth/calendar.readonly'];
-let credentials = {
-  installed:{
-    client_secret: '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',
-    client_id: '304572589092-a2plf5r7k7d1d5j91e62mjhgkq4tglbg.apps.googleusercontent.com',
-    redirect_uris: ["https://willrsvpwdc-code50-105689376-g4w9w6xgqfw5j5-8080.githubpreview.dev/api/calendar/googleResponse"],
+router.post('/clearExternal', function (req,res, next){
+  if (!('month' in req.body)){
+    res.sendStatus(400);
+  }else{
+    let user = req.session.user_name;
+    req.pool.getConnection(function (error, connection) {
+      if (error) {
+        console.log(error);
+        res.sendStatus(500);
+        return;
+      }
+      let month = moment(req.body.month)
+      let startOfMonth = moment(month).startOf('month').format("YYYY-MM-DD HH:mm")
+      let endOfMonth = moment(month).endOf('month').format("YYYY-MM-DD HH:mm")
+      let unavailabilityID = req.body.id;
+      let query = "delete from unavailabilities where origin='external' and user=? and unavailable_from > ? and unavailable_from <?";
+      connection.query(query, [user,startOfMonth,endOfMonth], function (error, rows, fields) {
+        connection.release();
+        if (error) {
+          console.log(error);
+          res.sendStatus(500);
+          return;
+        }
+        res.sendStatus(200);
+      });
+    });
   }
-};
-let tokens = {};
+})
 
-router.get('/test', function (req, res, next) {
-  authorize(credentials, listEvents);
+router.post('/addExternal', function (req, res, next) {
+  if (!('unavailable_from' in req.body) || !('unavailable_to' in req.body) || !('reason' in req.body) || !('origin' in req.body)) {
+    res.sendStatus(400);
+    return;
+  } else {
+    let user = req.session.user_name;
+    let unavailableFrom = moment(req.body.unavailable_from);
+    let unavailableTo = moment(req.body.unavailable_to);
+    let reason = req.body.reason;
+    let origin = req.body.origin;
+    const unavailabilityID = Uuid.v4();
+    req.pool.getConnection(function (error, connection) {
+      if (error) {
+        console.log(error);
+        res.sendStatus(500);
+        return;
+      }
+
+      let query = "insert into unavailabilities (unavailability_id,unavailable_from,unavailable_to,reason,user,event_id,origin) values (?,?,?,?,?,?,?)";
+      connection.query(query, [unavailabilityID, unavailableFrom.format("YYYY-MM-DD HH:mm"), unavailableTo.format("YYYY-MM-DD HH:mm"), reason, user, null,origin], function (error, rows, fields) {
+        connection.release();
+        if (error) {
+          console.log(error);
+          res.sendStatus(500);
+          return;
+        }
+        res.sendStatus(200);
+      });
+    });
+  }
 });
 
-function authorize(credentials, callback){
-  const {client_secret, client_id, redirect_uris} = credentials.installed;
-  const oAuth2Client = new google.auth.OAuth2(client_id, client_secret, redirect_uris[0]);
+router.post('/addEvent', function (req, res, next) {
+  if (!('unavailable_from' in req.body) || !('unavailable_to' in req.body) || !('reason' in req.body) || !('origin' in req.body)) {
+    res.sendStatus(400);
+    return;
+  } else {
+    let user = req.session.user_name;
+    let unavailableFrom = moment(req.body.unavailable_from);
+    let unavailableTo = moment(req.body.unavailable_to);
+    let reason = req.body.reason;
+    let origin = req.body.origin;
+    let event_id = req.body.event_id
+    const unavailabilityID = Uuid.v4();
+    req.pool.getConnection(function (error, connection) {
+      if (error) {
+        console.log(error);
+        res.sendStatus(500);
+        return;
+      }
 
-  // Check if we have previously stored a token.
-
-  if (Object.keys(tokens).length===0){
-    return getAccessToken(oAuth2Client, callback)
-  }else{
-    oAuth2Client.setCredentials(JSON.parse(token));
-    callback(oAuth2Client);
-  }
-}
-
-function getAccessToken(oAuth2Client, callback) {
-  const authUrl = oAuth2Client.generateAuthUrl({
-    access_type: 'offline',
-    scope: SCOPES,
-  });
-  console.log('Authorize this app by visiting this url:', authUrl);
-  const rl = readline.createInterface({
-    input: process.stdin,
-    output: process.stdout,
-  });
-  rl.question('Enter the code from that page here: ', (code) => {
-    rl.close();
-    oAuth2Client.getToken(code, (err, token) => {
-      if (err) return console.error('Error retrieving access token', err);
-      oAuth2Client.setCredentials(token);
-      // Store the token to disk for later program executions
-      fs.writeFile(TOKEN_PATH, JSON.stringify(token), (err) => {
-        if (err) return console.error(err);
-        console.log('Token stored to', TOKEN_PATH);
+      let query = "insert into unavailabilities (unavailability_id,unavailable_from,unavailable_to,reason,user,event_id,origin) values (?,?,?,?,?,?,?)";
+      connection.query(query, [unavailabilityID, unavailableFrom.format("YYYY-MM-DD HH:mm"), unavailableTo.format("YYYY-MM-DD HH:mm"), reason, user, event_id,origin], function (error, rows, fields) {
+        connection.release();
+        if (error) {
+          console.log(error);
+          res.sendStatus(500);
+          return;
+        }
+        res.sendStatus(200);
       });
-      callback(oAuth2Client);
     });
-  });
-}
+  }
+});
 
-function listEvents(auth) {
-  const calendar = google.calendar({version: 'v3', auth});
-  calendar.events.list({
-    calendarId: 'primary',
-    timeMin: (new Date()).toISOString(),
-    maxResults: 10,
-    singleEvents: true,
-    orderBy: 'startTime',
-  }, (err, res) => {
-    if (err) return console.log('The API returned an error: ' + err);
-    const events = res.data.items;
-    if (events.length) {
-      console.log('Upcoming 10 events:');
-      events.map((event, i) => {
-        const start = event.start.dateTime || event.start.date;
-        console.log(`${start} - ${event.summary}`);
+router.post('/setOriginExternal', function (req, res, next) {
+  if (!('id' in req.body)) {
+    res.sendStatus(400);
+    return;
+  } else {
+    let user = req.session.user_name;
+    let id = req.body.id;
+    req.pool.getConnection(function (error, connection) {
+      if (error) {
+        console.log(error);
+        res.sendStatus(500);
+        return;
+      }
+
+      let query = "update unavailabilities set origin = 'external' where unavailability_id=? and user=?;";
+      connection.query(query, [id, user], function (error, rows, fields) {
+        connection.release();
+        if (error) {
+          console.log(error);
+          res.sendStatus(500);
+          return;
+        }
+        res.sendStatus(200);
       });
-    } else {
-      console.log('No upcoming events found.');
-    }
-  });
-}
-
+    });
+  }
+});
 
 module.exports = router;

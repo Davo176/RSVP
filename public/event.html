@@ -35,8 +35,10 @@
                             </select>
                         </form>
                         <div v-if="areAdmin" v-on:click.stop="toggleEditMode()" class="editContainer">
-                            <span v-if="!editMode">Edit Event</span><span v-if="editMode">Close Edit Mode</span> <i
-                                class="edit fas fa-edit"></i>
+                            <span v-if="!editMode">Edit Event</span><span v-if="editMode">Close Edit Mode</span><i class="edit fas fa-edit"></i>
+                        </div>
+                        <div v-on:click.stop="addToCalendar()">
+                            <span>Add to Your Calendar</span>
                         </div>
                     </div>
                 </div>
