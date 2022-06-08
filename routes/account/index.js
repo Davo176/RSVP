@@ -1,5 +1,6 @@
 var express = require('express');
 var router = express.Router();
+var salt = 'RSVPWDC';
 
 router.post('/updatePassword', function(req, res, next){
 
@@ -14,7 +15,7 @@ router.post('/updatePassword', function(req, res, next){
                 return;
             }
             let query = "UPDATE users SET password_hash = SHA2(?, 224)";
-            connection.query(query, [req.body["newPassword"]], function(error, rows, fields){
+            connection.query(query, [req.body.newPassword+salt], function(error, rows, fields){
                 connection.release();
                 if(error){
                     console.log(error);
@@ -40,7 +41,7 @@ router.post('/updatePassword', function(req, res, next){
         }
 
         let query = "SELECT IF(password_hash=SHA2(?, 224), 'success', 'fail') AS Status FROM users where user_name = ?;"
-        connection.query(query, [req.body["oldPassword"], req.session.user_name], function(error, rows, fields){
+        connection.query(query, [req.body.oldPassword+salt, req.session.user_name], function(error, rows, fields){
 
             connection.release();
             if(error){
