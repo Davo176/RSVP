@@ -73,6 +73,8 @@ router.post('/updateinfo', function(req, res, next){
                 res.sendStatus(500);
                 return;
             }
+            //Change session to have updated value
+            req.session[req.body.field] = req.body.newFieldValue;
         })
     })
     res.sendStatus(200);
