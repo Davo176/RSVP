@@ -125,10 +125,9 @@ app.post('/loginGoogle', function(req, res, next) {
             req.session.first_name = first_name;
             req.session.last_name = last_name;
             req.session.email = email;
-            res.sendStatus(200);
+            res.redirect('/events');
+            return;
           });
-          res.redirect('/events');
-          return;
         }
         else
         {
