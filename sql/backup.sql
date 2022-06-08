@@ -151,6 +151,7 @@ CREATE TABLE `unavailabilities` (
   `reason` varchar(64) DEFAULT NULL,
   `user` varchar(36) DEFAULT NULL,
   `event_id` varchar(36) DEFAULT NULL,
+  `origin` varchar(10) DEFAULT NULL,
   PRIMARY KEY (`unavailability_id`),
   KEY `user` (`user`),
   KEY `event_id` (`event_id`),
@@ -165,7 +166,7 @@ CREATE TABLE `unavailabilities` (
 
 LOCK TABLES `unavailabilities` WRITE;
 /*!40000 ALTER TABLE `unavailabilities` DISABLE KEYS */;
-INSERT INTO `unavailabilities` VALUES ('22222221','2022-06-23 18:00:00','2022-06-24 18:00:00','clashes with another event','Seamus','1111112'),('22222222','2022-05-23 18:00:00','2022-05-24 18:00:00','clashes with another event','Neil','1111113'),('22222223','2022-06-21 18:30:00','2022-06-21 19:40:00','TEST','neil',NULL),('2d21dd90-69b8-454b-ad66-583c9fea1358','2022-06-21 18:30:00','2022-06-21 19:30:00','clash','Neil',NULL),('3afe8e4d-babb-4f0a-ae7e-6dfc7754c32d','2022-06-20 18:30:00','2022-06-20 19:30:00','clashing','Neil',NULL),('61def84f-2f8f-4ac5-9d68-df9dce2382c2','2022-05-31 09:00:00','2022-05-31 11:00:00','Testing','will',NULL),('bdcca053-971f-47d2-b2fb-2a7b5a7b70d1','2022-05-23 10:00:00','2022-05-23 11:00:00','Party','will',NULL),('d6d6d04e-f5b1-401f-8921-c14401d72f37','2022-05-01 09:00:00','2022-05-01 11:00:00','Poker','will',NULL);
+INSERT INTO `unavailabilities` VALUES ('22222221','2022-06-23 18:00:00','2022-06-24 18:00:00','clashes with another event','Seamus','1111112','internal'),('22222222','2022-05-23 18:00:00','2022-05-24 18:00:00','clashes with another event','Neil','1111113','internal'),('22222223','2022-06-21 18:30:00','2022-06-21 19:40:00','TEST','neil',NULL,'internal'),('2d21dd90-69b8-454b-ad66-583c9fea1358','2022-06-21 18:30:00','2022-06-21 19:30:00','clash','Neil',NULL,'internal'),('3afe8e4d-babb-4f0a-ae7e-6dfc7754c32d','2022-06-20 18:30:00','2022-06-20 19:30:00','clashing','Neil',NULL,'internal'),('bdcca053-971f-47d2-b2fb-2a7b5a7b70d1','2022-05-23 10:00:00','2022-05-23 11:00:00','Party','will',NULL,'internal'),('d6d6d04e-f5b1-401f-8921-c14401d72f37','2022-05-01 09:00:00','2022-05-01 11:00:00','Poker','will',NULL,'internal');
 /*!40000 ALTER TABLE `unavailabilities` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -231,4 +232,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2022-06-08  3:44:18
+-- Dump completed on 2022-06-08 11:27:03
