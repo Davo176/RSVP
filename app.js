@@ -5,6 +5,7 @@ var session = require('express-session');
 var logger = require('morgan');
 var mysql = require('mysql');
 var requestify = require('requestify');
+var salt = 'RSVPWDC';
 
 var indexRouter = require('./routes/index');
 const apiRouter = require('./routes/api');
@@ -46,7 +47,7 @@ app.post('/login', function(req, res, next) {
       let user_name = req.body.user_name;
       let password = req.body.password;
       let query = "SELECT * FROM users WHERE user_name = ? and password_hash = SHA2(?,224);";
-      connection.query(query,[user_name, password], function(error, rows, fields)
+      connection.query(query,[user_name, password+salt], function(error, rows, fields)
       {
         connection.release();
         if (error)
@@ -170,7 +171,7 @@ app.post('/signup', function(req, res, next) {
         }
       });
       let query = "INSERT INTO users (user_name, first_name, last_name, email, password_hash) VALUES (?,?,?,?,SHA2(?,224))";
-      connection.query(query,[user_name, first_name, last_name, email, password], function(error, rows, fields)
+      connection.query(query,[user_name, first_name, last_name, email, password+salt], function(error, rows, fields)
       {
         connection.release();
         req.session.user_name = user_name;
