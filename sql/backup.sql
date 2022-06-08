@@ -151,6 +151,7 @@ CREATE TABLE `unavailabilities` (
   `reason` varchar(64) DEFAULT NULL,
   `user` varchar(36) DEFAULT NULL,
   `event_id` varchar(36) DEFAULT NULL,
+  `origin` varchar(10) DEFAULT NULL,
   PRIMARY KEY (`unavailability_id`),
   KEY `user` (`user`),
   KEY `event_id` (`event_id`),
@@ -165,7 +166,7 @@ CREATE TABLE `unavailabilities` (
 
 LOCK TABLES `unavailabilities` WRITE;
 /*!40000 ALTER TABLE `unavailabilities` DISABLE KEYS */;
-INSERT INTO `unavailabilities` VALUES ('22222221','2022-06-23 18:00:00','2022-06-24 18:00:00','clashes with another event','Seamus','1111112'),('22222222','2022-05-23 18:00:00','2022-05-24 18:00:00','clashes with another event','Neil','1111113'),('22222223','2022-06-21 18:30:00','2022-06-21 19:40:00','TEST','neil',NULL),('2d21dd90-69b8-454b-ad66-583c9fea1358','2022-06-21 18:30:00','2022-06-21 19:30:00','clash','Neil',NULL),('3afe8e4d-babb-4f0a-ae7e-6dfc7754c32d','2022-06-20 18:30:00','2022-06-20 19:30:00','clashing','Neil',NULL),('61def84f-2f8f-4ac5-9d68-df9dce2382c2','2022-05-31 09:00:00','2022-05-31 11:00:00','Testing','will',NULL),('bdcca053-971f-47d2-b2fb-2a7b5a7b70d1','2022-05-23 10:00:00','2022-05-23 11:00:00','Party','will',NULL),('d6d6d04e-f5b1-401f-8921-c14401d72f37','2022-05-01 09:00:00','2022-05-01 11:00:00','Poker','will',NULL);
+INSERT INTO `unavailabilities` VALUES ('22222221','2022-06-23 18:00:00','2022-06-24 18:00:00','clashes with another event','Seamus','1111112','internal'),('22222222','2022-05-23 18:00:00','2022-05-24 18:00:00','clashes with another event','Neil','1111113','internal'),('22222223','2022-06-21 18:30:00','2022-06-21 19:40:00','TEST','neil',NULL,'internal'),('2d21dd90-69b8-454b-ad66-583c9fea1358','2022-06-21 18:30:00','2022-06-21 19:30:00','clash','Neil',NULL,'internal'),('3afe8e4d-babb-4f0a-ae7e-6dfc7754c32d','2022-06-20 18:30:00','2022-06-20 19:30:00','clashing','Neil',NULL,'internal'),('61def84f-2f8f-4ac5-9d68-df9dce2382c2','2022-05-31 09:00:00','2022-05-31 11:00:00','Testing','will',NULL,'internal'),('bdcca053-971f-47d2-b2fb-2a7b5a7b70d1','2022-05-23 10:00:00','2022-05-23 11:00:00','Party','will',NULL,'internal'),('d6d6d04e-f5b1-401f-8921-c14401d72f37','2022-05-01 09:00:00','2022-05-01 11:00:00','Poker','will',NULL,'internal');
 /*!40000 ALTER TABLE `unavailabilities` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -219,6 +220,7 @@ CREATE TABLE `users` (
 LOCK TABLES `users` WRITE;
 /*!40000 ALTER TABLE `users` DISABLE KEYS */;
 INSERT INTO `users` VALUES ('<b>test</b>','test','test','test','efa0d8b6ec66c0af96cd5747000854cc248da5e03dfa680c59fb7bb6'),('<img src=\'test\' onerror=\'alert(1)\'>','testing','asdf','test','efa0d8b6ec66c0af96cd5747000854cc248da5e03dfa680c59fb7bb6'),('54832645-44dc-4510-b818-2fc1dab04a2d','Johnathon','Doe',NULL,NULL),('Harrison','Harrison','Stokes','hazzaj467@gmail.com','6d26633ab6ed7a46e3a665f89ee18c880beceb4c43499479ef3f71c3'),('Humshikan','Humshikan','Gill','Hgill@gmail.com','e438823557ba06fe2bff7db19e3284655e0081f1bc00a0254bef82b4'),('Neil','Neil','Mazumdar','neil.k.mazumdar@gmail.com','14628dcc4d1e3da05b9dd1f6a41b52b8ed5137b27b0a26c0f2ed91fc'),('Seamus','Seamus','Pitcher','SPitcher@gmail.com','b72e309b0650eefeb444686a37352c544b9e51c962a58d91e4cad828'),('Thomas','Thomas','Foo','tfue@gmail.com','7d87f10400d6b1e7e979b3c8a87ac8e055022e17202ca450d8d5ee11'),('will','Will','Davis','willdavis925@gmail.com','3c04071b9e725567503c3ae74790d08b6d6b3dc644933666fad51b6c');
+
 /*!40000 ALTER TABLE `users` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -232,3 +234,4 @@ UNLOCK TABLES;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
 -- Dump completed on 2022-06-08  3:44:18
+
