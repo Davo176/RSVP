@@ -9,12 +9,15 @@ function login()
     //Aquire login_result text, and username and password fields
     let username = document.getElementById("l_username").value;
     let password = document.getElementById("l_password").value;
-    let login_result = document.getElementById("login_result");
 
     //Check whether either field is blank
     if (username == "" || password == "")
     {
-        login_result.innerText = "Please enter both a username and password";
+        showAlert("Please enter both a username and password");
+
+        //Makes them go red
+        document.getElementById("l_username").classList.add("error");
+        document.getElementById("l_password").classList.add("error");
         return;
     }
     else
@@ -36,7 +39,6 @@ function login()
             else if (this.status == 401)
             {
                 showAlert("Incorrect username and/or password");
-                login_result.innerText = "Incorrect username and/or password";
 
                 //Makes them go red
                 document.getElementById("l_username").classList.add("error");
@@ -45,7 +47,6 @@ function login()
             else if (this.status == 400)
             {
                 showAlert('Improper Login Form');
-                login_result.innerText = "Improper Login Form";
 
                 //Makes them go red
                 document.getElementById("l_username").classList.add("error");
