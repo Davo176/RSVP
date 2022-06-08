@@ -1,6 +1,68 @@
 var express = require('express');
 var router = express.Router();
 
+router.post('/updatePassword', function(req, res, next){
+
+    let updatePassword = function(){
+
+        //Update password
+        req.pool.getConnection(function(err, connection){
+
+            if(err){
+                console.log(err);
+                res.sendStatus(500);
+                return;
+            }
+            let query = "UPDATE users SET password_hash = SHA2(?, 224)";
+            connection.query(query, [req.body["newPassword"]], function(error, rows, fields){
+                connection.release();
+                if(error){
+                    console.log(error);
+                    res.sendStatus(500);
+                    return;
+                }
+
+                res.sendStatus(200);
+                return;
+            })
+        })
+    }
+
+    let status = "undefined";
+
+    //Is password correct?
+    req.pool.getConnection(function(err, connection){
+
+        if(err){
+            console.log(err);
+            res.sendStatus(500);
+            return;
+        }
+
+        let query = "SELECT IF(password_hash=SHA2(?, 224), 'success', 'fail') AS Status FROM users where user_name = ?;"
+        connection.query(query, [req.body["oldPassword"], req.session.user_name], function(error, rows, fields){
+
+            connection.release();
+            if(error){
+                console.log(error);
+                res.sendStatus(500);
+                return;
+            }
+
+            status = rows[0]["Status"];
+            if(status === "success"){
+                updatePassword();
+            }
+            else{
+
+                res.sendStatus(401);
+                return;
+            }
+        })
+    })
+
+});
+
 router.get('/getuserinfo', function(req, res, next){
 
     req.pool.getConnection(function(err, connection){
@@ -28,7 +90,6 @@ router.get('/getuserinfo', function(req, res, next){
 
 router.get('/getfieldlengths', function(req, res, next){
 
-    //Checks if user has entered something in a field that is longer than we have allocated space for
     req.pool.getConnection(function(err, connection){
 
         if(err){
@@ -36,8 +97,7 @@ router.get('/getfieldlengths', function(req, res, next){
             res.sendStatus(500);
             return;
         }
-        //SELECT * FROM INFORMATION_SCHEMA.COLUMNS WHERE TABLE_SCHEMA = 'production' AND TABLE_NAME = 'users' AND (COLUMN_NAME = 'first_name' OR COLUMN_NAME = 'last_name' OR COLUMN_NAME = 'email' OR COLUMN_NAME = 'user_name');
-        //SELECT * FROM INFORMATION_SCHEMA.COLUMNS WHERE TABLE_SCHEMA = 'production' AND TABLE_NAME = 'users';
+
         let query = "SELECT JSON_OBJECTAGG(COLUMN_NAME, CHARACTER_MAXIMUM_LENGTH) FROM INFORMATION_SCHEMA.COLUMNS WHERE TABLE_SCHEMA = 'production' AND TABLE_NAME = 'users' AND (COLUMN_NAME = 'first_name' OR COLUMN_NAME = 'last_name' OR COLUMN_NAME = 'email' OR COLUMN_NAME = 'user_name')";
         connection.query(query, [req.body.field], function(error, rows, fields){
             connection.release();

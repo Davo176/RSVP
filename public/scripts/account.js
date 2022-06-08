@@ -9,6 +9,55 @@ var vueInst = new Vue({
         currentEmailSettingResponse: 0,
     },
     methods: {
+        changePassword: function(){
+
+            let newPasswordNode = document.getElementById("newPassword");
+            let newPasswordRepeatNode = document.getElementById("newPasswordRepeat");
+
+            let newPassword = newPasswordNode.value;
+            let newPasswordRepeat = newPasswordRepeatNode.value;
+
+            if(newPassword !== newPasswordRepeat){
+
+
+
+                //Change colour of box until clicked and display error
+                newPasswordNode.classList.add("error");
+                newPasswordRepeatNode.classList.add("error");
+
+                showAlert("Passwords must match");
+            }
+            else{
+
+                let xhttp = new XMLHttpRequest();
+
+                xhttp.onreadystatechange = function(){
+                    if(this.readyState == 4){
+
+                        if(this.status == 200){
+                            showAlert("Password succefully changed");
+                        }
+
+                        if(this.status == 401){
+
+                            document.getElementById("oldPassword").classList.add("error");
+                            showAlert("Incorrect password");
+                        }
+
+                        if(this.status == 400){
+                            showAlert("Bad form");
+                        }
+                    }
+                }
+
+                let oldPassword = document.getElementById("oldPassword").value;
+
+                xhttp.open("POST","api/account/updatePassword");
+                xhttp.setRequestHeader("Content-type","application/json")
+                xhttp.send(JSON.stringify({oldPassword: oldPassword, newPassword: newPassword}));
+
+            }
+        },
         updateUser: function(field){
             //send a request to update a users fields
             let newFieldValue = document.getElementById(field).value;

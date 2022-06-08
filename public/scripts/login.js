@@ -8,21 +8,31 @@ function login()
     var xhttp = new XMLHttpRequest();
     xhttp.onreadystatechange = function()
     {
-        if (this.readyState == 4 && this.status == 200)
-        {
-            console.log('Logged in');
-            login_result.innerText = "Logged in"
-            location.href = "/"
-        }
-        else if (this.status == 401)
-        {
-            console.log('Incorrect username/password')
-            login_result.innerText = "Incorrect username/password"
-        }
-        else if (this.status == 400)
-        {
-            console.log('Improper Login Form')
-            login_result.innerText = "Improper Login Form"
+        if(this.readyState == 4){
+            if (this.status == 200)
+            {
+                console.log('Logged in');
+                login_result.innerText = "Logged in";
+                location.href = "/";
+            }
+            else if (this.status == 401)
+            {
+                showAlert("Incorrect username and/or password");
+                login_result.innerText = "Incorrect username and/or password";
+
+                //Makes them go red
+                document.getElementById("l_username").classList.add("error");
+                document.getElementById("l_password").classList.add("error");
+            }
+            else if (this.status == 400)
+            {
+                showAlert('Improper Login Form');
+                login_result.innerText = "Improper Login Form";
+
+                //Makes them go red
+                document.getElementById("l_username").classList.add("error");
+                document.getElementById("l_password").classList.add("error");
+            }
         }
     };
 

@@ -15,6 +15,27 @@ function loginButton ()
   location.href = "/login"
 }
 
+function showAlert(argAlert){
+
+  console.log(argAlert);
+  let alert = document.getElementById("alert");
+
+  alert.querySelector("#alertContent").innerText = argAlert;
+  alert.style.display = "flex";
+
+}
+
+function removeError(){
+
+  let fields = document.querySelectorAll(".error");
+  if(fields.length != 0){
+    for(let i = 0; i<fields.length; i++){ //fields[fields.length] is not an html element
+      fields[i].classList.remove("error");
+    }
+  }
+
+}
+
 var user_name = "";
 var loggedIn = false;
 function getUser() {
@@ -25,7 +46,8 @@ function getUser() {
       {
         user_name=this.responseText;
         loggedIn = true;
-        updateNav()
+        addAlertDiv();
+        updateNav();
       }
   };
   xhttp.open("GET","/user");
@@ -37,51 +59,70 @@ function dropdown(){ //tutorial from https://www.w3schools.com/howto/howto_js_dr
 }
 
 window.onclick = function(event){
-  if(!event.target.matches('.dropdown')){
+  if(document.querySelector(".dropdown") && !event.target.matches('.dropdown')){
       document.getElementById("dropdownContent").classList.remove("show");
+  }
+  if(document.querySelector("button[type='submit]") && !event.target.matches("button[type='submit']")){
+      document.getElementById("alert").style.display = "none";
   }
 }
 
-function updateNav () {
-  var nav = document.getElementById('Nav');
-  if (user_name == "GUEST")
-  {
-    nav.innerHTML += `
-  <nav>
-    <ul class="navBar">
-        <li class="navBarElementContainerText">RSVP</li>
-    </ul>
-  </nav>
-  <nav>
-    <ul class="navBar">
-        <li class="navBarElementContainer"><button onclick="loginButton()">Sign Up</button></li>
-    </ul>
-  </nav>`;
-  }
-  else
-  {
-    nav.innerHTML += `
-  <nav>
-    <ul class="navBar">
-        <li class="navBarElementContainerText">RSVP</li>
-        <li class="navBarElementContainerText"><a href="/events" class="navBarElement">Home</a></li>
-        <li class="navBarElementContainerText"><a href="/friends" class="navBarElement">Friends</a></li>
+function addAlertDiv() {
 
-    </ul>
-  </nav>
-  <nav>
-    <ul class="navBar">
-        <li class="navBarElementContainer"><a href="/newevent" title="Create new event"><i href="#" class="icon fa-solid fa-plus"></i></a></li>
-        <li class="navBarElementContainer"><a href="/notifications" title="Go to notifications page"><i class="icon fa-solid fa-bell"></i></a></li>
-        <li class="navBarElementContainer"><a href="/calendar" title="Go to calendar"><i class="icon fa-solid fa-calendar-days"></i></a></li>
-        <li class="navBarElementContainerText" style="padding-right: 5px"><p>${user_name}</p></li>
-        <li class="navBarElementContainer dropdown" style="padding-left: 0px"><i onclick="dropdown()" class="pointer fa-solid fa-circle-user dropdown"></i></a></li>
-    </ul>
-  </nav>
-  <ul style="list-style-type: none" id="dropdownContent" class="dropdown-content dropdown">
-        <li><a href="/account" class="dropdown">Edit account</a></li>
-        <li><a href="/logout" class="dropdown">Log out</a></li>
-  </ul>`;
+  let div = document.createElement("DIV");
+  div.id = "alert";
+  div.classList.add("alert");
+
+  div.innerHTML = `
+  <div id="alertContent"></div>
+  `;
+
+  var body = document.querySelector("body");
+  body.prepend(div);
+}
+
+function updateNav () {
+  if(document.body.contains(document.querySelector("header"))){
+    var nav = document.getElementById('Nav');
+    if (user_name == "GUEST")
+    {
+      nav.innerHTML += `
+    <nav>
+      <ul class="navBar">
+          <li class="navBarElementContainerText">RSVP</li>
+      </ul>
+    </nav>
+    <nav>
+      <ul class="navBar">
+          <li class="navBarElementContainer"><button onclick="loginButton()">Sign Up</button></li>
+      </ul>
+    </nav>`;
+    }
+    else
+    {
+      nav.innerHTML += `
+    <nav>
+      <ul class="navBar">
+          <li class="navBarElementContainerText">RSVP</li>
+          <li class="navBarElementContainerText"><a href="/events" class="navBarElement">Home</a></li>
+          <li class="navBarElementContainerText"><a href="/friends" class="navBarElement">Friends</a></li>
+
+      </ul>
+    </nav>
+    <nav>
+      <ul class="navBar">
+          <li class="navBarElementContainer"><a href="/newevent" title="Create new event"><i href="#" class="icon fa-solid fa-plus"></i></a></li>
+          <li class="navBarElementContainer"><a href="/notifications" title="Go to notifications page"><i class="icon fa-solid fa-bell"></i></a></li>
+          <li class="navBarElementContainer"><a href="/calendar" title="Go to calendar"><i class="icon fa-solid fa-calendar-days"></i></a></li>
+          <li class="navBarElementContainerText" style="padding-right: 5px"><p>${user_name}</p></li>
+          <li class="navBarElementContainer dropdown" style="padding-left: 0px"><i onclick="dropdown()" class="pointer fa-solid fa-circle-user dropdown"></i></a></li>
+      </ul>
+    </nav>
+    <ul style="list-style-type: none" id="dropdownContent" class="dropdown-content dropdown">
+          <li><a href="/account" class="dropdown">Edit account</a></li>
+          <li><a href="/logout" class="dropdown">Log out</a></li>
+    </ul>`;
+    }
   }
 
 }

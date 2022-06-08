@@ -10,8 +10,20 @@
         <script src="https://kit.fontawesome.com/849e072605.js" crossorigin="anonymous"></script>
         <script src="https://cdn.jsdelivr.net/npm/vue@2.6.12/dist/vue.js"></script>
         <script src="/scripts/login.js" defer></script>
+        <script src="/scripts/global.js" defer></script>
         <script src="https://accounts.google.com/gsi/client" async defer></script>
         <meta name="google-signin-client_id" content="304572589092-a2plf5r7k7d1d5j91e62mjhgkq4tglbg.apps.googleusercontent.com">
+
+        <!--Not in vue because I couldn't find an "onmouseup" element for vue-->
+        <script>
+            function showPassword(field){
+                //Turns password field into text field
+                document.getElementById(field).type = "text";
+            }
+            function hidePassword(field){
+                document.getElementById(field).type = "password";
+            }
+        </script>
     </head>
     <body>
     <div id="app" style="align-content: center;">
@@ -23,9 +35,12 @@
                     <hr />
                     <div class="loginContainer">
                         <p>Username</p>
-                        <input type="text" id="l_username" placeholder="Enter Username" name="username" required>
+                        <input type="text" id="l_username" placeholder="Enter Username" name="username" onclick="removeError()" required>
                         <p>Password</p>
-                        <input type="password" id="l_password" placeholder="Enter Password" name="password" required>
+                        <div class="passwordContainer">
+                            <input type="password" id="l_password" placeholder="Enter Password" name="password" style="flex-grow: 0.95" style="flex-grow: 0.95" onclick="removeError()" required>
+                            <img src="/images/eye-close-up.jpg" alt="Show password" onmousedown="showPassword('l_password')" onmouseup="hidePassword('l_password')" width="20em" style="padding-left: 0.2em">
+                        </div>
                         <br/>
                         <button onclick="login()">Login</button>
                         <br />
