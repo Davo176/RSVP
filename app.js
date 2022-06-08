@@ -235,8 +235,16 @@ app.get('/externalInvitee', function(req, res, next) {
   }
 });
 
-app.get('/login', function(req, res, next) {
-  res.sendFile('/public/login.html', { root: __dirname });
+app.get('/login', function(req, res, next)
+{
+  if ('user_name' in req.session)
+  {
+    res.redirect('/');
+  }
+  else
+  {
+    res.sendFile('/public/login.html', { root: __dirname });
+  }
 });
 
 app.use(function(req,res,next){

@@ -12,7 +12,17 @@ function eventsButton () {
 
 function loginButton ()
 {
-  location.href = "/login"
+  var xhttp = new XMLHttpRequest();
+  xhttp.onreadystatechange = function()
+  {
+      if (this.readyState == 4 && this.status == 200)
+      {
+        location.href = "/login"
+      }
+  };
+  xhttp.open("GET","/logout");
+  xhttp.send();
+
 }
 
 var first_name = "";
@@ -45,7 +55,7 @@ window.onclick = function(event){
 
 function updateNav () {
   var nav = document.getElementById('Nav');
-  if (user_name == "GUEST")
+  if (first_name == "GUEST")
   {
     nav.innerHTML += `
   <nav>
