@@ -459,7 +459,29 @@ var vueinst = new Vue({
             xhttp.send(JSON.stringify(signup));
 
             //Invite user to event
-        }
+        },
+        addToCalendar: function () {
+            //send unavailability into the database
+            if (this.unavailableFrom === null || this.reason === null || this.unavailableTo === null) {
+                return;
+            }
+            let reqBody = JSON.stringify({event_id: this.event.event_id,unavailable_from: moment(this.event.Date +" " + this.event.Time).format("YYYY-MM-DD[T]HH:mm:ss"), unavailable_to: moment(this.event.Date +" " + this.event.Time).add(2,'hours').format("YYYY-MM-DD[T]HH:mm:ss"), reason: this.event.Title, origin:'internal'});
+            let xhttp = new XMLHttpRequest();
+            let vueReference = this;
+
+            xhttp.onreadystatechange = function () {
+                if (this.readyState == 4 && this.status == 500) {
+                    console.log("error");
+                }
+                if (this.readyState == 4 && this.status == 200) {
+                    console.log('added');
+                }
+            };
+
+            xhttp.open("POST", "/api/calendar/addEvent", true);
+            xhttp.setRequestHeader('Content-type', 'application/json; charset=UTF-8')
+            xhttp.send(reqBody);
+        },
 
     },
     created: function(){

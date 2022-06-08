@@ -1,6 +1,3 @@
-
-
-
 var vueinst = new Vue({
     el: '#app',
     data: {
@@ -12,6 +9,8 @@ var vueinst = new Vue({
         unavailableFrom: null,
         unavailableTo: null,
         reason: null,
+        auth: false,
+        buttonName: 'Get Authentication',
     },
     methods: {
         formatTime: function (time) {
@@ -65,7 +64,7 @@ var vueinst = new Vue({
             if (this.unavailableFrom === null || this.reason === null || this.unavailableTo === null) {
                 return;
             }
-            let reqBody = JSON.stringify({ date: `${this.year}-${this.month}-${this.addUnavailabilityDate}`, unavailable_from: this.unavailableFrom, unavailable_to: this.unavailableTo, reason: this.reason });
+            let reqBody = JSON.stringify({ date: `${this.year}-${this.month}-${this.addUnavailabilityDate}`, unavailable_from: this.unavailableFrom, unavailable_to: this.unavailableTo, reason: this.reason, origin:'internal' });
             let xhttp = new XMLHttpRequest();
             let vueReference = this;
 
@@ -108,6 +107,25 @@ var vueinst = new Vue({
             xhttp.setRequestHeader('Content-type', 'application/json; charset=UTF-8')
             xhttp.send(reqBody);
         },
+        pushUnavUp: function(a,b,c,d){
+            pushUnavUp(a,b,c);
+            let reqBody = JSON.stringify({ id: d });
+            let xhttp = new XMLHttpRequest();
+            let vueReference = this;
+
+            xhttp.onreadystatechange = function () {
+                if (this.readyState == 4 && this.status == 500) {
+                    console.log("error");
+                }
+                if (this.readyState == 4 && this.status == 200) {
+                    vueReference.getMonth();
+                }
+            };
+
+            xhttp.open("POST", "/api/calendar/setOriginExternal", true);
+            xhttp.setRequestHeader('Content-type', 'application/json; charset=UTF-8')
+            xhttp.send(reqBody);
+        }
     },
     created: function () {
         //on page create get the current month
