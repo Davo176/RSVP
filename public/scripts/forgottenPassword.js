@@ -5,7 +5,8 @@ let vueinst = new Vue({
         userName: "",
         userNameOnSubmit: "",
         code: "",
-        newPassword: ""
+        newPassword: "",
+        definiteUser_name; ""
     },
     methods: {
         generateCode: function(){
@@ -23,6 +24,8 @@ let vueinst = new Vue({
                         xhttp2.onreadystatechange = function(){
                             if(this.readyState == 4 && this.status == 200){
                                 showAlert("email sent to " + this.responseText[0]);
+
+                                vueinst.definiteUser_name = vueinst.userNameOnSubmit;
                             }
                         }
 
@@ -68,7 +71,7 @@ let vueinst = new Vue({
 
                 xhttp.open("POST", "/api/forgottenPassword/checkCode", true);
                 xhttp.setRequestHeader("Content-type", "application/json");
-                xhttp.send(JSON.stringify({code: vueinst.code, newPassword: vueinst.newPassword}));
+                xhttp.send(JSON.stringify({code: vueinst.code, newPassword: vueinst.newPassword, user_name: vueinst.definiteUser_name}));
 
             }
 

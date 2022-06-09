@@ -99,8 +99,31 @@ router.post("/checkCode", function(req, res, next){
             return;
         }
 
-        let query = "SELECT 
+        let query = "SELECT IF(?";
+        connection.query(query, [req.body.user_name], function(error, rows, fields){
+            connection.release();
+            if(error) {
+                console.log(error);
+                res.sendStatus(500);
+                return;
+            }
+
+            let code = rows[0];
+
+            if(code == req.body.code){
+                next();
+            } else {
+                res.sendStatus(401);
+            }
+        })
     })
+
+})
+
+//Changes password
+router.post("/changePassword", function(req, res, next){
+
+    let query = "UPDATE pass
 
 })
 
