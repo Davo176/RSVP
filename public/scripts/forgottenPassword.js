@@ -51,9 +51,9 @@ let vueinst = new Vue({
         updatePassword: function(){
 
             let passwordNode = document.getElementById("password");
-            let passwordRepeatNode = document.getElementByIs("passwordRepeat");
+            let passwordRepeatNode = document.getElementById("passwordRepeat");
 
-            if(password.value != passwordRepeat.value){
+            if(passwordNode.value != passwordRepeatNode.value){
 
                 showAlert("Passwords must match");
 

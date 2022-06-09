@@ -134,7 +134,17 @@ router.post("/changePassword", function(req, res, next){
 
         let query = "UPDATE users SET password_hash = SHA2(?, 224) WHERE user_name = ?";
         connection.query(query, [req.body.newPassword + salt, req.body.user_name], function(error, rows, fields){
-            connection.release()
+            connection.release();
+            if(error) {
+                console.log(error);
+                res.sendStatus(500);
+                return;
+            }
+        })
+
+        let query2 = "UPDATE users SET forgotten_password_code = NULL WHERE user_name = ?";
+        connection.query(query, [req.body.user_name], function(error, rows, fields){
+            connection.release();
             if(error) {
                 console.log(error);
                 res.sendStatus(500);
@@ -145,6 +155,6 @@ router.post("/changePassword", function(req, res, next){
         })
     })
 
-})
+});
 
 module.exports = router;
