@@ -1,5 +1,5 @@
 //create functions that return the new mailoptions
-function forgottenPassword(mailOptions) {
+function ForgottenPassword(mailOptions) {
     return {
         subject: "Password reset code",
         text: `Your password reset code is: ${mailOptions.code}`,
