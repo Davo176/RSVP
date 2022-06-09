@@ -37,7 +37,7 @@ router.post('/generateCode', function(req, res, next){
 //This function sends an email to the client
 router.post('/sendEmail', function(req, res, next){
 
-    let emailRecipient = "";
+    let emailRecipient = [];
 
     //Gets the user's email
     req.pool.getConnection(function (error, connection) {
