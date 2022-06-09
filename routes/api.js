@@ -9,6 +9,8 @@ const calendarRouter = require('./calendar');
 const friendRouter = require('./friends');
 const notificationRouter = require('./notifications');
 const accountRouter = require('./account');
+const forgottenPasswordRouter = require('./forgottenPassword');
+
 //reroute all calls to /api accordingly
 router.get('/test', function(req, res, next) {
   res.send('server Healthy');
@@ -23,5 +25,6 @@ router.use('/calendar', calendarRouter);
 router.use('/friends', friendRouter);
 router.use('/notifications', friendRouter);
 router.use('/account', accountRouter);
+router.use('forgottenPassword', forgottenPasswordRouter);
 
 module.exports = router;
