@@ -93,7 +93,7 @@ router.post('/sendEmail', function(req, res, next){
 });
 
 //Checks if the code entered is correct, then updates password in seperate route
-router.post("/checkCode", function(req, res, next){
+router.post("/updatePassword", function(req, res, next){
 
     req.pool.getConnection(function(error, connection) {
         if(error) {
@@ -102,8 +102,9 @@ router.post("/checkCode", function(req, res, next){
             return;
         }
 
-        let query = "SELECT IF(forgotten_password_code = ?, 'YES', 'NO') AS isValid FROM users WHERE user_name = ?";
-        connection.query(query, [req.body.code, req.body.user_name], function(error, rows, fields){
+        //Query checks the code is right
+        let query = "UPDATE users SET forgotten_password_code = null, password_hash = SHA2(?, 224) WHERE user_name = ? AND forgotten_password_code = ?;";
+        connection.query(query, [req.body.newPassword, req.body.user_name, req.body.code], function(error, rows, fields){
             connection.release();
             if(error) {
                 console.log(error);
@@ -111,56 +112,16 @@ router.post("/checkCode", function(req, res, next){
                 return;
             }
 
-            console.log(rows);
-
-            let result = rows[0]["isValid"];
-
-            if(result == "YES"){
-                next();
-                return;
-            } else {
+            //Rows.message looks like: (Rows matched: 0  Changed: 0  Warnings: 0 if no matches
+            //search() function will return -1 if no matches
+            if(rows.message.search("1") == -1){
                 res.sendStatus(401);
+            } else {
+                res.sendStatus(200);
             }
         })
     })
 
 })
-
-//Changes password
-router.post("/changePassword", function(req, res, next){
-
-    console.log("hmm");
-
-    req.pool.getConnection(function (error, connection) {
-        if(error){
-            console.log(error);
-            res.sendStatus(500);
-            return;
-        }
-
-        let query = "UPDATE users SET password_hash = SHA2(?, 224) WHERE user_name = ?";
-        connection.query(query, [req.body.newPassword + salt, req.body.user_name], function(error, rows, fields){
-            connection.release();
-            if(error) {
-                console.log(error);
-                res.sendStatus(500);
-                return;
-            }
-        })
-
-        let query2 = "UPDATE users SET forgotten_password_code = NULL WHERE user_name = ?";
-        connection.query(query, [req.body.user_name], function(error, rows, fields){
-            connection.release();
-            if(error) {
-                console.log(error);
-                res.sendStatus(500);
-                return;
-            }
-
-            res.sendStatus(200);
-        })
-    })
-
-});
 
 module.exports = router;
