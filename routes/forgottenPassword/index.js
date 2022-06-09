@@ -1,5 +1,6 @@
 var express = require('express');
 var router = express.Router();
+var sendMail = require("../../email");
 
 //This function generates a 6 digit code and stores it in the database
 router.post('/generateCode', function(req, res, next){
@@ -24,7 +25,7 @@ router.post('/generateCode', function(req, res, next){
             if(rows.message.search("1") == -1){
                 res.sendStatus(401);
             } else {
-                next();
+                next()
             }
         });
     })
@@ -53,9 +54,9 @@ router.post('/sendEmail', function(req, res, next){
                 return;
             }
 
-            email = rows[0]["email"];
+            emailAddress = rows[0]["email"];
 
-            
+            sendMail()
 
         })
     })
