@@ -23,9 +23,9 @@ router.post('/generateCode', function(req, res, next){
             //search() function will return -1 if no matches
             if(rows.message.search("1") == -1){
                 res.sendStatus(401);
+            } else {
+                res.sendStatus(200);
             }
-
-            res.sendStatus(200);
         });
     })
 
