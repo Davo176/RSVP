@@ -23,7 +23,10 @@ let vueinst = new Vue({
                         let xhttp2 = new XMLHttpRequest();
                         xhttp2.onreadystatechange = function(){
                             if(this.readyState == 4 && this.status == 200){
-                                showAlert("email sent to " + this.responseText[0]);
+
+
+
+                                showAlert("email sent to " + JSON.parse(this.responseText)[0]);
 
                                 vueinst.definiteUser_name = vueinst.userNameOnSubmit;
                             }
@@ -47,7 +50,7 @@ let vueinst = new Vue({
             xhttp.send(JSON.stringify({user_name: vueinst.userNameOnSubmit}));
 
         },
-        checkPassword: function(){
+        updatePassword: function(){
 
             let passwordNode = document.getElementById("password");
             let passwordRepeatNode = document.getElementByIs("passwordRepeat");
