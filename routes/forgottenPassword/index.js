@@ -44,6 +44,8 @@ router.post('/sendEmail', function(req, res, next){
             return;
         }
 
+        console.log(req.body.user_name);
+
         let query = "SELECT email FROM users WHERE user_name = ?";
         connection.query(query, [req.body.user_name], function(error, rows, fields){
             connection.release();
