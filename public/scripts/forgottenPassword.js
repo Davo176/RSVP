@@ -25,7 +25,7 @@ let vueinst = new Vue({
                         xhttp2.open("POST", "/api/forgottenPassword/sendEmail", true);
                         xhttp2.setRequestHeader("Content-type", "application/json");
                         console.log(vueinst.userNameOnSubmit);
-                        xhttp2.send(JSON.stringify{user_name: vueinst.userNameOnSubmit});
+                        xhttp2.send(JSON.stringify({user_name: vueinst.userNameOnSubmit}));
 
                     } else {
                         showAlert("Invalid username");
