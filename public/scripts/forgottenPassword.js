@@ -7,8 +7,6 @@ let vueinst = new Vue({
     methods: {
         generateCode: function(){
 
-            console.log("gone in");
-
             let xhttp = new XMLHttpRequest();
 
             xhttp.onreadystatechange = function(){
