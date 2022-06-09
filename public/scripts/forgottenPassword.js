@@ -15,6 +15,8 @@ let vueinst = new Vue({
 
                     } else {
                         showAlert("Invalid username");
+
+                        document.getElementById("userName").classList.add("error");
                     }
                 }
             }
