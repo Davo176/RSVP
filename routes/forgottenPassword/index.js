@@ -2,6 +2,8 @@ var express = require('express');
 var router = express.Router();
 var sendMail = require("../../email");
 
+var salt = 'RSVPWDC';
+
 //This function generates a 6 digit code and stores it in the database
 router.post('/generateCode', function(req, res, next){
 
@@ -130,9 +132,9 @@ router.post("/changePassword", function(req, res, next){
             return;
         }
 
-        let query = "UPDATE users SET password_hash = SHA2(? + , 224) WHERE user_name = ?";
-        connection.query(query, [req.body.newPassword, req.body.user_name], function(error, rows, fields){
-            connection.release();
+        let query = "UPDATE users SET password_hash = SHA2(?, 224) WHERE user_name = ?";
+        connection.query(query, [req.body.newPassword + salt, req.body.user_name], function(error, rows, fields){
+            connection.release()
             if(error) {
                 console.log(error);
                 res.sendStatus(500);
