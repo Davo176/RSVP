@@ -49,6 +49,7 @@ function removeError(){
 var first_name = "";
 
 var loggedIn = false;
+
 function getUser()
 {
   var xhttp = new XMLHttpRequest();
@@ -74,7 +75,7 @@ window.onclick = function(event){
   if(document.querySelector(".dropdown") && !event.target.matches('.dropdown')){
       document.getElementById("dropdownContent").classList.remove("show");
   }
-  if(document.querySelector("button[type='submit]") && !event.target.matches("button[type='submit']")){
+  if(document.querySelector("button[type='submit']") && !event.target.matches("button[type='submit']")){
       document.getElementById("alert").style.display = "none";
   }
 }

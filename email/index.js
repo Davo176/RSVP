@@ -22,7 +22,7 @@ async function sendMail(mailName,mailArgs,emailReceivers){
         }
     });
     //convert receivers into string
-    emailReceivers = emailReceivers.join(', ')
+    emailReceivers = emailReceivers.join(', ');
     //set up default mail options
     let mailOptions = {
         from: "No_Reply_RSVP_WDC_2022@outlook.com",
