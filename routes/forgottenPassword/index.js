@@ -111,9 +111,9 @@ router.post("/checkCode", function(req, res, next){
             }
 
             let result = rows[0]["isValid"];
-            console.log(result);
 
             if(result == "YES"){
+                console.log(next());
                 next();
             } else {
                 res.sendStatus(401);
