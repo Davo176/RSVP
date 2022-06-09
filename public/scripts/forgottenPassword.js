@@ -53,7 +53,7 @@ let vueinst = new Vue({
             let passwordNode = document.getElementById("password");
             let passwordRepeatNode = document.getElementById("passwordRepeat");
 
-            console.log(passwordNode.value);
+            console.log(document.getElementById("password").value);
             console.log(passwordRepeatNode.value);
 
             if(passwordNode.value != passwordRepeatNode.value){
