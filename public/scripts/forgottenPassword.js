@@ -68,8 +68,15 @@ let vueinst = new Vue({
                 let xhttp = new XMLHttpRequest();
 
                 xhttp.onreadystatechange = function(){
-                    if(this.readyState == 4 && this.status == 200){
-                        showAlert("Password updated");
+                    if(this.readyState == 4){
+                        if(this.status == 200){
+                            showAlert("Password updated");
+                        }
+                        else if(this.status == 401){
+                            showAlert("Incorrect code");
+
+                            document.getElementById("code").classList.add("error");
+                        }
                     }
                 }
 
