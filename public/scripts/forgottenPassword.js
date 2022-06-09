@@ -78,7 +78,7 @@ let vueinst = new Vue({
                     }
                 }
 
-                xhttp.open("POST", "/api/forgottenPassword/checkCode", true);
+                xhttp.open("POST", "/api/forgottenPassword/updatePassword", true);
                 xhttp.setRequestHeader("Content-type", "application/json");
                 xhttp.send(JSON.stringify({code: vueinst.code, newPassword: vueinst.newPassword, user_name: vueinst.userName}));
 

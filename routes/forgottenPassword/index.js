@@ -104,7 +104,7 @@ router.post("/updatePassword", function(req, res, next){
 
         //Query checks the code is right
         let query = "UPDATE users SET forgotten_password_code = null, password_hash = SHA2(?, 224) WHERE user_name = ? AND forgotten_password_code = ?;";
-        connection.query(query, [req.body.newPassword, req.body.user_name, req.body.code], function(error, rows, fields){
+        connection.query(query, [req.body.newPassword + salt, req.body.user_name, req.body.code], function(error, rows, fields){
             connection.release();
             if(error) {
                 console.log(error);
