@@ -69,7 +69,7 @@ router.post('/sendEmail', function(req, res, next){
             return;
         }
 
-        let query = "SELECT forgotten_passsword_code FROM users WHERE user_name = ?";
+        let query = "SELECT forgotten_password_code FROM users WHERE user_name = ?";
         connection.query(query, [req.body.user_name], function(error, rows, fields){
             connection.release();
             if(error) {
