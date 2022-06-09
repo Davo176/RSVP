@@ -2,16 +2,21 @@ let vueinst = new Vue({
 
     el: "#app",
     data: {
-        userName: ""
+        userName: "",
+        userNameOnSubmit: ""
     },
     methods: {
         generateCode: function(){
+
+            this.userNameOnSubmit = userName;
 
             let xhttp = new XMLHttpRequest();
 
             xhttp.onreadystatechange = function(){
                 if(this.readyState == 4){
                     if(this.status == 200){
+
+                        showAlert("code stored in database");
 
                     } else {
                         showAlert("Invalid username");
