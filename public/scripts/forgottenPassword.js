@@ -3,15 +3,13 @@ let vueinst = new Vue({
     el: "#app",
     data: {
         userName: "",
-        userNameOnSubmit: "",
         code: "",
         newPassword: "",
-        definiteUser_name: ""
     },
     methods: {
         generateCode: function(){
 
-            vueinst.userNameOnSubmit = vueinst.userName;
+            vueinst.userName = vueinst.userName;
 
             let xhttp = new XMLHttpRequest();
 
@@ -26,14 +24,14 @@ let vueinst = new Vue({
 
                                 showAlert("email sent to " + JSON.parse(this.responseText)[0]);
 
-                                vueinst.definiteUser_name = vueinst.userNameOnSubmit;
+                                vueinst.userName = vueinst.userName;
                             }
                         }
 
                         xhttp2.open("POST", "/api/forgottenPassword/sendEmail", true);
                         xhttp2.setRequestHeader("Content-type", "application/json");
-                        console.log(vueinst.userNameOnSubmit);
-                        xhttp2.send(JSON.stringify({user_name: vueinst.userNameOnSubmit}));
+                        console.log(vueinst.userName);
+                        xhttp2.send(JSON.stringify({user_name: vueinst.userName}));
 
                     } else {
                         showAlert("Invalid username");
@@ -45,7 +43,7 @@ let vueinst = new Vue({
 
             xhttp.open("POST", "/api/forgottenPassword/generateCode", true);
             xhttp.setRequestHeader("Content-type", "application/json");
-            xhttp.send(JSON.stringify({user_name: vueinst.userNameOnSubmit}));
+            xhttp.send(JSON.stringify({user_name: vueinst.userName}));
 
         },
         updatePassword: function(){
@@ -82,7 +80,7 @@ let vueinst = new Vue({
 
                 xhttp.open("POST", "/api/forgottenPassword/checkCode", true);
                 xhttp.setRequestHeader("Content-type", "application/json");
-                xhttp.send(JSON.stringify({code: vueinst.code, newPassword: vueinst.newPassword, user_name: vueinst.definiteUser_name}));
+                xhttp.send(JSON.stringify({code: vueinst.code, newPassword: vueinst.newPassword, user_name: vueinst.userName}));
 
             }
 
