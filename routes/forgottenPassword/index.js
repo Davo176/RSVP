@@ -126,6 +126,8 @@ router.post("/checkCode", function(req, res, next){
 //Changes password
 router.post("/changePassword", function(req, res, next){
 
+    console.log("hmm");
+
     req.pool.getConnection(function (error, connection) {
         if(error){
             console.log(error);
