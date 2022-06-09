@@ -3,7 +3,9 @@ let vueinst = new Vue({
     el: "#app",
     data: {
         userName: "",
-        userNameOnSubmit: ""
+        userNameOnSubmit: "",
+        code: "",
+        newPassword: ""
     },
     methods: {
         generateCode: function(){
@@ -40,6 +42,35 @@ let vueinst = new Vue({
             xhttp.open("POST", "/api/forgottenPassword/generateCode", true);
             xhttp.setRequestHeader("Content-type", "application/json");
             xhttp.send(JSON.stringify({user_name: vueinst.userNameOnSubmit}));
+
+        }
+        checkPassword: function(){
+
+            let passwordNode = document.getElementById("password");
+            let passwordRepeatNode = document.getElementByIs("passwordRepeat");
+
+            if(password.value != passwordRepeat.value){
+
+                showAlert("Passwords must match");
+
+                passwordNode.classList.add("error");
+                passwordNode.classList.add("error");
+
+            } else {
+
+                let xhttp = new XMLHttpRequest();
+
+                xhttp.onreadystatechange = function(){
+                    if(this.readyState == 4 && this.status == 200){
+                        showAlert("Password updated");
+                    }
+                }
+
+                xhttp.open("POST", "/api/forgottenPassword/checkCode", true);
+                xhttp.setRequestHeader("Content-type", "application/json");
+                xhttp.send(JSON.stringify({code: vueinst.code, newPassword: vueinst.newPassword}));
+
+            }
 
         }
 

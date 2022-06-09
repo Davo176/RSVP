@@ -89,6 +89,19 @@ router.post('/sendEmail', function(req, res, next){
 
 });
 
+//Checks if the code entered is correct, then updates password in seperate route
+router.post("/checkCode", function(req, res, next){
 
+    req.pool.getConnection(function(error, connection) {
+        if(error) {
+            console.log(error);
+            res.sendStatus(500);
+            return;
+        }
+
+        let query = "SELECT 
+    })
+
+})
 
 module.exports = router;
