@@ -11,8 +11,8 @@ router.get('/code', function(req, res, next){
             return;
         }
 
-        let query = "UPDATE users SET forgotten_password_code = (SELECT RAND()*(1000000-100000)+100000) WHERE user_id=?";
-        connection.query(query, [req.session.user_id], function(error, rows, fields){
+        let query = "UPDATE users SET forgotten_password_code = (SELECT RAND()*(1000000-100000)+100000) WHERE user_name=?";
+        connection.query(query, [req.session.user_name], function(error, rows, fields){
             connection.release();
             if(error) {
                 console.log(error);
