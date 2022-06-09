@@ -4,8 +4,6 @@ var router = express.Router();
 //This function generates a 6 digit code, stores it in the database in the user's information and sends an email to the user containing the code
 router.post('/generateCode', function(req, res, next){
 
-    console.log("hmm");
-
     req.pool.getConnection(function (error, connection) {
         if(error) {
             console.log(error);
@@ -21,7 +19,7 @@ router.post('/generateCode', function(req, res, next){
                 res.sendStatus(500);
                 return;
             }
-            console.log("rows: "+ rows);
+            console.log(rows);
             if(rows.length == 0){
                 res.sendStatus(401);
             }
