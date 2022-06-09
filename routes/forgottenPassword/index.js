@@ -82,7 +82,7 @@ router.post('/sendEmail', function(req, res, next){
 
             sendMail("forgottenPassword", {code: code}, emailRecipient);
 
-            res.sendStatus(200);
+            res.send(emailRecipient);
 
         })
     })
