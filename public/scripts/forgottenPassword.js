@@ -1,6 +1,9 @@
 let vueinst = new Vue({
 
     el: "#app",
+    data: {
+        email: ""
+    },
     methods: {
         generateCode: function(){
 
