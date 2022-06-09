@@ -49,6 +49,7 @@ function removeError(){
 var first_name = "";
 
 var loggedIn = false;
+
 function getUser()
 {
   var xhttp = new XMLHttpRequest();
