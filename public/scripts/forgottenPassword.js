@@ -8,7 +8,7 @@ let vueinst = new Vue({
 
             xhttp.onreadystatechange = function(){
                 if(this.readyState == 4 && this.status == 200){
-                    showAlert("Code sent to inbox");
+                    showAlert("Code sent to " + this.responseText);
                 }
             }
 
