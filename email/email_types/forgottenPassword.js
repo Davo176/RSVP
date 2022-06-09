@@ -2,6 +2,7 @@
 function forgottenPassword(mailOptions) {
     return {
         subject: "Password reset code",
-        text: `Your code is: ${}`
+        text: `Your password reset code is: ${}`,
+        html:  `Your password reset code is: <b> ${} </b>`
     }
 }
