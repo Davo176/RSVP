@@ -19,7 +19,12 @@ router.post('/code', function(req, res, next){
                 res.sendStatus(500);
                 return;
             }
-            res.sendStatus(200);
+            if(rows.length == 0){
+                res.sendStatus(401);
+            }
+            else{
+                res.sendStatus(200);
+            }
         })
     })
 
