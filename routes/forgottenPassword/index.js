@@ -56,7 +56,7 @@ router.post('/sendEmail', function(req, res, next){
                 return;
             }
 
-            emailRecipient = rows[0]["email"];
+            emailRecipient[0] = rows[0]["email"]; //emailRecipient[0] so that it is in an array and the emailReiceivers.join function doesn't crash the server
 
         })
     })

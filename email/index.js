@@ -16,7 +16,7 @@ async function sendMail(mailName,mailArgs,emailReceivers){
         },
     });
     //convert receivers into string
-    emailReceivers = emailReceivers.join(', ')
+    emailReceivers = emailReceivers.join(', ');
     //set up default mail options
     let mailOptions = {
         from: "No_Reply_RSVP_WDC_2022@outlook.com",
@@ -25,6 +25,7 @@ async function sendMail(mailName,mailArgs,emailReceivers){
         text: "Failed to Load Email Contents",
         html: "<b>Failed to Load Email Contents</b>"
     }
+    console.log(mailName);
     //replace text and email based off supplied type and args
     let newMailOptions = emailTypes[mailName](mailArgs)
     //update mail options
