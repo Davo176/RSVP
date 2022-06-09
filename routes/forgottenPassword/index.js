@@ -37,8 +37,6 @@ router.post('/generateCode', function(req, res, next){
 //This function sends an email to the client
 router.post('/sendEmail', function(req, res, next){
 
-    console.log(req.body.user_name);
-
     let emailReciever = "";
 
     //Gets the user's email
@@ -63,16 +61,17 @@ router.post('/sendEmail', function(req, res, next){
         })
     })
 
-    //Queries the database for the code and sends email
-    // req.pool.getConnection(function (error, connection) {
-    //     if(error) {
-    //         console.log(error);
-    //         res.sendStatus(500);
-    //         return;
-    //     }
+    // Queries the database for the code and sends email
+    req.pool.getConnection(function (error, connection) {
+        if(error) {
+            console.log(error);
+            res.sendStatus(500);
+            return;
+        }
 
-    //     // let query = "SELECT forgotten_passsword_code FROM users WHERE user_name = ?
-    // })
+        let query = "SELECT forgotten_passsword_code FROM users WHERE user_name = ?";
+        
+    })
 
 });
 
