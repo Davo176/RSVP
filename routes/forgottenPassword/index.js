@@ -20,6 +20,7 @@ router.post('/generateCode', function(req, res, next){
                 return;
             }
             console.log(rows);
+            console.log("rows length: " + rows.length);
             if(rows.length == 0){
                 res.sendStatus(401);
             }
