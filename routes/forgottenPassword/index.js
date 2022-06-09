@@ -99,8 +99,8 @@ router.post("/checkCode", function(req, res, next){
             return;
         }
 
-        let query = "SELECT IF(?";
-        connection.query(query, [req.body.user_name], function(error, rows, fields){
+        let query = "SELECT IF(forgotten_password_code = ?, 'YES', 'NO') FROM users WHERE user_name = ?";
+        connection.query(query, [req.body.code, req.body.user_name], function(error, rows, fields){
             connection.release();
             if(error) {
                 console.log(error);
@@ -108,9 +108,9 @@ router.post("/checkCode", function(req, res, next){
                 return;
             }
 
-            let code = rows[0];
+            let result = rows[0];
 
-            if(code == req.body.code){
+            if(result == "YES"){
                 next();
             } else {
                 res.sendStatus(401);
@@ -123,7 +123,25 @@ router.post("/checkCode", function(req, res, next){
 //Changes password
 router.post("/changePassword", function(req, res, next){
 
-    let query = "UPDATE pass
+    req.pool.getConnection(function (error, connection) {
+        if(error){
+            console.log(error);
+            res.sendStatus(500);
+            return;
+        }
+
+        let query = "UPDATE users SET password_hash = SHA2(? + , 224) WHERE user_name = ?";
+        connection.query(query, [req.body.newPassword, req.body.user_name], function(error, rows, fields){
+            connection.release();
+            if(error) {
+                console.log(error);
+                res.sendStatus(500);
+                return;
+            }
+
+            res.sendStatus(200);
+        })
+    }
 
 })
 
