@@ -19,16 +19,14 @@ router.post('/generateCode', function(req, res, next){
                 res.sendStatus(500);
                 return;
             }
-            console.log(rows.message.search("1"));
-            console.log("rows length: " + rows.length);
             //Rows.message looks like: (Rows matched: 0  Changed: 0  Warnings: 0 if no matches
             //search() function will return -1 if no matches
-            if(rows.message.search("1") != -1){
+            if(rows.message.search("1") == -1){
                 res.sendStatus(401);
-            } else {
-                res.sendStatus(200);
             }
-        })
+
+            res.sendStatus(200);
+        });
     })
 
 });
