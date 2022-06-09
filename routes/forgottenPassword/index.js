@@ -111,6 +111,7 @@ router.post("/checkCode", function(req, res, next){
             }
 
             let result = rows[0];
+            console.log(result);
 
             if(result == "YES"){
                 next();
