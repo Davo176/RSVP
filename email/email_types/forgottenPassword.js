@@ -6,3 +6,5 @@ function ForgottenPassword(mailOptions) {
         html:  `Your password reset code is: <b> ${mailOptions.code} </b>`
     }
 }
+
+module.exports = ForgottenPassword;
