@@ -14,9 +14,17 @@ let vueinst = new Vue({
 
             xhttp.onreadystatechange = function(){
                 if(this.readyState == 4){
+
                     if(this.status == 200){
 
-                        showAlert("code stored in database");
+                        let xhttp2 = new XMLHttpRequest();
+                        xhttp2.onreadystatechange = function(){
+
+                        }
+
+                        xhttp2.open("POST", "/api/forgottenPassword/sendEmail", true);
+                        xhttp2.setRequestHeader("Content-type", "application/json");
+                        xhttp2.send(this.userNameOnSubmit);
 
                     } else {
                         showAlert("Invalid username");
