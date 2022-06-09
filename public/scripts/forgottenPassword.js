@@ -8,11 +8,11 @@ let vueinst = new Vue({
 
             xhttp.onreadystatechange = function(){
                 if(this.readyState == 4 && this.status == 200){
-                    
+                    showAlert("Code sent to inbox");
                 }
             }
 
-            xhttp.open("GET", "/api/forgottenPassword/generateCode", true);
+            xhttp.open("GET", "/api/forgottenPassword/code", true);
             xhttp.send();
 
         }
