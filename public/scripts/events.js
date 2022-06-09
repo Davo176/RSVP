@@ -105,7 +105,7 @@ var vueinst = new Vue({
         },
         //redirect to an event
         goToEvent: function(eventId){
-            location.href = `/event?id=${eventId}`
+            location.href = `/event?id=${eventId}`;
         }
     },
     //on create get events
