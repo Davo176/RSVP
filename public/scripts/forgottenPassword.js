@@ -19,7 +19,9 @@ let vueinst = new Vue({
 
                         let xhttp2 = new XMLHttpRequest();
                         xhttp2.onreadystatechange = function(){
-
+                            if(this.readyState == 4 && this.status == 200){
+                                showAlert("email send to");
+                            }
                         }
 
                         xhttp2.open("POST", "/api/forgottenPassword/sendEmail", true);

@@ -37,7 +37,7 @@ router.post('/generateCode', function(req, res, next){
 //This function sends an email to the client
 router.post('/sendEmail', function(req, res, next){
 
-    let emailReciever = "";
+    let emailRecipient = "";
 
     //Gets the user's email
     req.pool.getConnection(function (error, connection) {
@@ -56,7 +56,7 @@ router.post('/sendEmail', function(req, res, next){
                 return;
             }
 
-            emailReceiver = rows[0]["email"];
+            emailRecipient = rows[0]["email"];
 
         })
     })
@@ -70,7 +70,21 @@ router.post('/sendEmail', function(req, res, next){
         }
 
         let query = "SELECT forgotten_passsword_code FROM users WHERE user_name = ?";
-        
+        connection.query(query, [req.body.user_name], function(error, rows, fields){
+            connection.release();
+            if(error) {
+                console.log(error);
+                res.sendStatus(500);
+                return;
+            }
+
+            let code = rows[0]["forgotten_password_code"];
+
+            sendMail("forgottenPassword", {code: code}, emailRecipient);
+
+            res.sendStatus(200);
+
+        })
     })
 
 });
