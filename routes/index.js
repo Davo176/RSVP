@@ -84,4 +84,8 @@ router.get('/logout', function(req, res, next){
   });
 })
 
+router.get('/forgottenPassword', function(req, res, next){
+  res.sendFile('/public/forgottenPassword.html');
+})
+
 module.exports = router;
