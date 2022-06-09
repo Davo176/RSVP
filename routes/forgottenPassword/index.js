@@ -143,7 +143,7 @@ router.post("/changePassword", function(req, res, next){
 
             res.sendStatus(200);
         })
-    }
+    })
 
 })
 

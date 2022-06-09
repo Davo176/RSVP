@@ -6,7 +6,7 @@ let vueinst = new Vue({
         userNameOnSubmit: "",
         code: "",
         newPassword: "",
-        definiteUser_name; ""
+        definiteUser_name: ""
     },
     methods: {
         generateCode: function(){
