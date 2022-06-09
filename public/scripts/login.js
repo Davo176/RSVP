@@ -33,7 +33,6 @@ function login()
             if (this.status == 200)
             {
                 console.log('Logged in');
-                login_result.innerText = "Logged in";
                 location.href = "/";
             }
             else if (this.status == 401)
