@@ -2,8 +2,10 @@ let vueinst = new Vue({
 
     el: "#app",
     methods: {
-        generateCode:
-        
+        generateCode: function(){
+            let xhttp
+        }
+
     }
 
 });
