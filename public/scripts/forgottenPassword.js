@@ -8,7 +8,7 @@ let vueinst = new Vue({
     methods: {
         generateCode: function(){
 
-            this.userNameOnSubmit = userName;
+            this.userNameOnSubmit = vueinst.userName;
 
             let xhttp = new XMLHttpRequest();
 
@@ -24,6 +24,7 @@ let vueinst = new Vue({
 
                         xhttp2.open("POST", "/api/forgottenPassword/sendEmail", true);
                         xhttp2.setRequestHeader("Content-type", "application/json");
+                        console.log(this.userNameOnSubmit);
                         xhttp2.send(this.userNameOnSubmit);
 
                     } else {
