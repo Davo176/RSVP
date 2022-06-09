@@ -82,10 +82,6 @@ router.get('/newevent', function(req, res, next) {
   res.sendFile('/public/newevent.html', { root: __dirname+"/.." });
 });
 
-router.get('/notifications', function(req, res, next) {
-  res.sendFile('/public/notifications.html', { root: __dirname+"/.." });
-});
-
 router.get('/account', function(req, res, next){
   res.sendFile('/public/account.html', { root: __dirname+"/.."});
 })

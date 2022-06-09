@@ -7,7 +7,6 @@ var multer = require('multer');
 const eventsRouter = require('./events');
 const calendarRouter = require('./calendar');
 const friendRouter = require('./friends');
-const notificationRouter = require('./notifications');
 const accountRouter = require('./account');
 const forgottenPasswordRouter = require('./forgottenPassword');
 
@@ -33,7 +32,6 @@ router.use(function(req,res,next){
 router.use('/events', eventsRouter);
 router.use('/calendar', calendarRouter);
 router.use('/friends', friendRouter);
-router.use('/notifications', friendRouter);
 router.use('/account', accountRouter);
 
 

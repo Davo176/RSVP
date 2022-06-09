@@ -5,9 +5,11 @@ var multer = require('multer');
 var upload = multer({ des: 'public/images/userUploads'});
 const Uuid = require('uuid');
 const changeRouter = require('./change');
-var sendMail = require('../../email')
+var sendMail = require('../../email');
+
 //if change then send to change router
 router.use('/change', changeRouter);
+
 //get people who are invited
 router.get('/invited', function(req,res,next){
     let user = req.session.user_name;
@@ -153,6 +155,7 @@ router.post('/add', upload.single("eventImage"), function(req, res, next){
     res.redirect('/event?id='+eventID);
   })
 });
+
 //update your attending status (and send emails out)
 router.post('/updateStatus', function(req,res,next){
   let user = req.session.user_name;

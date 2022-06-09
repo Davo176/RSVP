@@ -40,8 +40,8 @@
                         <div v-if="areAdmin" v-on:click.stop="toggleEditMode()" class="editContainer">
                             <span v-if="!editMode">Edit Event</span><span v-if="editMode">Close Edit Mode</span><i class="edit fas fa-edit"></i>
                         </div>
-                        <div v-on:click.stop="addToCalendar()">
-                            <span>Add to Your Calendar</span>
+                        <div v-on:click.stop="addToCalendar()" style="cursor:pointer;">
+                            <span>Add to Your Calendar</span><i class="edit fa-solid fa-plus"></i>
                         </div>
                     </div>
                 </div>
@@ -53,40 +53,50 @@
                         <h3>Edit the Event</h3>
                         <div class="editGroupContainer">
                             <div class="labelContainer">
-                                Title
+                                <p>Title</p>
                                 <input v-model="newTitle" v-bind:placeholder="event.Title" type="text"></input>
                             </div>
-                            <button v-on:click="changeTitle">Change</button>
+                            <button v-on:click="changeTitle">Update</button>
                         </div>
 
                         <div class="editGroupContainer">
                             <div class="labelContainer">
-                                Address
+                                <p>Address</p>
                                 <input v-model="newAddress" v-bind:placeholder="event.Address" type="text"></input>
                             </div>
-                            <button v-on:click="changeAddress">Change</button>
+                            <button v-on:click="changeAddress">Update</button>
                         </div>
                         <div class="editGroupContainer">
                             <div class="labelContainer">
-                                Description
-                                <textarea v-model="newDescription"></textarea>
+                                <p>Description</p>
+                                <textarea v-model="newDescription" v-bind:placeholder="event.Description"></textarea>
                             </div>
-                            <button v-on:click="changeDescription">Change</button>
+                            <button v-on:click="changeDescription">Update</button>
                         </div>
                         <div class="editGroupContainer" v-if="!event.Finalised">
                             <div class="labelContainer">
-                                Date
+                                <p>Date</p>
                                 <input v-model="newDate" type="date"></input>
                             </div>
-                            <button v-on:click="changeDate">Change</button>
+                            <button v-on:click="changeDate">Update</button>
                         </div>
                         <div class="editGroupContainer" v-if="!event.Finalised">
                             <div class="labelContainer">
-                                Time
+                                <p>Time</p>
                                 <input v-model="newTime" type="time"></input>
                             </div>
-                            <button v-on:click="changeTime">Change</button>
+                            <button v-on:click="changeTime">Update</button>
                         </div>
+                        <div class="editGroupContainer">
+                            <div class="labelContainer">
+                                <p>Image</p>
+                                <input type="file" accept="image/*" id="imageEdit"></input>
+                            </div>
+
+                            <button v-on:click="changeImage">Update</button>
+                        </div>
+
+                        <br/>
 
                         <div v-if="!event.Finalised && unavailable.length>=1">
                             <h3>
