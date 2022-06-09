@@ -30,6 +30,7 @@ router.post('/generateCode', function(req, res, next){
                 res.sendStatus(401);
             } else {
                 next();
+                return;
             }
         });
     })
@@ -114,6 +115,7 @@ router.post("/checkCode", function(req, res, next){
 
             if(result == "YES"){
                 next();
+                return;
             } else {
                 res.sendStatus(401);
             }
