@@ -100,9 +100,6 @@ router.get('/logout', function(req, res, next){
   });
 })
 
-<<<<<<< HEAD
-=======
 
 
->>>>>>> dafa447bf8ada99238db5eaa0691cf448466373a
 module.exports = router;
