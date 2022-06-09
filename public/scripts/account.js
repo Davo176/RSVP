@@ -19,8 +19,6 @@ var vueInst = new Vue({
 
             if(newPassword !== newPasswordRepeat){
 
-
-
                 //Change colour of box until clicked and display error
                 newPasswordNode.classList.add("error");
                 newPasswordRepeatNode.classList.add("error");

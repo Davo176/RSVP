@@ -9,6 +9,7 @@ const calendarRouter = require('./calendar');
 const friendRouter = require('./friends');
 const notificationRouter = require('./notifications');
 const accountRouter = require('./account');
+
 //reroute all calls to /api accordingly
 router.get('/test', function(req, res, next) {
   res.send('server Healthy');
