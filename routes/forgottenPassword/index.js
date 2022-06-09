@@ -19,7 +19,7 @@ router.post('/code', function(req, res, next){
                 res.sendStatus(500);
                 return;
             }
-            console.log(rows);
+            console.log("rows: "+ rows);
             if(rows.length == 0){
                 res.sendStatus(401);
             }
