@@ -15,7 +15,7 @@ let vueinst = new Vue({
                 }
             }
 
-            xhttp.open("POST", "/api/forgottenPassword/code", true);
+            xhttp.open("POST", "/api/forgottenPassword/generateCode", true);
             xhttp.setRequestHeader("Content-type", "application/json");
             xhttp.send(JSON.stringify({user_name: this.userName}));
 
