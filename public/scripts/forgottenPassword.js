@@ -46,7 +46,7 @@ let vueinst = new Vue({
             xhttp.setRequestHeader("Content-type", "application/json");
             xhttp.send(JSON.stringify({user_name: vueinst.userNameOnSubmit}));
 
-        }
+        },
         checkPassword: function(){
 
             let passwordNode = document.getElementById("password");
