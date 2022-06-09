@@ -101,7 +101,7 @@ router.post("/checkCode", function(req, res, next){
             return;
         }
 
-        let query = "SELECT IF(forgotten_password_code = ?, 'YES', 'NO') FROM users WHERE user_name = ?";
+        let query = "SELECT IF(forgotten_password_code = ?, 'YES', 'NO') AS isValid FROM users WHERE user_name = ?";
         connection.query(query, [req.body.code, req.body.user_name], function(error, rows, fields){
             connection.release();
             if(error) {
@@ -110,7 +110,7 @@ router.post("/checkCode", function(req, res, next){
                 return;
             }
 
-            let result = rows[0];
+            let result = rows[0]["isValid"];
             console.log(result);
 
             if(result == "YES"){
