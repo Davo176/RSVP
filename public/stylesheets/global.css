@@ -124,6 +124,10 @@ input.error{
   border-color: red;
 }
 
+a {
+  display: sticky;
+}
+
 .pointer {
   cursor: pointer;
 }
