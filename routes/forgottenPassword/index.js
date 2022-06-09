@@ -5,6 +5,8 @@ var sendMail = require("../../email");
 //This function generates a 6 digit code and stores it in the database
 router.post('/generateCode', function(req, res, next){
 
+    let code = null;
+
     req.pool.getConnection(function (error, connection) {
         if(error) {
             console.log(error);
@@ -25,7 +27,7 @@ router.post('/generateCode', function(req, res, next){
             if(rows.message.search("1") == -1){
                 res.sendStatus(401);
             } else {
-                next()
+                next();
             }
         });
     })
@@ -34,8 +36,6 @@ router.post('/generateCode', function(req, res, next){
 
 //This function sends an email to the client
 router.post('/sendEmail', function(req, res, next){
-
-    let email = "";
 
     //Gets the user's email
     req.pool.getConnection(function (error, connection) {
@@ -54,7 +54,9 @@ router.post('/sendEmail', function(req, res, next){
                 return;
             }
 
-            emailAddress = rows[0]["email"];
+            let emailReceiver = rows[0]["email"];
+
+            sendMail("forgottenPassword", {code})
 
             sendMail()
 
