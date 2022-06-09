@@ -80,7 +80,7 @@ router.post('/sendEmail', function(req, res, next){
 
             let code = rows[0]["forgotten_password_code"];
 
-            sendMail("forgottenPassword", {code: code}, emailRecipient);
+            sendMail("ForgottenPassword", {code: code}, emailRecipient);
 
             res.send(emailRecipient);
 
