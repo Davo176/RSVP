@@ -25,6 +25,6 @@ router.use('/calendar', calendarRouter);
 router.use('/friends', friendRouter);
 router.use('/notifications', friendRouter);
 router.use('/account', accountRouter);
-router.use('forgottenPassword', forgottenPasswordRouter);
+router.use('/forgottenPassword', forgottenPasswordRouter);
 
 module.exports = router;
