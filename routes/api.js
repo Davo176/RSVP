@@ -20,11 +20,21 @@ router.get('/login', function(req, res, next) {
   res.send('server Healthy');
 });
 
+router.use('/forgottenPassword', forgottenPasswordRouter);
+
+router.use(function(req,res,next){
+  if (!("user_name" in req.session)){
+    res.redirect('/login');
+  }else{
+    next();
+  }
+})
+
 router.use('/events', eventsRouter);
 router.use('/calendar', calendarRouter);
 router.use('/friends', friendRouter);
 router.use('/notifications', friendRouter);
 router.use('/account', accountRouter);
-router.use('/forgottenPassword', forgottenPasswordRouter);
+
 
 module.exports = router;

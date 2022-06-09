@@ -1,6 +1,18 @@
 var express = require('express');
 var router = express.Router();
 
+router.get('/forgottenPassword', function(req, res, next){
+  res.sendFile('/public/forgottenPassword.html', { root: __dirname+"/.." });
+})
+
+router.use(function(req,res,next){
+  if (!("user_name" in req.session)){
+    res.redirect('/login');
+  }else{
+    next();
+  }
+})
+
 /* GET home page. */
 router.get('/test', function(req, res, next) {
   if('session' in req)
@@ -84,8 +96,6 @@ router.get('/logout', function(req, res, next){
   });
 })
 
-router.get('/forgottenPassword', function(req, res, next){
-  res.sendFile('/public/forgottenPassword.html');
-})
+
 
 module.exports = router;
