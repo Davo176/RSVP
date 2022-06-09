@@ -12,7 +12,7 @@ router.post('/code', function(req, res, next){
         }
 
         let query = "UPDATE users SET forgotten_password_code = (SELECT RAND()*(1000000-100000)+100000) WHERE user_name=?";
-        connection.query(query, [req.session.user_name], function(error, rows, fields){
+        connection.query(query, [req.body.user_name], function(error, rows, fields){
             connection.release();
             if(error) {
                 console.log(error);
