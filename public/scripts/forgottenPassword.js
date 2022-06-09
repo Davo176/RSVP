@@ -14,7 +14,7 @@ let vueinst = new Vue({
                     if(this.status == 200){
 
                     } else {
-                        showAlert("");
+                        showAlert("Invalid username");
                     }
                 }
             }
