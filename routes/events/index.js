@@ -39,7 +39,8 @@ router.get('/invited', function(req,res,next){
                         AND
                         events.event_id NOT IN (select event_admins.event_id from event_admins where event_admins.admin_id=?)
                         AND
-                        i.invitee_id = ?;`;
+                        i.invitee_id = ?
+                    order by event_date,event_time;`;
         connection.query(query, [user,user,user], function(error, rows, fields) {
           connection.release();
           if (error) {
@@ -76,7 +77,8 @@ router.get('/admin', function(req,res,next){
                   FROM
                       events
                   WHERE
-                      events.event_id IN (select event_admins.event_id from event_admins where event_admins.admin_id=?);`;
+                      events.event_id IN (select event_admins.event_id from event_admins where event_admins.admin_id=?)
+                  order by event_date,event_time;`;
       connection.query(query, [user], function(error, rows, fields) {
         connection.release();
         if (error) {

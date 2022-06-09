@@ -18,7 +18,9 @@ Steps to get website running:
     mysql --host=127.0.0.1 < sql/backup.sql (To restore database backup)
 5. Start express server:
     npm start (Make sure port server is running on is set to public)
-    
+6. We recommend signing in with the following google account
+    rsvpwdc@gmail.com (IanKnight)
+
 Steps to query database:
 1. If database is not running start database
     sql_start (Start server)

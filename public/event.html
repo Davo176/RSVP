@@ -40,7 +40,7 @@
                         <div v-if="areAdmin" v-on:click.stop="toggleEditMode()" class="editContainer">
                             <span v-if="!editMode">Edit Event</span><span v-if="editMode">Close Edit Mode</span><i class="edit fas fa-edit"></i>
                         </div>
-                        <div v-on:click.stop="addToCalendar()" style="cursor:pointer;">
+                        <div v-on:click.stop="addToCalendar()" style="cursor:pointer;" v-if="event.Finalised">
                             <span>Add to Your Calendar</span><i class="edit fa-solid fa-plus"></i>
                         </div>
                     </div>
@@ -129,7 +129,7 @@
                             </div>
                             <button v-on:click="finalise">Finalise</button>
                         </div>
-                        <div class="editGroupContainer" v-if="!event.Finalised">
+                        <div class="editGroupContainer">
                             <strong>
                                 Delete Event. Permanent.
                             </strong>

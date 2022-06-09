@@ -451,7 +451,7 @@ router.get('/uninvitedFriends', function (req, res, next) {
                    left join users as u on u.user_name=f.requestee
                    where requester=?
                    and
-                   requester NOT IN (select event_invitees.invitee_id from event_invitees where event_invitees.event_id=?)
+                   requestee NOT IN (select event_invitees.invitee_id from event_invitees where event_invitees.event_id=?)
                    and
                    f.friendship_start_date is not null;`
         req.pool.getConnection(function (error, connection) {
