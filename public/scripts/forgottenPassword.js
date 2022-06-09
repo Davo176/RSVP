@@ -24,8 +24,6 @@ let vueinst = new Vue({
                         xhttp2.onreadystatechange = function(){
                             if(this.readyState == 4 && this.status == 200){
 
-
-
                                 showAlert("email sent to " + JSON.parse(this.responseText)[0]);
 
                                 vueinst.definiteUser_name = vueinst.userNameOnSubmit;
