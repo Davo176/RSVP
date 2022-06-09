@@ -28,6 +28,6 @@ router.get('/code', function(req, res, next){
 router.post('/newPassword', function(req, res, next){
 
     //verifies the code
-})
+});
 
 module.exports = router;
