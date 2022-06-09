@@ -20,7 +20,7 @@ let vueinst = new Vue({
                         let xhttp2 = new XMLHttpRequest();
                         xhttp2.onreadystatechange = function(){
                             if(this.readyState == 4 && this.status == 200){
-                                showAlert("email sent to " + this.responseText);
+                                showAlert("email sent to " + this.responseText[0]);
                             }
                         }
 
