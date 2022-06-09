@@ -78,14 +78,14 @@ router.get('/account', function(req, res, next){
   res.sendFile('/public/account.html', { root: __dirname+"/.."});
 })
 
+router.get('/forgottenPassword', function(req, res, next){
+  res.sendFile('/public/forgottenPassword.html');
+})
+
 router.get('/logout', function(req, res, next){
   req.session.destroy((err) => {
     res.redirect('/login');
   });
-})
-
-router.get('/forgottenPassword', function(req, res, next){
-  res.sendFile('/public/forgottenPassword.html');
 })
 
 module.exports = router;
