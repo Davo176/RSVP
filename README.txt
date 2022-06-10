@@ -22,7 +22,7 @@ Steps to get website running:
 5. Start express server:
     npm start (Make sure port server is running on is set to public)
 6. We recommend signing in with the following google account
-    Email: rsvpwdc@gmail.com 
+    Email: rsvpwdc@gmail.com
     Password: IanKnight
 
 Accounts within the website:
@@ -35,13 +35,14 @@ Accounts within the website:
     Username: Seamus Password: admin1234
     Username: Speedy Password: admin1234
     Username: Will Password: admin1234
-Google Login: 
-    To use google login, you must be signed into an developer email: 
-        Email: rsvpwdc@gmail.com 
+
+Google Login (Recommended):
+    To use google login, you must be signed into an developer email:
+        Email: rsvpwdc@gmail.com
         Password: IanKnight
-    Once signed into the google account, you can access the website 
+    Once signed into the google account, you can access the website
     via google sign in
-    
+
 Steps to query database:
 1. If database is not running start database
     sql_start (Start server)
