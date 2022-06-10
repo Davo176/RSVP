@@ -16,4 +16,5 @@
     display: flex;
     width: 50vw;
     flex-grow: 1;
+    flex-direction: column;
 }
