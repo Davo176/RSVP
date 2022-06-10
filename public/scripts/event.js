@@ -295,11 +295,16 @@ var vueinst = new Vue({
         },
         changeImage: function(){
 
+            let newImage = document.getElementById("imageEdit").files[0];
+
+            if(newImage == null){
+                showAlert("Please select image to change to");
+            }
+
             let vueReference = this;
 
             let formData = new FormData();
 
-            let newImage = document.getElementById("imageEdit").files[0];
             let imageName = this.event.Image;
             let eventId = this.event.event_id;
 
