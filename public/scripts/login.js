@@ -197,7 +197,7 @@ function codeLogin()
                 code_result.innerText = "Please Enter A Code";
                 showAlert("Please Enter A Code");
 
-                document.getElementById("invite_code").classList.add("error")
+                document.getElementById("invite_code").classList.add("error");
             }
         };
         xhttp.open("GET", "/externalInvitee"+param, true);
