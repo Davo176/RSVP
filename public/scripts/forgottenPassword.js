@@ -9,7 +9,7 @@ let vueinst = new Vue({
     methods: {
         generateCode: function(){
 
-            toggleLoad();
+            // toggleLoad();
 
             vueinst.userName = vueinst.userName;
 
@@ -47,7 +47,7 @@ let vueinst = new Vue({
             xhttp.setRequestHeader("Content-type", "application/json");
             xhttp.send(JSON.stringify({user_name: vueinst.userName}));
 
-            toggleLoad();
+            // toggleLoad();
 
         },
         updatePassword: function(){

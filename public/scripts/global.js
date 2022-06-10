@@ -97,19 +97,19 @@ function addAlertDiv() {
 }
 
 //Load bar, didn't end up figuring out how to call this function from inside vue
-// function toggleLoad() {
+function toggleLoad() {
 
-//   let header = document.querySelector("header");
+  let header = document.querySelector("header");
 
-//   let animation = window.getComputedStyle(header, null).getPropertyValue("animation");
+  let animation = window.getComputedStyle(header, null).getPropertyValue("animation");
 
-//   if(animation == "1s ease 0s infinite alternate none running loading"){
-//     header.style.animation = "";
-//   } else {
-//     header.style.animation = "loading 1s infinite alternate";
-//   }
+  if(animation == "1s ease 0s infinite alternate none running loading"){
+    header.style.animation = "";
+  } else {
+    header.style.animation = "loading 1s infinite alternate";
+  }
 
-// }
+}
 
 function updateNav () {
   if(document.body.contains(document.querySelector("header"))){
