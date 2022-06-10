@@ -67,20 +67,26 @@
                 <div id="passwordFields">
 
                     <label for="oldPassword">Current Password: </label>
-                    <input type="password" name="oldPassword" id="oldPassword" onclick="removeError()"></input>
-                    <img src="/images/eye-close-up.jpg" alt="Show password" onmousedown="showPassword('oldPassword')" onmouseup="hidePassword('oldPassword')" width="15em">
+                    <div class="passwordContainer">
+                        <input type="password" name="oldPassword" id="oldPassword" onclick="removeError()"></input>
+                        <i class="fa-solid fa-eye" alt="Show password" onmousedown="showPassword('oldPassword')" onmouseup="hidePassword('oldPassword')"></i>
+                    </div>
 
                     </br>
 
                     <label for="newPassword">New Password: </label>
-                    <input type="password" name="newPassword" id="newPassword" onclick="removeError()"></input>
-                    <img src="/images/eye-close-up.jpg" alt="Show password" onmousedown="showPassword('newPassword')" onmouseup="hidePassword('newPassword')" width="15em">
+                    <div class="passwordContainer">
+                        <input type="password" name="newPassword" id="newPassword" onclick="removeError()"></input>
+                        <i class="fa-solid fa-eye" alt="Show password" onmousedown="showPassword('newPassword')" onmouseup="hidePassword('newPassword')"></i>
+                    </div>
 
                     </br>
 
                     <label for="newPasswordRepeat">Repeat new password: </label>
-                    <input type="password" name="newPasswordRepeat" id="newPasswordRepeat" onclick="removeError()"></input>
-                    <img src="/images/eye-close-up.jpg" alt="Show password" onmousedown="showPassword('newPasswordRepeat')" onmouseup="hidePassword('newPasswordRepeat')" width="15em">
+                    <div class="passwordContainer">
+                        <input type="password" name="newPasswordRepeat" id="newPasswordRepeat" onclick="removeError()"></input>
+                        <i class="fa-solid fa-eye" alt="Show password" onmousedown="showPassword('newPassword')" onmouseup="hidePassword('newPassword')"></i>
+                    </div>
 
                 </div>
 
