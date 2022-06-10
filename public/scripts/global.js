@@ -98,7 +98,9 @@ function addAlertDiv() {
 
 function toggleLoad() {
 
-  let playState = document.querySelector("header").style.animationPlayState;
+  let playState = document.querySelector("header").style.animationPlayState.value;
+
+  console.log(playState);
 
   if(playState = "running"){
     playState = "paused";
