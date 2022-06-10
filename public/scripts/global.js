@@ -30,7 +30,7 @@ function showAlert(argAlert){
   console.log(argAlert);
   let alert = document.getElementById("alert");
 
-  alert.querySelector("#alertContent").innerText = argAlert;
+  document.querySelector("#alertContent").innerText = argAlert;
   alert.style.display = "flex";
 
 }
@@ -101,7 +101,7 @@ function addLoadingDiv() {
   let div = document.createElement("div");
   div.id = "loading";
 
-  document.prepent(div);
+  document.prepend(div);
 
 }
 
