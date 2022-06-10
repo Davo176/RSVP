@@ -86,10 +86,6 @@ function addAlertDiv() {
   div.id = "alert";
   div.classList.add("alert");
 
-  div.innerHTML = `
-  <div id="alertContent"></div>
-  `;
-
   var body = document.querySelector("body");
   body.prepend(div);
 }
