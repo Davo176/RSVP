@@ -71,9 +71,10 @@ let vueinst = new Vue({
                             showAlert("Password updated");
                         }
                         else if(this.status == 401){
-                            showAlert("Incorrect code");
+                            showAlert("Incorrect code and/or username");
 
                             document.getElementById("code").classList.add("error");
+                            document.getElementById("userName").classList.add("error");
                         }
                     }
                 }
