@@ -1,13 +1,13 @@
 function homeButton () {
-  location.href = "home"
+  location.href = "home";
 }
 
 function friendsButton () {
-  location.href = "friends"
+  location.href = "friends";
 }
 
 function eventsButton () {
-  location.href = "evfents"
+  location.href = "events";
 }
 
 function loginButton ()
@@ -17,7 +17,7 @@ function loginButton ()
   {
       if (this.readyState == 4 && this.status == 200)
       {
-        location.href = "/login"
+        location.href = "/login";
       }
   };
   xhttp.open("GET","/logout");
@@ -78,7 +78,7 @@ window.onclick = function(event){
   if(document.querySelector("button") && !event.target.matches("button")){
       document.getElementById("alert").style.display = "none";
   }
-}
+};
 
 function addAlertDiv() {
 
@@ -155,7 +155,7 @@ function updateNav () {
       </ul>`;
       let placeholder = document.getElementById("user_name_placeholder");
       placeholder.innerText = `${first_name}`;
-      };
+      }
   }
 
 }

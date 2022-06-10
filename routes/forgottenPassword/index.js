@@ -33,7 +33,7 @@ router.post('/generateCode', function(req, res, next){
                 return;
             }
         });
-    })
+    });
 
 });
 
@@ -61,8 +61,8 @@ router.post('/sendEmail', function(req, res, next){
 
             emailRecipient[0] = rows[0]["email"]; //emailRecipient[0] so that it is in an array and the emailReiceivers.join function doesn't crash the server
 
-        })
-    })
+        });
+    });
 
     // Queries the database for the code and sends email
     req.pool.getConnection(function (error, connection) {
@@ -87,8 +87,8 @@ router.post('/sendEmail', function(req, res, next){
 
             res.send(emailRecipient);
 
-        })
-    })
+        });
+    });
 
 });
 
@@ -119,9 +119,9 @@ router.post("/updatePassword", function(req, res, next){
             } else {
                 res.sendStatus(200);
             }
-        })
-    })
+        });
+    });
 
-})
+});
 
 module.exports = router;

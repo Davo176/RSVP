@@ -138,7 +138,7 @@ router.post('/declineRequest', function (req, res, next) {
 });
 
 router.post('/sendRequest', function (req, res, next) {
-  console.log(req.body)
+  console.log(req.body);
   if (!('requestee' in req.body)) {
     res.sendStatus(400);
     return;
@@ -182,7 +182,7 @@ router.post('/removeFriend', function (req, res, next) {
         return;
       }
       let unavailabilityID = req.body.id;
-      console.log(user, friend)
+      console.log(user, friend);
       let query = "delete from friends where requester=? and requestee=? or requestee=? and requester=? ";
       connection.query(query, [user, friend, user, friend], function (error, rows, fields) {
         connection.release();
@@ -191,7 +191,7 @@ router.post('/removeFriend', function (req, res, next) {
           res.sendStatus(500);
           return;
         }
-        console.log(rows)
+        console.log(rows);
         res.sendStatus(200);
       });
     });
@@ -203,7 +203,7 @@ router.get('/search', function (req, res, next) {
     res.sendStatus(400);
   } else {
     let searchTerm = '%' + req.query.searchTerm + '%';
-    let user = req.session.user_name
+    let user = req.session.user_name;
     req.pool.getConnection(function (error, connection) {
       if (error) {
         console.log(error);
@@ -229,7 +229,7 @@ router.get('/search', function (req, res, next) {
           res.sendStatus(500);
           return;
         }
-        res.json(rows)
+        res.json(rows);
       });
     });
   }

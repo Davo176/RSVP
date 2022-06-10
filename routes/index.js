@@ -3,7 +3,7 @@ var router = express.Router();
 
 router.get('/forgottenPassword', function(req, res, next){
   res.sendFile('/public/forgottenPassword.html', { root: __dirname+"/.." });
-})
+});
 
 router.use(function(req,res,next){
   if (!("user_name" in req.session)){
@@ -11,7 +11,7 @@ router.use(function(req,res,next){
   }else{
     next();
   }
-})
+});
 
 /* GET home page. */
 router.get('/test', function(req, res, next) {
@@ -35,10 +35,8 @@ router.get('/', function(req, res, next) {
 
 router.get('/event', function(req, res, next) {
   //if request doesnt have an event id
-  if (!"id" in req.query){
-    //cannot find
-    res.sendStatus(404);
-  }else{
+  if ("id" in req.query)
+  {
     //check if they are allowed to see the event
     req.pool.getConnection(function(error, connection){
       if(error){
@@ -63,6 +61,11 @@ router.get('/event', function(req, res, next) {
         }
       });
     });
+    }
+  else
+  {
+    //cannot find
+    res.sendStatus(404);
   }
 });
 //allow pages to be accessed without the .html
@@ -84,17 +87,17 @@ router.get('/newevent', function(req, res, next) {
 
 router.get('/account', function(req, res, next){
   res.sendFile('/public/account.html', { root: __dirname+"/.."});
-})
+});
 
 router.get('/forgottenPassword', function(req, res, next){
   res.sendFile('/public/forgottenPassword.html');
-})
+});
 
 router.get('/logout', function(req, res, next){
   req.session.destroy((err) => {
     res.redirect('/login');
   });
-})
+});
 
 
 

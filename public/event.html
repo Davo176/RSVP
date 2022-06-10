@@ -1,27 +1,29 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <title>Event Planning - Event</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <link rel="stylesheet" href="/stylesheets/global.css">
     <link rel="stylesheet" href="/stylesheets/event.css">
     <link rel="icon" type="image/x-icon" href="/images/favicon.ico">
     <script src="https://kit.fontawesome.com/849e072605.js" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/vue@2.6.12/dist/vue.js"></script>
-    <script src="//cdnjs.cloudflare.com/ajax/libs/moment.js/2.7.0/moment.min.js" type="text/javascript"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/moment.js/2.7.0/moment.min.js"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Open+Sans&display=swap" rel="stylesheet">
     <script src="/scripts/global.js"></script>
     <script src="/scripts/event.js" defer></script>
 </head>
+
 <body>
     <div id="app">
         <header id="Nav"></header>
-        </header>
         <div class="eventPageContainer">
             <div>
                 <div class="eventTitleBar">
-                    <img v-bind:src="imagePreURL + event.Image" style="width:20vw;" />
+                    <img alt="Event's Image'" v-bind:src="imagePreURL + event.Image" style="width:20vw;" />
                     <div class="eventInfoContainer">
                         <h1 class="title">{{event.Title}}</h1>
                         <div></div>
@@ -38,7 +40,8 @@
                             </select>
                         </form>
                         <div v-if="areAdmin" v-on:click.stop="toggleEditMode()" class="editContainer">
-                            <span v-if="!editMode">Edit Event</span><span v-if="editMode">Close Edit Mode</span><i class="edit fas fa-edit"></i>
+                            <span v-if="!editMode">Edit Event</span><span v-if="editMode">Close Edit Mode</span><i
+                                class="edit fas fa-edit"></i>
                         </div>
                         <div v-on:click.stop="addToCalendar()" style="cursor:pointer;" v-if="event.Finalised">
                             <span>Add to Your Calendar</span><i class="edit fa-solid fa-plus"></i>
@@ -54,7 +57,7 @@
                         <div class="editGroupContainer">
                             <div class="labelContainer">
                                 <p>Title</p>
-                                <input v-model="newTitle" v-bind:placeholder="event.Title" type="text"></input>
+                                <input v-model="newTitle" v-bind:placeholder="event.Title" type="text">
                             </div>
                             <button v-on:click="changeTitle">Update</button>
                         </div>
@@ -62,7 +65,7 @@
                         <div class="editGroupContainer">
                             <div class="labelContainer">
                                 <p>Address</p>
-                                <input v-model="newAddress" v-bind:placeholder="event.Address" type="text"></input>
+                                <input v-model="newAddress" v-bind:placeholder="event.Address" type="text">
                             </div>
                             <button v-on:click="changeAddress">Update</button>
                         </div>
@@ -76,31 +79,32 @@
                         <div class="editGroupContainer" v-if="!event.Finalised">
                             <div class="labelContainer">
                                 <p>Date</p>
-                                <input v-model="newDate" type="date"></input>
+                                <input v-model="newDate" type="date">
                             </div>
                             <button v-on:click="changeDate">Update</button>
                         </div>
                         <div class="editGroupContainer" v-if="!event.Finalised">
                             <div class="labelContainer">
                                 <p>Time</p>
-                                <input v-model="newTime" type="time"></input>
+                                <input v-model="newTime" type="time">
                             </div>
                             <button v-on:click="changeTime">Update</button>
                         </div>
                         <div class="editGroupContainer">
                             <div class="labelContainer">
                                 <p>Image</p>
-                                <input type="file" accept="image/*" id="imageEdit"></input>
+                                <input type="file" accept="image/*" id="imageEdit">
                             </div>
 
                             <button v-on:click="changeImage">Update</button>
                         </div>
 
-                        <br/>
+                        <br />
 
                         <div v-if="!event.Finalised && unavailable.length>=1">
                             <h3>
-                            {{unavailable.length}} {{unavailable.length==1 ? 'person' : 'people'}} cannot make the current time, they are:
+                                {{unavailable.length}} {{unavailable.length==1 ? 'person' : 'people'}} cannot make the
+                                current time, they are:
                             </h3>
                             <div v-for="person in unavailable">
                                 {{person.first_name}} {{person.last_name}}
@@ -109,14 +113,15 @@
                                 <div>
                                     We suggest you move it to <strong>{{nextDateTime}}</strong>
                                 </div>
-                                <button v-on:click="getNextFullAvailableTime(searchFromDate,searchFromTime)">Suggest Next Time</button>
+                                <button v-on:click="getNextFullAvailableTime(searchFromDate,searchFromTime)">Suggest
+                                    Next Time</button>
                                 <button v-on:click="setNewDateTime()">Set this as Time</button>
                             </div>
                             <div class="editGroupContainer" v-if="!event.Finalised">
                                 <div class="labelContainer">
                                     Search From
-                                    <input v-model="searchFromDate" type="date"></input>
-                                    <input v-model="searchFromTime" type="time"></input>
+                                    <input v-model="searchFromDate" type="date">
+                                    <input v-model="searchFromTime" type="time">
                                 </div>
                             </div>
                         </div>
@@ -143,8 +148,7 @@
                     <div class="groupTitleContainer" v-on:click="adminOpen=!adminOpen">
                         <h4>Admins:</h4>
                         <i class="chevron fa-solid" title="Show/Hide admins"
-                            v-bind:class="{ 'fa-chevron-up':adminOpen, 'fa-chevron-down':!adminOpen }"
-                            ></i>
+                            v-bind:class="{ 'fa-chevron-up':adminOpen, 'fa-chevron-down':!adminOpen }"></i>
                     </div>
                     <div v-if="adminOpen && name.attending_status==='Admin'" v-for="name in people">
                         <div>{{name.first_name}} {{name.last_name}}</div>
@@ -154,16 +158,21 @@
                     <div class="groupTitleContainer" v-on:click="goingOpen=!goingOpen">
                         <h4>Going:</h4>
                         <i class="chevron fa-solid" title="Show/Hide going"
-                            v-bind:class="{ 'fa-chevron-up':goingOpen, 'fa-chevron-down':!goingOpen }"
-                            ></i>
+                            v-bind:class="{ 'fa-chevron-up':goingOpen, 'fa-chevron-down':!goingOpen }"></i>
                     </div>
                     <div class="nameContainer" v-if="goingOpen && name.attending_status==='Going'"
                         v-for="name in people">
                         <div>{{name.first_name}} {{name.last_name}}</div>
                         <div>
-                            <i title="Send friend request" v-on:click="addFriend(name.invitee_id)" v-if="name.areFriends=='0' && yourUsername.toLowerCase()!=name.invitee_id.toLowerCase()" class="addFriend fa-solid fa-user-plus"></i>
-                            <i title="Make admin" v-on:click="addAdmin(name.invitee_id)" v-if="areAdmin && !(adminInfo.includes(name.invitee_id.toLowerCase()))" class="star fa-solid fa-star"></i>
-                            <i title="Uninvite from event" v-on:click="uninvite(name.invitee_id)" v-if="areAdmin && yourUsername.toLowerCase()!=name.invitee_id.toLowerCase() && !(adminInfo.includes(name.invitee_id.toLowerCase()))" class="unInvite fa-solid fa-calendar-xmark"></i>
+                            <i title="Send friend request" v-on:click="addFriend(name.invitee_id)"
+                                v-if="name.areFriends=='0' && yourUsername.toLowerCase()!=name.invitee_id.toLowerCase()"
+                                class="addFriend fa-solid fa-user-plus"></i>
+                            <i title="Make admin" v-on:click="addAdmin(name.invitee_id)"
+                                v-if="areAdmin && !(adminInfo.includes(name.invitee_id.toLowerCase()))"
+                                class="star fa-solid fa-star"></i>
+                            <i title="Uninvite from event" v-on:click="uninvite(name.invitee_id)"
+                                v-if="areAdmin && yourUsername.toLowerCase()!=name.invitee_id.toLowerCase() && !(adminInfo.includes(name.invitee_id.toLowerCase()))"
+                                class="unInvite fa-solid fa-calendar-xmark"></i>
                         </div>
                     </div>
                 </div>
@@ -171,15 +180,21 @@
                     <div class="groupTitleContainer" v-on:click="pendingOpen=!pendingOpen">
                         <h4>Pending:</h4>
                         <i class="chevron fa-solid" title="Show/Hide pending"
-                            v-bind:class="{ 'fa-chevron-up':pendingOpen, 'fa-chevron-down':!pendingOpen }"
-                            ></i>
+                            v-bind:class="{ 'fa-chevron-up':pendingOpen, 'fa-chevron-down':!pendingOpen }"></i>
                     </div>
-                    <div class="nameContainer" v-if="pendingOpen && name.attending_status==='Unsure'" v-for="name in people">
+                    <div class="nameContainer" v-if="pendingOpen && name.attending_status==='Unsure'"
+                        v-for="name in people">
                         <div>{{name.first_name}} {{name.last_name}}</div>
                         <div>
-                            <i title="Send friend request" v-on:click="addFriend(name.invitee_id)" v-if="name.areFriends=='0' && yourUsername.toLowerCase()!=name.invitee_id.toLowerCase()" class="addFriend fa-solid fa-user-plus"></i>
-                            <i title="Make admin" v-on:click="addAdmin(name.invitee_id)" v-if="areAdmin && !(adminInfo.includes(name.invitee_id.toLowerCase()))" class="star fa-solid fa-star"></i>
-                            <i title="Uninvite from event" v-on:click="uninvite(name.invitee_id)" v-if="areAdmin && yourUsername.toLowerCase()!=name.invitee_id.toLowerCase() && !(adminInfo.includes(name.invitee_id.toLowerCase()))" class="unInvite fa-solid fa-calendar-xmark"></i>
+                            <i title="Send friend request" v-on:click="addFriend(name.invitee_id)"
+                                v-if="name.areFriends=='0' && yourUsername.toLowerCase()!=name.invitee_id.toLowerCase()"
+                                class="addFriend fa-solid fa-user-plus"></i>
+                            <i title="Make admin" v-on:click="addAdmin(name.invitee_id)"
+                                v-if="areAdmin && !(adminInfo.includes(name.invitee_id.toLowerCase()))"
+                                class="star fa-solid fa-star"></i>
+                            <i title="Uninvite from event" v-on:click="uninvite(name.invitee_id)"
+                                v-if="areAdmin && yourUsername.toLowerCase()!=name.invitee_id.toLowerCase() && !(adminInfo.includes(name.invitee_id.toLowerCase()))"
+                                class="unInvite fa-solid fa-calendar-xmark"></i>
                         </div>
                     </div>
                 </div>
@@ -187,15 +202,21 @@
                     <div class="groupTitleContainer" v-on:click="notGoingOpen=!notGoingOpen">
                         <h4>Not Going:</h4>
                         <i class="chevron fa-solid" title="Show/Hide not going"
-                            v-bind:class="{ 'fa-chevron-up':notGoingOpen, 'fa-chevron-down':!notGoingOpen }"
-                            ></i>
+                            v-bind:class="{ 'fa-chevron-up':notGoingOpen, 'fa-chevron-down':!notGoingOpen }"></i>
                     </div>
-                    <div class="nameContainer" v-if="notGoingOpen && name.attending_status==='Not Going'" v-for="name in people">
+                    <div class="nameContainer" v-if="notGoingOpen && name.attending_status==='Not Going'"
+                        v-for="name in people">
                         <div>{{name.first_name}} {{name.last_name}}</div>
                         <div>
-                            <i title="Send friend request" v-on:click="addFriend(name.invitee_id)" v-if="name.areFriends=='0' && yourUsername.toLowerCase()!=name.invitee_id.toLowerCase()" class="addFriend fa-solid fa-user-plus"></i>
-                            <i title="Make admin" v-on:click="addAdmin(name.invitee_id)" v-if="areAdmin && !(adminInfo.includes(name.invitee_id.toLowerCase()))" class="star fa-solid fa-star"></i>
-                            <i title="Uninvite from event" v-on:click="uninvite(name.invitee_id)" v-if="areAdmin && yourUsername.toLowerCase()!=name.invitee_id.toLowerCase() && !(adminInfo.includes(name.invitee_id.toLowerCase()))" class="unInvite fa-solid fa-calendar-xmark"></i>
+                            <i title="Send friend request" v-on:click="addFriend(name.invitee_id)"
+                                v-if="name.areFriends=='0' && yourUsername.toLowerCase()!=name.invitee_id.toLowerCase()"
+                                class="addFriend fa-solid fa-user-plus"></i>
+                            <i title="Make admin" v-on:click="addAdmin(name.invitee_id)"
+                                v-if="areAdmin && !(adminInfo.includes(name.invitee_id.toLowerCase()))"
+                                class="star fa-solid fa-star"></i>
+                            <i title="Uninvite from event" v-on:click="uninvite(name.invitee_id)"
+                                v-if="areAdmin && yourUsername.toLowerCase()!=name.invitee_id.toLowerCase() && !(adminInfo.includes(name.invitee_id.toLowerCase()))"
+                                class="unInvite fa-solid fa-calendar-xmark"></i>
                         </div>
                     </div>
                 </div>
@@ -203,32 +224,33 @@
                     <div class="groupTitleContainer" v-on:click="friendOpen=!friendOpen">
                         <h4>Other Friends</h4>
                         <i class="chevron fa-solid"
-                            v-bind:class="{ 'fa-chevron-up':friendOpen, 'fa-chevron-down':!friendOpen }"
-                            ></i>
+                            v-bind:class="{ 'fa-chevron-up':friendOpen, 'fa-chevron-down':!friendOpen }"></i>
                     </div>
                     <div class="nameContainer" v-if="friendOpen" v-for="name in otherFriends">
                         <div>{{name.first_name}} {{name.last_name}}</div>
                         <i v-on:click="invite(name.user_name)" class="inviteFriend fa-solid fa-calendar-check"></i>
                     </div>
-                    <div v-if="friendOpen" v-for="name in notInvitedFriends">{{name.first_name}} {{name.last_name}}</div>
+                    <div v-if="friendOpen" v-for="name in notInvitedFriends">{{name.first_name}} {{name.last_name}}
+                    </div>
                     <button v-on:click="inviteExternal()">Invite external person</button>
                     <div class="externalUserContainer" style="display: none;">
                         <div>
-                        <p>First Name</p>
-                        <input type="text" id="fname" placeholder="Enter First Name" name="fname" required>
+                            <p>First Name</p>
+                            <input type="text" id="fname" placeholder="Enter First Name" name="fname" required>
                         </div>
                         <div>
-                        <p>Last Name</p>
-                        <input type="text" id="lname" placeholder="Enter Last Name" name="lname" required>
+                            <p>Last Name</p>
+                            <input type="text" id="lname" placeholder="Enter Last Name" name="lname" required>
                         </div>
                         <button v-on:click="generateLink()">Generate Invite Code:</button>
-                        <br/>
+                        <br />
                         <p id="linkText" style="display: none;"></p>
                         <a id="link" style="display: none;"></a>
                     </div>
                 </div>
             </div>
         </div>
+    </div>
 </body>
 
 </html>

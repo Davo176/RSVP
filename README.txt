@@ -1,4 +1,7 @@
 #### ReadMe ####
+5 minute overview of the website can be viewed at:
+    https://www.youtube.com/watch?v=z3SIrZBdOIE&ab_channel=WDCRSVP
+
 Steps to get website running:
 1. Install latest configuration files in codespace:
     rm -f ~/.bashrc ~/.bash_profile ~/.profile ~/.eslintrc
@@ -22,6 +25,23 @@ Steps to get website running:
     Email: rsvpwdc@gmail.com 
     Password: IanKnight
 
+Accounts within the website:
+    Username: Bugs Password: admin1234
+    Username: Daffy Password: admin1234
+    Username: Harrison Password: admin1234
+    Username: MeepMeep Password: admin1234
+    Username: Neil Password: admin1234
+    Username: Porky Password: admin1234
+    Username: Seamus Password: admin1234
+    Username: Speedy Password: admin1234
+    Username: Will Password: admin1234
+Google Login: 
+    To use google login, you must be signed into an developer email: 
+        Email: rsvpwdc@gmail.com 
+        Password: IanKnight
+    Once signed into the google account, you can access the website 
+    via google sign in
+    
 Steps to query database:
 1. If database is not running start database
     sql_start (Start server)
@@ -31,6 +51,7 @@ Steps to query database:
 3. Set mysql to use the production database
     use production
 4. Run queries
+####################
 
 #### Old ReadMe ####
 To Run Database:
