@@ -98,7 +98,9 @@ function addAlertDiv() {
 
 function toggleLoad() {
 
-  let playState = document.querySelector("header").getComputedStyle;
+  let header = document.querySelector("header");
+
+  let playState = window.getComputedStyle(header, null).getPropertyValue("animationPlayState");
 
   console.log(playState);
 
