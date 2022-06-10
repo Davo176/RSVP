@@ -175,8 +175,10 @@ a {
 
 .loadingDots {
   bottom: 10px;
-  width: 100vw;
+  width: 10vw;
   padding: 30px;
+  margin-left: auto;
+  margin-right: auto;
 }
 
 .dot-elastic {
