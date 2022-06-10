@@ -71,7 +71,6 @@ header {
   background-color: var(--secondary-color);
   height: 5vh;
   color: white!important;
-  animation: loading;
   animation-iteration-count: infinite;
   animation-duration: 1s;
   animation-direction: alternate;
