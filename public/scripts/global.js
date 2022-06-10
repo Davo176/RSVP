@@ -140,8 +140,7 @@ function updateNav () {
   placeholder.innerText = `${first_name}`;
   };
 
-  nav.innerHTML += `
-  <div id="loading"></div>`;
+  document.querySelector("header").innerHTML += `<div id="loading"></div>`;
   }
 
 }
