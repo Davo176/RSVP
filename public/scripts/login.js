@@ -178,26 +178,28 @@ function codeLogin()
         var xhttp = new XMLHttpRequest();
         xhttp.onreadystatechange = function()
         {
-            if (this.readyState == 4 && this.status == 200)
-            {
-                //If sucessful request, redirect user to the invited event
-                location.href = this.response;
-            }
-            else if (this.status == 403)
-            {
-                //403 denotes the invite code is not valid
-                code_result.innerText = "Incorrect Code";
-                showAlert("Incorrect Code");
+            if(this.readyState == 4){
+                if (this.status == 200)
+                {
+                    //If sucessful request, redirect user to the invited event
+                    location.href = this.response;
+                }
+                else if (this.status == 403)
+                {
+                    //403 denotes the invite code is not valid
+                    code_result.innerText = "Incorrect Code";
+                    showAlert("Incorrect Code");
 
-                document.getElementById("invite_code").classList.add("error");
-            }
-            else if (this.status == 400)
-            {
-                //400 denotes no input code was provided which should occur due to prior check
-                code_result.innerText = "Please Enter A Code";
-                showAlert("Please Enter A Code");
+                    document.getElementById("invite_code").classList.add("error");
+                }
+                else if (this.status == 400)
+                {
+                    //400 denotes no input code was provided which should occur due to prior check
+                    code_result.innerText = "Please Enter A Code";
+                    showAlert("Please Enter A Code");
 
-                document.getElementById("invite_code").classList.add("error");
+                    document.getElementById("invite_code").classList.add("error");
+                }
             }
         };
         xhttp.open("GET", "/externalInvitee"+param, true);
