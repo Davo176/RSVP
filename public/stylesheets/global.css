@@ -155,18 +155,34 @@ a {
   width: 50%;
 }
 
-@keyframes acrossScreen {
+/* The animation code */
+@keyframes example {
   from {position: left;}
   to {position: right;}
+}
+
+/* The element to apply the animation to */
+#loading {
+  width: 100px;
+  height: 100px;
+  background-color: red;
+  animation-name: example;
+  animation-duration: 4s;
+}
+
+/* @keyframes acrossScreen {
+  from {float: left;}
+  to {float: right;}
 }
 
 #loading {
   width: 10px;
   height: 10px;
-  background-color: white;
+  float: left;
+  background-color: red;
   animation-name: acrossScreen;
   animation-duration: 2s;
-}
+} */
 
 /*https://codepen.io/nzbin/pen/GGrXbp */
 /**
