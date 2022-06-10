@@ -102,7 +102,7 @@ function toggleLoad() {
 
   let animation = window.getComputedStyle(header, null).getPropertyValue("animation");
 
-  if(animation == "loading"){
+  if(animation == "loading 1s infinite alternate"){
     header.style.animation = "";
   } else {
     header.style.animation = "loading 1s infinite alternate";
