@@ -28,10 +28,10 @@ function loginButton ()
 function showAlert(argAlert){
 
   console.log(argAlert);
-  let alert = document.getElementById("alert");
+  let alertContent = document.getElementById("alertContent");
 
-  alert.querySelector("#alertContent").innerText = argAlert;
-  alert.style.display = "flex";
+  alertContent.innerText = argAlert;
+  alertContent.style.display = "flex";
 
 }
 
