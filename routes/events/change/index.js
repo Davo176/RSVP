@@ -1,10 +1,27 @@
 var express = require('express');
 var router = express.Router();
+var multer = require('multer');
+const Uuid = require('uuid');
+
+var storage = multer.diskStorage({
+    destination: function (req, file, cb) {
+      cb(null, './public/images/userUploads')
+    },
+    filename: function (req, file, cb) {
+      let split = file.originalname.split(".");
+      let extension = file.originalname.split(".")[split.length-1];
+      cb(null, Uuid.v4() + "." + extension)
+    }
+});
+
+var upload = multer({ storage: storage });
+
+var fs = require('fs');
 
 var sendMail = require('../../../email')
 
 //middleware to make sure an admin is making the request
-router.use(function (req, res, next) {
+router.use(upload.single("newImage"), function (req, res, next) {
     if (!("event_id" in req.body) && !((req.path == "/uninvitedFriends" || req.path == "/unavailable") && ("event_id" in req.query))) {
         res.sendStatus(400);
         return;
@@ -117,6 +134,38 @@ router.post('/time', function (req, res, next) {
             });
         });
     }
+});
+
+//Change image
+router.post('/image', function(req, res, next){
+
+    //Deleting image tutorial from https://www.youtube.com/watch?v=L7QQdMJqi1U
+
+    try{
+        fs.unlinkSync('./public/images/userUploads/' + req.body.imageName);
+        req.pool.getConnection(function(err, connection){
+            if(err) {
+                console.log(err);
+                res.sendStatus(500);
+                return;
+            }
+            let query = "UPDATE events SET event_image = ? WHERE event_id = ?"
+            connection.query(query, [req.file.filename, req.body.event_id], function(error, rows, fields) {
+                connection.release();
+                if(error) {
+                    console.log(error);
+                    res.sendStatus(500);
+                    return;
+                }
+                res.sendStatus(200);
+            })
+        });
+    }
+    catch(err){
+        console.log("Error when deleting file: " + err);
+        res.sendStatus(422);
+    }
+
 });
 
 //finalise an event
@@ -311,6 +360,7 @@ router.post('/makeAdmin', function (req, res, next) {
 });
 //delete the event
 router.post('/delete', function (req, res, next) {
+
     req.pool.getConnection(function (err, connection) {
         if (err) {
             console.log(err);
@@ -352,8 +402,18 @@ router.post('/delete', function (req, res, next) {
                         console.log(error);
                         return;
                     }
-                    res.sendStatus(200);
-                    sendMail('Cancel',{eventTitle:eventTitle},emailReceivers);
+                    //Deletes file from server
+                    //Deleting image tutorial from https://www.youtube.com/watch?v=L7QQdMJqi1U
+                    try{
+                        fs.unlinkSync('./public/images/userUploads/' + req.body.event_image);
+                        res.sendStatus(200);
+                        sendMail('Cancel',{eventTitle:eventTitle},emailReceivers);
+                    }
+                    catch(err){
+                        console.log("Error when deleting file: " + err);
+                        res.sendStatus(422);
+                    }
+
                 });
             });
         });
@@ -391,7 +451,7 @@ router.get('/uninvitedFriends', function (req, res, next) {
                    left join users as u on u.user_name=f.requestee
                    where requester=?
                    and
-                   requester NOT IN (select event_invitees.invitee_id from event_invitees where event_invitees.event_id=?)
+                   requestee NOT IN (select event_invitees.invitee_id from event_invitees where event_invitees.event_id=?)
                    and
                    f.friendship_start_date is not null;`
         req.pool.getConnection(function (error, connection) {

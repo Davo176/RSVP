@@ -5,6 +5,9 @@ const nodemailer = require('nodemailer');
 //can probably create transporter as middleware.
 
 async function sendMail(mailName,mailArgs,emailReceivers){
+    if (emailReceivers.length===0){
+        return;
+    }
     //create the transporter
     let transporter = nodemailer.createTransport({
         host: "smtp-mail.outlook.com",
@@ -14,9 +17,12 @@ async function sendMail(mailName,mailArgs,emailReceivers){
             user: 'No_Reply_RSVP_WDC_2022@outlook.com', // email sent from
             pass: 'IanKnight', // super secure having password sitting in code... Ideally would set up Vault or something
         },
+        tls: {
+            ciphers:'SSLv3'
+        }
     });
     //convert receivers into string
-    emailReceivers = emailReceivers.join(', ')
+    emailReceivers = emailReceivers.join(', ');
     //set up default mail options
     let mailOptions = {
         from: "No_Reply_RSVP_WDC_2022@outlook.com",
@@ -32,7 +38,12 @@ async function sendMail(mailName,mailArgs,emailReceivers){
     mailOptions.text = newMailOptions.text;
     mailOptions.html = newMailOptions.html;
     //send mail
-    let info = await transporter.sendMail(mailOptions);
+    try {
+        let info = await transporter.sendMail(mailOptions);
+    } catch (error) {
+        console.log("Error")
+    }
+
     //CAN TURN BELOW ON TO GET EMAIL PREVIEWS WHEN USING TEST ACCOUNT.
     //console.log("Message sent: %s", info.messageId);
 

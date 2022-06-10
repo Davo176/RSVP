@@ -5,9 +5,11 @@ var multer = require('multer');
 var upload = multer({ des: 'public/images/userUploads'});
 const Uuid = require('uuid');
 const changeRouter = require('./change');
-var sendMail = require('../../email')
+var sendMail = require('../../email');
+
 //if change then send to change router
 router.use('/change', changeRouter);
+
 //get people who are invited
 router.get('/invited', function(req,res,next){
     let user = req.session.user_name;
@@ -37,7 +39,8 @@ router.get('/invited', function(req,res,next){
                         AND
                         events.event_id NOT IN (select event_admins.event_id from event_admins where event_admins.admin_id=?)
                         AND
-                        i.invitee_id = ?;`;
+                        i.invitee_id = ?
+                    order by event_date,event_time;`;
         connection.query(query, [user,user,user], function(error, rows, fields) {
           connection.release();
           if (error) {
@@ -74,7 +77,8 @@ router.get('/admin', function(req,res,next){
                   FROM
                       events
                   WHERE
-                      events.event_id IN (select event_admins.event_id from event_admins where event_admins.admin_id=?);`;
+                      events.event_id IN (select event_admins.event_id from event_admins where event_admins.admin_id=?)
+                  order by event_date,event_time;`;
       connection.query(query, [user], function(error, rows, fields) {
         connection.release();
         if (error) {
@@ -153,6 +157,7 @@ router.post('/add', upload.single("eventImage"), function(req, res, next){
     res.redirect('/event?id='+eventID);
   })
 });
+
 //update your attending status (and send emails out)
 router.post('/updateStatus', function(req,res,next){
   let user = req.session.user_name;

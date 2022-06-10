@@ -145,7 +145,6 @@
           console.log("error");
         }
         if (this.readyState == 4 && this.status == 200) {
-          vueinst.getMonth();
           for (let event of events){
             await addExternalUnav(moment(event.start.dateTime).format("YYYY-MM-DD[T]HH:mm:ss"),moment(event.end.dateTime).format("YYYY-MM-DD[T]HH:mm:ss"),event.summary)
           }

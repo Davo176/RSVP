@@ -23,3 +23,6 @@ UPDATE users SET password_hash = SHA2('fooey2002RSVPWDC',224) WHERE user_name = 
 UPDATE users SET password_hash = SHA2('adminRSVPWDC',224) WHERE user_name = 'will';
 UPDATE users SET password_hash = SHA2('testRSVPWDC',224) WHERE user_name = '<b>test</b>';
 UPDATE users SET password_hash = SHA2('testRSVPWDC',224) WHERE user_name = "<img src='test' onerror='alert(1)'>";
+
+
+insert into users values ('Porky','Porky','Pig','fakeemail@fakedomain.com','a404481a208031bfcf6c3d3e714d5d0774a892d1e2be9d19f2de0f4c',NULL);

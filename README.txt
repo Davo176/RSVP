@@ -1,3 +1,37 @@
+#### ReadMe ####
+Steps to get website running:
+1. Install latest configuration files in codespace:
+    rm -f ~/.bashrc ~/.bash_profile ~/.profile ~/.eslintrc
+    curl -Lo ~/.bash_profile https://github.com/ian-knight-uofa/uofa-tools/releases/download/22.05.17/bashrc
+    curl -Lo ~/.eslintrc https://github.com/ian-knight-uofa/uofa-tools/releases/download/22.05.17/eslintrc
+    exit
+2. Retrieve server files:
+    (Make sure you're in a blank directory if havent setup before, or in same folder as last time)
+    export GITHUB_TOKEN="your token"
+    git clone https://github.com/RSVPWDC/RSVP.git (If havent setup before)
+    git checkout master (If on another branch)
+    git pull
+3. Update node_modules folder:
+    npm install
+4. Start mysql server:
+    sql_start (Start server)
+    mysql --host=127.0.0.1 < sql/backup.sql (To restore database backup)
+5. Start express server:
+    npm start (Make sure port server is running on is set to public)
+6. We recommend signing in with the following google account
+    rsvpwdc@gmail.com (IanKnight)
+
+Steps to query database:
+1. If database is not running start database
+    sql_start (Start server)
+    mysql --host=127.0.0.1 < sql/backup.sql (To restore database backup)
+2. Connect to Database:
+    mysql --host=127.0.0.1
+3. Set mysql to use the production database
+    use production
+4. Run queries
+
+#### Old ReadMe ####
 To Run Database:
 sql_start
 

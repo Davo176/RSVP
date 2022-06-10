@@ -57,11 +57,12 @@ DROP TABLE IF EXISTS `event_invitees`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `event_invitees` (
-  `admin_id` varchar(36) NOT NULL,
+  `invitee_id` varchar(36) NOT NULL,
   `event_id` varchar(36) NOT NULL,
-  PRIMARY KEY (`admin_id`,`event_id`),
+  `attending_status` varchar(30) DEFAULT NULL,
+  PRIMARY KEY (`invitee_id`,`event_id`),
   KEY `event_id` (`event_id`),
-  CONSTRAINT `event_invitees_ibfk_1` FOREIGN KEY (`admin_id`) REFERENCES `users` (`user_name`) ON DELETE CASCADE,
+  CONSTRAINT `event_invitees_ibfk_1` FOREIGN KEY (`invitee_id`) REFERENCES `users` (`user_name`) ON DELETE CASCADE,
   CONSTRAINT `event_invitees_ibfk_2` FOREIGN KEY (`event_id`) REFERENCES `events` (`event_id`) ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -90,6 +91,7 @@ CREATE TABLE `events` (
   `event_image` varchar(500) DEFAULT NULL,
   `event_address` varchar(255) DEFAULT NULL,
   `event_description` varchar(255) DEFAULT NULL,
+  `finalised` tinyint NOT NULL,
   PRIMARY KEY (`event_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -145,6 +147,7 @@ CREATE TABLE `unavailabilities` (
   `reason` varchar(64) DEFAULT NULL,
   `user` varchar(36) DEFAULT NULL,
   `event_id` varchar(36) DEFAULT NULL,
+  `origin` varchar(10) DEFAULT NULL,
   PRIMARY KEY (`unavailability_id`),
   KEY `user` (`user`),
   KEY `event_id` (`event_id`),
@@ -163,6 +166,31 @@ LOCK TABLES `unavailabilities` WRITE;
 UNLOCK TABLES;
 
 --
+-- Table structure for table `user_email_settings`
+--
+
+DROP TABLE IF EXISTS `user_email_settings`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `user_email_settings` (
+  `user_name` varchar(36) NOT NULL,
+  `setting_name` varchar(36) NOT NULL,
+  `setting_state` tinyint NOT NULL,
+  PRIMARY KEY (`user_name`,`setting_name`),
+  CONSTRAINT `user_email_settings_ibfk_1` FOREIGN KEY (`user_name`) REFERENCES `users` (`user_name`) ON DELETE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `user_email_settings`
+--
+
+LOCK TABLES `user_email_settings` WRITE;
+/*!40000 ALTER TABLE `user_email_settings` DISABLE KEYS */;
+/*!40000 ALTER TABLE `user_email_settings` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
 -- Table structure for table `users`
 --
 
@@ -175,6 +203,7 @@ CREATE TABLE `users` (
   `last_name` varchar(50) DEFAULT NULL,
   `email` varchar(255) DEFAULT NULL,
   `password_hash` varchar(255) DEFAULT NULL,
+  `forgotten_password_code` int DEFAULT NULL,
   PRIMARY KEY (`user_name`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -197,4 +226,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2022-05-18 12:53:54
+-- Dump completed on 2022-06-09 12:33:03

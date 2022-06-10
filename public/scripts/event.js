@@ -293,8 +293,34 @@ var vueinst = new Vue({
             xhttp.setRequestHeader('Content-type', 'application/json; charset=UTF-8');
             xhttp.send(reqBody);
         },
+        changeImage: function(){
+
+            let vueReference = this;
+
+            let formData = new FormData();
+
+            let newImage = document.getElementById("imageEdit").files[0];
+            let imageName = this.event.Image;
+            let eventId = this.event.event_id;
+
+            formData.append("newImage", newImage);
+            formData.append("imageName", imageName);
+            formData.append("event_id", eventId);
+
+            let xhttp = new XMLHttpRequest();
+
+            xhttp.onreadystatechange = function(){
+                if(this.readyState == 4 && this.status == 200){
+                    vueReference.getEventInfo(vueReference.event.event_id);
+                }
+            }
+
+            xhttp.open("POST", "/api/events/change/image", true); //For some reason, this worked only when we didn't set the request header. In order to use, multer I think I needed to set it to 'multipart/form-data'
+            xhttp.send(formData);
+
+        },
         deleteEvent: function(){
-            let reqBody = JSON.stringify({event_id: this.event.event_id});
+            let reqBody = JSON.stringify({event_id: this.event.event_id, event_image: this.event.Image});
             let xhttp = new XMLHttpRequest();
             let vueReference = this;
 
@@ -323,6 +349,7 @@ var vueinst = new Vue({
                     console.log("error");
                 }
                 if (this.readyState == 4 && this.status == 200) {
+                    vueReference.updateInfo(vueReference.event.event_id);
                     console.log("working");
                 }
             };
@@ -385,7 +412,6 @@ var vueinst = new Vue({
         //called on create, to update all necessary info (used to be more functions in here)
         updateInfo: function(eventID){
             this.getEventInfo(eventID);
-
         },
         //get list of people who are invited and not not going but arent available
         getUnavailabilities: function(eventId,eventDate,eventTime, setValue){
