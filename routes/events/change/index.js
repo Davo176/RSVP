@@ -142,7 +142,9 @@ router.post('/image', function(req, res, next){
     //Deleting image tutorial from https://www.youtube.com/watch?v=L7QQdMJqi1U
 
     try{
-        fs.unlinkSync('./public/images/userUploads/' + req.body.imageName);
+        if(req.body.imageName != "test.jpg"){ //Never delete test.jpg, is default image
+             fs.unlinkSync('./public/images/userUploads/' + req.body.imageName);
+        }
         req.pool.getConnection(function(err, connection){
             if(err) {
                 console.log(err);

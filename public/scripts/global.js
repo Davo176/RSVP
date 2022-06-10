@@ -30,7 +30,7 @@ function showAlert(argAlert){
   console.log(argAlert);
   let alert = document.getElementById("alert");
 
-  alert.querySelector("#alertContent").innerText = argAlert;
+  document.querySelector("#alertContent").innerText = argAlert;
   alert.style.display = "flex";
 
 }
@@ -75,7 +75,7 @@ window.onclick = function(event){
   if(document.querySelector(".dropdown") && !event.target.matches('.dropdown')){
       document.getElementById("dropdownContent").classList.remove("show");
   }
-  if(document.querySelector("button[type='submit']") && !event.target.matches("button[type='submit']")){
+  if(document.querySelector("button") && !event.target.matches("button")){
       document.getElementById("alert").style.display = "none";
   }
 }
@@ -86,57 +86,76 @@ function addAlertDiv() {
   div.id = "alert";
   div.classList.add("alert");
 
-  div.innerHTML = `
-  <div id="alertContent"></div>
-  `;
+  let alertContent = document.createElement("DIV");
+  alertContent.id="alertContent";
+  alertContent.classList.add("alertContent");
+
+  div.append(alertContent);
 
   var body = document.querySelector("body");
   body.prepend(div);
 }
 
+//Load bar, didn't end up figuring out how to call this function from inside vue
+function toggleLoad() {
+
+  let header = document.querySelector("header");
+
+  let animation = window.getComputedStyle(header, null).getPropertyValue("animation");
+
+  if(animation == "1s ease 0s infinite alternate none running loading"){
+    header.style.animation = "";
+  } else {
+    header.style.animation = "loading 1s infinite alternate";
+  }
+
+}
+
 function updateNav () {
   if(document.body.contains(document.querySelector("header"))){
-    var nav = document.getElementById('Nav');
-  if (first_name == "GUEST")
-  {
-    nav.innerHTML += `
-  <nav>
-    <ul class="navBar">
-        <li class="navBarElementContainerText">RSVP</li>
-    </ul>
-  </nav>
-  <nav>
-    <ul class="navBar">
-        <li class="navBarElementContainer"><button onclick="loginButton()">Sign Up</button></li>
-    </ul>
-  </nav>`;
-  }
-  else
-  {
-    nav.innerHTML += `
-  <nav>
-    <ul class="navBar">
-        <li class="navBarElementContainerText">RSVP</li>
-        <li class="navBarElementContainerText"><a href="/events" class="navBarElement">Home</a></li>
-        <li class="navBarElementContainerText"><a href="/friends" class="navBarElement">Friends</a></li>
 
-    </ul>
-  </nav>
-  <nav>
-    <ul class="navBar">
-        <li class="navBarElementContainer"><a href="/newevent" title="Create new event"><i href="#" class="icon fa-solid fa-plus"></i></a></li>
-        <li class="navBarElementContainer"><a href="/calendar" title="Go to calendar"><i class="icon fa-solid fa-calendar-days"></i></a></li>
-        <li class="navBarElementContainerText" style="padding-right: 5px"><p id="user_name_placeholder"></p></li>
-        <li class="navBarElementContainer dropdown" style="padding-left: 0px"><i onclick="dropdown()" class="pointer fa-solid fa-circle-user dropdown"></i></a></li>
-    </ul>
-  </nav>
-  <ul style="list-style-type: none" id="dropdownContent" class="dropdown-content dropdown">
-        <li><a href="/account" class="dropdown">Edit account</a></li>
-        <li><a href="/logout" class="dropdown">Log out</a></li>
-  </ul>`;
-  let placeholder = document.getElementById("user_name_placeholder");
-  placeholder.innerText = `${first_name}`;
-  };
+      var nav = document.getElementById('Nav');
+
+      if (first_name == "GUEST")
+      {
+        nav.innerHTML += `
+      <nav>
+        <ul class="navBar">
+            <li class="navBarElementContainerText">RSVP</li>
+        </ul>
+      </nav>
+      <nav>
+        <ul class="navBar">
+            <li class="navBarElementContainer"><button onclick="loginButton()">Sign Up</button></li>
+        </ul>
+      </nav>`;
+      }
+      else
+      {
+        nav.innerHTML += `
+      <nav>
+        <ul class="navBar">
+            <li class="navBarElementContainerText">RSVP</li>
+            <li class="navBarElementContainerText"><a href="/events" class="navBarElement">Home</a></li>
+            <li class="navBarElementContainerText"><a href="/friends" class="navBarElement">Friends</a></li>
+
+        </ul>
+      </nav>
+      <nav>
+        <ul class="navBar">
+            <li class="navBarElementContainer"><a href="/newevent" title="Create new event"><i href="#" class="icon fa-solid fa-plus"></i></a></li>
+            <li class="navBarElementContainer"><a href="/calendar" title="Go to calendar"><i class="icon fa-solid fa-calendar-days"></i></a></li>
+            <li class="navBarElementContainerText" style="padding-right: 5px"><p id="user_name_placeholder"></p></li>
+            <li class="navBarElementContainer dropdown" style="padding-left: 0px"><i onclick="dropdown()" class="pointer fa-solid fa-circle-user dropdown"></i></a></li>
+        </ul>
+      </nav>
+      <ul style="list-style-type: none" id="dropdownContent" class="dropdown-content dropdown">
+            <li><a href="/account" class="dropdown">Edit account</a></li>
+            <li><a href="/logout" class="dropdown">Log out</a></li>
+      </ul>`;
+      let placeholder = document.getElementById("user_name_placeholder");
+      placeholder.innerText = `${first_name}`;
+      };
   }
 
 }

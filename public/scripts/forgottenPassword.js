@@ -9,6 +9,8 @@ let vueinst = new Vue({
     methods: {
         generateCode: function(){
 
+            // toggleLoad();
+
             vueinst.userName = vueinst.userName;
 
             let xhttp = new XMLHttpRequest();
@@ -34,7 +36,7 @@ let vueinst = new Vue({
                         xhttp2.send(JSON.stringify({user_name: vueinst.userName}));
 
                     } else {
-                        showAlert("Invalid username");
+                        showAlert("User not recognised");
 
                         document.getElementById("userName").classList.add("error");
                     }
@@ -44,6 +46,8 @@ let vueinst = new Vue({
             xhttp.open("POST", "/api/forgottenPassword/generateCode", true);
             xhttp.setRequestHeader("Content-type", "application/json");
             xhttp.send(JSON.stringify({user_name: vueinst.userName}));
+
+            // toggleLoad();
 
         },
         updatePassword: function(){
@@ -67,7 +71,7 @@ let vueinst = new Vue({
 
                 xhttp.onreadystatechange = function(){
                     if(this.readyState == 4){
-                        
+
                         if(this.status == 200){
                             showAlert("Password updated");
                         }

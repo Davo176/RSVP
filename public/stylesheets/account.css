@@ -11,3 +11,10 @@
     width: 25vw;
     justify-content: space-between;
 }
+
+#passwordFields {
+    display: flex;
+    width: 30vw;
+    flex-grow: 1;
+    flex-direction: column;
+}

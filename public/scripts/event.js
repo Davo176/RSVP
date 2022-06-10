@@ -295,28 +295,34 @@ var vueinst = new Vue({
         },
         changeImage: function(){
 
-            let vueReference = this;
-
-            let formData = new FormData();
-
             let newImage = document.getElementById("imageEdit").files[0];
-            let imageName = this.event.Image;
-            let eventId = this.event.event_id;
 
-            formData.append("newImage", newImage);
-            formData.append("imageName", imageName);
-            formData.append("event_id", eventId);
+            if(newImage == null){
+                showAlert("Please select image to change to");
+            } else {
 
-            let xhttp = new XMLHttpRequest();
+                let vueReference = this;
 
-            xhttp.onreadystatechange = function(){
-                if(this.readyState == 4 && this.status == 200){
-                    vueReference.getEventInfo(vueReference.event.event_id);
+                let formData = new FormData();
+
+                let imageName = this.event.Image;
+                let eventId = this.event.event_id;
+
+                formData.append("newImage", newImage);
+                formData.append("imageName", imageName);
+                formData.append("event_id", eventId);
+
+                let xhttp = new XMLHttpRequest();
+
+                xhttp.onreadystatechange = function(){
+                    if(this.readyState == 4 && this.status == 200){
+                        vueReference.getEventInfo(vueReference.event.event_id);
+                    }
                 }
-            }
 
-            xhttp.open("POST", "/api/events/change/image", true); //For some reason, this worked only when we didn't set the request header. In order to use, multer I think I needed to set it to 'multipart/form-data'
-            xhttp.send(formData);
+                xhttp.open("POST", "/api/events/change/image", true); //For some reason, this worked only when we didn't set the request header. In order to use, multer I think I needed to set it to 'multipart/form-data'
+                xhttp.send(formData);
+            }
 
         },
         deleteEvent: function(){

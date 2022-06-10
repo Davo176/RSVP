@@ -70,11 +70,6 @@ h1 {
     text-align: center;
 }
 
-.passwordContainer{
-    display: flex;
-    justify-content:left;
-}
-
 a {
     font-size: 0.8em;
     text-decoration: underline;

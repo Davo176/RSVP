@@ -73,6 +73,11 @@ header {
   color: white!important;
 }
 
+@keyframes loading {
+  from {opacity: 1}
+  to {opacity: 0.75}
+}
+
 .navBar {
   display: flex;
   align-items:center;
@@ -135,14 +140,16 @@ a {
 /*no background-color here because alert div spans whole screen*/
 .alert {
   display: none;
-  position: absolute;
+  position: sticky;
   justify-content: center;
+  align-self:center;
   top: 3em;
   width: 100vw;
 }
 
 #alertContent {
   display: flex;
+  position: absolute;
   background-color: white;
   border:solid;
   border-color: lightgrey;
@@ -151,4 +158,20 @@ a {
   text-align: center;
   height: 3em;
   width: 50%;
+}
+
+.passwordContainer{
+  display: flex;
+  justify-content:left;
+  align-items: center;
+}
+
+.passwordContainer > i {
+  color: var(--secondary-color);
+  font-size: 0.8em;
+  padding: 5px;
+}
+
+.passwordContainer > input {
+  flex-grow: 1;
 }
