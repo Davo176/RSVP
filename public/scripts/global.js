@@ -59,7 +59,6 @@ function getUser()
       {
         first_name=this.responseText;
         loggedIn = true;
-        addLoadingDiv();
         addAlertDiv();
         updateNav();
       }
@@ -95,15 +94,6 @@ function addAlertDiv() {
 
   var body = document.querySelector("body");
   body.prepend(div);
-}
-
-function addLoadingDiv() {
-
-  let div = document.createElement("div");
-  div.id = "loading";
-
-  document.querySelector("body").prepend(div);
-
 }
 
 function updateNav () {
@@ -149,6 +139,9 @@ function updateNav () {
   let placeholder = document.getElementById("user_name_placeholder");
   placeholder.innerText = `${first_name}`;
   };
+
+  nav.innerHTML += `
+  <div id="loading"></div>`;
   }
 
 }
