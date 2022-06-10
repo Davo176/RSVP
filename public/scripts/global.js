@@ -112,7 +112,7 @@ function addAlertDiv() {
 // }
 
 function updateNav () {
-  if(document.body.contains(document.querySelector("Nav"))){
+  if(document.body.contains(document.querySelector("header"))){
 
       var nav = document.getElementById('Nav');
 
