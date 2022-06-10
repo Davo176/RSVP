@@ -144,6 +144,7 @@ a {
 
 #alertContent {
   display: flex;
+  position: absolute;
   background-color: white;
   border:solid;
   border-color: lightgrey;
