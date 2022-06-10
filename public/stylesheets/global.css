@@ -156,8 +156,8 @@ a {
 }
 
 #loading {
-  width: 10px;
-  height: 10px;
+  width: 5px;
+  height: 5px;
   background-color: white;
   position: relative;
   animation-name: loadingAnimation;
@@ -170,9 +170,9 @@ a {
   to  {left:66vw; top:0px;}
 }
 
-#loading::after {
-  
-}
+/* #loading::after {
+
+} */
 
 /* @keyframes acrossScreen {
   from {float: left;}
