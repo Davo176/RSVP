@@ -155,10 +155,6 @@ a {
   width: 50%;
 }
 
-#loadingContainer {
-  width: 100px;
-}
-
 #loading {
   width: 10px;
   height: 10px;
@@ -170,8 +166,8 @@ a {
 }
 
 @keyframes example {
-  from   {left:0px; top:0px;}
-  to  {left:100px; top:0px;}
+  from   {left:33vw; top:0px;}
+  to  {left:66vw; top:0px;}
 }
 
 /* @keyframes acrossScreen {
