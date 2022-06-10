@@ -30,7 +30,7 @@ function showAlert(argAlert){
   console.log(argAlert);
   let alert = document.getElementById("alert");
 
-  alert.getElementById("alertContent");innerText = argAlert;
+  alert.querySelector("#alertContent").innerText = argAlert;
   alert.style.display = "flex";
 
 }
@@ -85,6 +85,12 @@ function addAlertDiv() {
   let div = document.createElement("DIV");
   div.id = "alert";
   div.classList.add("alert");
+
+  let alertContent = document.createElement("DIV");
+  alertContent.id="alertContent";
+  alertContent.classList.add("alertContent");
+
+  div.append(alertContent);
 
   var body = document.querySelector("body");
   body.prepend(div);
