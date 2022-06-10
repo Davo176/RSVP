@@ -34,7 +34,7 @@ let vueinst = new Vue({
                         xhttp2.send(JSON.stringify({user_name: vueinst.userName}));
 
                     } else {
-                        showAlert("Invalid username");
+                        showAlert("User not recognised");
 
                         document.getElementById("userName").classList.add("error");
                     }
@@ -67,7 +67,7 @@ let vueinst = new Vue({
 
                 xhttp.onreadystatechange = function(){
                     if(this.readyState == 4){
-                        
+
                         if(this.status == 200){
                             showAlert("Password updated");
                         }
