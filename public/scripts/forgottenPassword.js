@@ -32,7 +32,6 @@ let vueinst = new Vue({
 
                         xhttp2.open("POST", "/api/forgottenPassword/sendEmail", true);
                         xhttp2.setRequestHeader("Content-type", "application/json");
-                        console.log(vueinst.userName);
                         xhttp2.send(JSON.stringify({user_name: vueinst.userName}));
 
                     } else {
@@ -54,9 +53,6 @@ let vueinst = new Vue({
 
             let passwordNode = document.getElementById("password");
             let passwordRepeatNode = document.getElementById("passwordRepeat");
-
-            console.log(document.getElementById("password").value);
-            console.log(passwordRepeatNode.value);
 
             if(passwordNode.value != passwordRepeatNode.value){
 
