@@ -247,9 +247,15 @@ app.get('/login', function(req, res, next)
   }
 });
 
-app.use('/api', apiRouter);
+app.use(function(req,res,next){
+  if (!("user_name" in req.session)){
+    res.redirect('/login');
+  }else{
+    next();
+  }
+})
+
 app.use('/', indexRouter);
-
-
+app.use('/api', apiRouter);
 
 module.exports = app;
