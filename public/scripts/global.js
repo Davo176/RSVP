@@ -97,9 +97,7 @@ function addAlertDiv() {
 }
 
 function updateNav () {
-  if(document.body.contains(document.querySelector("header"))){
-    document.querySelector("header").innerHTML += `<div id="loading"></div>`;
-    if(document.body.contains.getElementById("Nav")){
+  if(document.body.contains(document.querySelector("Nav"))){
 
       var nav = document.getElementById('Nav');
 
@@ -143,7 +141,6 @@ function updateNav () {
       let placeholder = document.getElementById("user_name_placeholder");
       placeholder.innerText = `${first_name}`;
       };
-    }
   }
 
 }

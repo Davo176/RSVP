@@ -71,6 +71,15 @@ header {
   background-color: var(--secondary-color);
   height: 5vh;
   color: white!important;
+  animation: loading;
+  animation-iteration-count: infinite;
+  animation-duration: 1s;
+  animation-direction: alternate;
+}
+
+@keyframes loading {
+  from {opacity: 1}
+  to {opacity: 0.75}
 }
 
 .navBar {
@@ -154,155 +163,4 @@ a {
   height: 3em;
   width: 50%;
 }
-
-#loading {
-  width: 5px;
-  height: 2px;
-  top: -2px;
-  background-color: red;
-  position: relative;
-  animation-name: loadingAnimation;
-  animation-duration: 2s;
-  animation-iteration-count: infinite;
-}
-
-@keyframes loadingAnimation {
-  0%   {left:33vw; width: 0px;}
-  50%  {left:50vw; width: 100px;}
-  100% {left:66vw; width: 0px;}
-}
-
-/* #loading::after {
-
-} */
-
-/* @keyframes acrossScreen {
-  from {float: left;}
-  to {float: right;}
-}
-
-#loading {
-  width: 10px;
-  height: 10px;
-  float: left;
-  background-color: red;
-  animation-name: acrossScreen;
-  animation-duration: 2s;
-} */
-
-/*https://codepen.io/nzbin/pen/GGrXbp */
-/**
- *
- * three-dots.css v0.1.0
- *
- * https://nzbin.github.io/three-dots/
- *
- * Copyright (c) 2018 nzbin
- *
- * Released under the MIT license
- *
- */
-/**
- * ==============================================
- * Dot Elastic
- * ==============================================
- */
-
-.loadingDots {
-  bottom: 10px;
-  width: 10vw;
-  padding: 30px;
-  margin-left: auto;
-  margin-right: auto;
-}
-
-.dot-elastic {
-  position: sticky;
-  width: 10px;
-  height: 10px;
-  border-radius: 5px;
-  background-color: var(--secondary-color);
-  color: #9880ff;
-  animation: dotElastic 1s infinite linear;
-}
-
-.dot-elastic::before, .dot-elastic::after {
-  content: '';
-  display: inline-block;
-  position: absolute;
-  top: 0;
-}
-
-.dot-elastic::before {
-  left: -15px;
-  width: 10px;
-  height: 10px;
-  border-radius: 5px;
-  background-color: var(--secondary-color);
-  color: #9880ff;
-  animation: dotElasticBefore 1s infinite linear;
-}
-
-.dot-elastic::after {
-  left: 15px;
-  width: 10px;
-  height: 10px;
-  border-radius: 5px;
-  background-color: var(--secondary-color);
-  color: #9880ff;
-  animation: dotElasticAfter 1s infinite linear;
-}
-
-@keyframes dotElasticBefore {
-  0% {
-    transform: scale(1, 1);
-  }
-  25% {
-    transform: scale(1, 1.5);
-  }
-  50% {
-    transform: scale(1, 0.67);
-  }
-  75% {
-    transform: scale(1, 1);
-  }
-  100% {
-    transform: scale(1, 1);
-  }
-}
-
-@keyframes dotElastic {
-  0% {
-    transform: scale(1, 1);
-  }
-  25% {
-    transform: scale(1, 1);
-  }
-  50% {
-    transform: scale(1, 1.5);
-  }
-  75% {
-    transform: scale(1, 1);
-  }
-  100% {
-    transform: scale(1, 1);
-  }
-}
-
-@keyframes dotElasticAfter {
-  0% {
-    transform: scale(1, 1);
-  }
-  25% {
-    transform: scale(1, 1);
-  }
-  50% {
-    transform: scale(1, 0.67);
-  }
-  75% {
-    transform: scale(1, 1.5);
-  }
-  100% {
-    transform: scale(1, 1);
-  }
 }
