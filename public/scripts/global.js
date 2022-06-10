@@ -96,6 +96,18 @@ function addAlertDiv() {
   body.prepend(div);
 }
 
+function toggleLoad() {
+
+  let playState = document.querySelector("header").style.animationPlayState;
+
+  if(playState = "running"){
+    playState = "paused";
+  } else {
+    playState = "running";
+  }
+
+}
+
 function updateNav () {
   if(document.body.contains(document.querySelector("Nav"))){
 
