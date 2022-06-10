@@ -25,6 +25,23 @@ Steps to get website running:
     Email: rsvpwdc@gmail.com 
     Password: IanKnight
 
+Accounts within the website:
+    Username: Bugs Password: admin1234
+    Username: Daffy Password: admin1234
+    Username: Harrison Password: admin1234
+    Username: MeepMeep Password: admin1234
+    Username: Neil Password: admin1234
+    Username: Porky Password: admin1234
+    Username: Seamus Password: admin1234
+    Username: Speedy Password: admin1234
+    Username: Will Password: admin1234
+Google Login: 
+    To use google login, you must be signed into an developer email: 
+        Email: rsvpwdc@gmail.com 
+        Password: IanKnight
+    Once signed into the google account, you can access the website 
+    via google sign in
+    
 Steps to query database:
 1. If database is not running start database
     sql_start (Start server)
