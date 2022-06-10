@@ -30,7 +30,7 @@ function showAlert(argAlert){
   console.log(argAlert);
   let alert = document.getElementById("alert");
 
-  alert.innerText = argAlert;
+  alert.getElementById("alertContent");innerText = argAlert;
   alert.style.display = "flex";
 
 }
