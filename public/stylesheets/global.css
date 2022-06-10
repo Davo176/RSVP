@@ -13,8 +13,8 @@
 
 body {
   display: flex;
-  justify-content: none;
-  align-items: none;
+  justify-content: flex-start;
+  align-items: left;
   background-color: var(--primary-color);
 }
 
