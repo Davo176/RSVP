@@ -100,12 +100,12 @@ function toggleLoad() {
 
   let header = document.querySelector("header");
 
-  let playState = window.getComputedStyle(header, null).getPropertyValue("animation-play-state");
+  let animation = window.getComputedStyle(header, null).getPropertyValue("animation");
 
-  if(playState == "running"){
+  if(animation == "loading"){
     header.style.animation = "";
   } else {
-    header.style.animation = "loading";
+    header.style.animation = "loading 1s infinite alternate";
   }
 
 }
