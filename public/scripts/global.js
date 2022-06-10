@@ -7,7 +7,7 @@ function friendsButton () {
 }
 
 function eventsButton () {
-  location.href = "events"
+  location.href = "evfents"
 }
 
 function loginButton ()
