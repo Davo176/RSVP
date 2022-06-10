@@ -79,3 +79,7 @@ a {
     font-size: 0.8em;
     text-decoration: underline;
 }
+
+i {
+    color: var(--secondary-color);
+}
