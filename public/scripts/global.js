@@ -143,10 +143,10 @@ function updateNav () {
       </nav>
       <nav>
         <ul class="navBar">
-            <li class="navBarElementContainer"><a href="/newevent" title="Create new event"><i href="#" class="icon fa-solid fa-plus"></i></a></li>
+            <li class="navBarElementContainer"><a href="/newevent" title="Create new event"><i class="icon fa-solid fa-plus"></i></a></li>
             <li class="navBarElementContainer"><a href="/calendar" title="Go to calendar"><i class="icon fa-solid fa-calendar-days"></i></a></li>
             <li class="navBarElementContainerText" style="padding-right: 5px"><p id="user_name_placeholder"></p></li>
-            <li class="navBarElementContainer dropdown" style="padding-left: 0px"><i onclick="dropdown()" class="pointer fa-solid fa-circle-user dropdown"></i></a></li>
+            <li class="navBarElementContainer dropdown" style="padding-left: 0px"><i onclick="dropdown()" class="pointer fa-solid fa-circle-user dropdown"></i></li>
         </ul>
       </nav>
       <ul style="list-style-type: none" id="dropdownContent" class="dropdown-content dropdown">
