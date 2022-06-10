@@ -171,6 +171,12 @@ a {
  * Dot Elastic
  * ==============================================
  */
+
+.loadingDots {
+  bottom: 10px;
+  width: 100vw;
+}
+
 .dot-elastic {
   position: sticky;
   width: 10px;
