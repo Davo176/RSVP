@@ -12,7 +12,7 @@ function toggleLoad() {
       header.style.animation = "loading 1s infinite alternate";
     }
 
-  }
+}
 
 let vueinst = new Vue({
 
