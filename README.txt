@@ -1,4 +1,7 @@
 #### ReadMe ####
+5 minute overview of the website can be viewed at:
+    https://www.youtube.com/watch?v=z3SIrZBdOIE&ab_channel=WDCRSVP
+
 Steps to get website running:
 1. Install latest configuration files in codespace:
     rm -f ~/.bashrc ~/.bash_profile ~/.profile ~/.eslintrc
@@ -31,6 +34,7 @@ Steps to query database:
 3. Set mysql to use the production database
     use production
 4. Run queries
+####################
 
 #### Old ReadMe ####
 To Run Database:
