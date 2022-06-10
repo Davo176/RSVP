@@ -159,7 +159,7 @@ a {
   width: 5px;
   height: 2px;
   top: -2px;
-  background-color: white;
+  background-color: red;
   position: relative;
   animation-name: loadingAnimation;
   animation-duration: 2s;
