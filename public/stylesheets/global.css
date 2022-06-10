@@ -159,3 +159,15 @@ a {
   height: 3em;
   width: 50%;
 }
+
+.passwordContainer{
+  display: flex;
+  justify-content:left;
+  align-items: center;
+}
+
+.passwordContainer > i {
+  color: var(--secondary-color);
+  font-size: 0.8em;
+  padding: 5px;
+}
