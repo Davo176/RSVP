@@ -134,7 +134,7 @@ a {
 
 /*no background-color here because alert div spans whole screen*/
 .alert {
-  display: flex;
+  display: none;
   position: sticky;
   justify-content: center;
   top: 3em;
@@ -143,7 +143,7 @@ a {
 }
 
 #alertContent {
-  display: none;
+  display: flex;
   background-color: white;
   border:solid;
   border-color: lightgrey;
