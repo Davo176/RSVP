@@ -155,19 +155,24 @@ a {
   width: 50%;
 }
 
+#loading:before{
+  width: 100px;
+  height: 100px;
+}
+
 #loading {
   width: 5px;
   height: 5px;
   background-color: white;
   position: relative;
   animation-name: loadingAnimation;
-  animation-duration: 1s;
+  animation-duration: 2s;
   animation-iteration-count: infinite;
 }
 
 @keyframes loadingAnimation {
-  from   {left:33vw; top:0px;}
-  to  {left:66vw; top:0px;}
+  from   {left:33vw; top:-5px;}
+  to  {left:66vw; top:-5px;}
 }
 
 /* #loading::after {
