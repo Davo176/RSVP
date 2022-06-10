@@ -37,26 +37,26 @@
                 <h3>Your Account Info</h3>
 
                 <span>Username: </span>
-                <p style="display: inline" id="user_name" name="userName"></p>
+                <p style="display: inline" id="user_name"></p>
 
-                </br>
+                <br/>
 
-                <label for="firstName">First name: </label>
-                <input type="text" name="firstName" id="first_name"> </input>
+                <span>First name: </span>
+                <input type="text"></input>
                 <button type="submit" v-on:click="updateUser(`first_name`)">Submit</button>
                 <p id="maxLengthFirstName"></p>
 
                 </br>
 
-                <label for="lastName">Last name: </label>
-                <input type="text" name="lastName" id="last_name"> </input>
+                <span>Last name: </span>
+                <input type="text"> </input>
                 <button type="submit" v-on:click="updateUser(`last_name`)">Submit</button>
                 <p id="maxLengthLastName"></p>
 
                 </br>
 
-                <label for="email">Email: </label>
-                <input type="text" name="email" id="email"> </input>
+                <span>Email: </span>
+                <input type="text"> </input>
                 <button type="submit" v-on:click="updateUser(`email`)">Submit</button>
                 <p id="maxLengthEmail"></p>
 
@@ -66,25 +66,25 @@
 
                 <div id="passwordFields">
 
-                    <label for="oldPassword">Current Password: </label>
+                    <span>Current Password: </span>
                     <div class="passwordContainer">
-                        <input type="password" name="oldPassword" id="oldPassword" onclick="removeError()"></input>
+                        <input type="password"></input>
                         <i class="fa-solid fa-eye" alt="Show password" onmousedown="showPassword('oldPassword')" onmouseup="hidePassword('oldPassword')"></i>
                     </div>
 
                     </br>
 
-                    <label for="newPassword">New Password: </label>
+                    <span>New Password: </span>
                     <div class="passwordContainer">
-                        <input type="password" name="newPassword" id="newPassword" onclick="removeError()"></input>
+                        <input type="password"></input>
                         <i class="fa-solid fa-eye" alt="Show password" onmousedown="showPassword('newPassword')" onmouseup="hidePassword('newPassword')"></i>
                     </div>
 
                     </br>
 
-                    <label for="newPasswordRepeat">Repeat new password: </label>
+                    <span>Repeat new password: </span>
                     <div class="passwordContainer">
-                        <input type="password" name="newPasswordRepeat" id="newPasswordRepeat" onclick="removeError()"></input>
+                        <input type="password"></input>
                         <i class="fa-solid fa-eye" alt="Show password" onmousedown="showPassword('newPasswordRepeat')" onmouseup="hidePassword('newPasswordRepeat')"></i>
                     </div>
 
