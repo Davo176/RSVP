@@ -155,8 +155,17 @@ a {
   width: 50%;
 }
 
-@keyframes examples {
-  from {position: left}
+@keyframes acrossScreen {
+  from {position: left;}
+  to {position: right;}
+}
+
+#loading {
+  width: 10px;
+  height: 10px;
+  background-color: white;
+  animation-name: acrossScreen;
+  animation-duration: 2s;
 }
 
 /*https://codepen.io/nzbin/pen/GGrXbp */
