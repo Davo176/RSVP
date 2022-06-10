@@ -62,8 +62,6 @@ var vueInst = new Vue({
             let newFieldValue = document.getElementById(field).value;
             let reqBody = JSON.stringify({"newFieldValue": newFieldValue, "field": field});
 
-            if(newFieldValue > )
-
             let xhttp2 = new XMLHttpRequest();
 
             xhttp2.onreadystatechange = function(){
