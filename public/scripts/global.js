@@ -102,12 +102,10 @@ function toggleLoad() {
 
   let playState = window.getComputedStyle(header, null).getPropertyValue("animation-play-state");
 
-  console.log(playState);
-
   if(playState == "running"){
-    header.animationPlayState = "paused";
+    header.style.animationPlayState = "paused";
   } else {
-    playState.style.animationPlayState = "running";
+    header.style.animationPlayState = "running";
   }
 
 }
