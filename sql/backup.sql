@@ -104,7 +104,9 @@ CREATE TABLE `events` (
 
 LOCK TABLES `events` WRITE;
 /*!40000 ALTER TABLE `events` DISABLE KEYS */;
+
 INSERT INTO `events` VALUES ('44e3f0b1-0489-4e90-9711-86a5e0ec331a','Poker Night','2022-07-05','21:00','d34f8979-159c-4490-bb90-f14b671aed1f.jpeg','221B Baker St., London','$100 buy ins, winner takes all.',0),('6270445c-2f9a-41c6-80db-74771dd7eae2','End of WDC','2022-07-19','11:00','edc49a3a-800d-43c3-9f30-93b39c8229b7.jpg','Ingkarni Wardli','Teachers and Students get together to bid WDC Fairwell!',0),('8e5806ae-2360-44e0-b0ca-674e83733ab3','Submit Final Project','2022-06-10','23:50','c5203b3b-1006-4510-b0ac-09727daf08d3.jpg','Ingkarni Wardli','Make sure the assignment is submitted by now!',0),('99aab1f2-dbef-401e-b2a0-43e89cdeb60f','Chirstmas in July Party','2022-07-25','12:00','df08c34a-b99b-448e-b45a-d0d69101b58e.jpg','62 West Wallaby Street','Have a jolly christmas with us!',0),('9d0146e4-108f-4a2d-9f68-ad85b0d835c3','Mark our Project','2022-06-20','18:00','673e0e3b-51a3-42c8-b6db-fc31325f6beb.jpeg','Adelaide University','Explore the Site. See time suggestions',1),('a4530556-cd68-4598-bdef-6c523a79b826','Post Footy Barbeque','2022-06-12','13:30','822d85e7-9dfb-4b6f-950a-f209c826d2ae.jpg','Tusmore Park','Come enjoy a snag and burger after the Adelaide Uni Blacks game',0),('b964b3b1-aab0-437c-bc1a-67fac48ab0da','Crows Grand Final Celebration','2022-09-24','21:00','ea07a473-d1a9-4b4d-9ffe-d43d214d7d5d.jpg','Brunton Ave, Richmond','Come celebrate after the mighty crows pummel reigning premiers melbourne on the last saturday of september',0),('cf83ea49-4114-4897-9fd3-807929fb52d5','Wills Birthday','2022-06-02','18:00','test.jpg','1600 Pennsylvania Avenue, Washington, D.C., USA','Come celebrate my birthday and meet some famous people',0);
+
 /*!40000 ALTER TABLE `events` ENABLE KEYS */;
 UNLOCK TABLES;
 

@@ -65,7 +65,7 @@ var vueinst = new Vue({
             };
 
             xhttp.open("POST","/api/events/updateStatus",true);
-            xhttp.setRequestHeader('Content-type', 'application/json; charset=UTF-8')
+            xhttp.setRequestHeader('Content-type', 'application/json; charset=UTF-8');
             xhttp.send(reqBody);
         },
         //get all events

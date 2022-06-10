@@ -54,7 +54,7 @@ function login()
         }
         };
         xhttp.open("POST","/login");
-        xhttp.setRequestHeader("Content-type","application/json")
+        xhttp.setRequestHeader("Content-type","application/json");
         xhttp.send(JSON.stringify(login));
     }
 }
@@ -134,22 +134,22 @@ function signup()
         if (this.readyState == 4 && this.status == 200)
         {
             //Successful sign up so update text and redirect user
-            signup_result.innerText = "Signed UP"
-            location.href = "/"
+            signup_result.innerText = "Signed UP";
+            location.href = "/";
         }
         else if (this.status == 403)
         {
             //403 denotes username already exits in database
-            signup_result.innerText = "Username Exists"
+            signup_result.innerText = "Username Exists";
         }
         else if (this.status == 400)
         {
             //400 denotes incorrect signup form which shouldnt occur due to prior checks
-            signup_result.innerText = "Inproper Signup Form"
+            signup_result.innerText = "Inproper Signup Form";
         }
     };
     xhttp.open("POST","/signup");
-    xhttp.setRequestHeader("Content-type","application/json")
+    xhttp.setRequestHeader("Content-type","application/json");
     xhttp.send(JSON.stringify(signup));
 }
 

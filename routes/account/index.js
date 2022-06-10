@@ -25,9 +25,9 @@ router.post('/updatePassword', function(req, res, next){
 
                 res.sendStatus(200);
                 return;
-            })
-        })
-    }
+            });
+        });
+    };
 
     let status = "undefined";
 
@@ -40,7 +40,7 @@ router.post('/updatePassword', function(req, res, next){
             return;
         }
 
-        let query = "SELECT IF(password_hash=SHA2(?, 224), 'success', 'fail') AS Status FROM users where user_name = ?;"
+        let query = "SELECT IF(password_hash=SHA2(?, 224), 'success', 'fail') AS Status FROM users where user_name = ?;";
         connection.query(query, [req.body.oldPassword+salt, req.session.user_name], function(error, rows, fields){
 
             connection.release();
@@ -59,8 +59,8 @@ router.post('/updatePassword', function(req, res, next){
                 res.sendStatus(401);
                 return;
             }
-        })
-    })
+        });
+    });
 
 });
 
@@ -83,11 +83,11 @@ router.get('/getuserinfo', function(req, res, next){
             }
 
             res.json(rows);
-        })
+        });
 
-    })
+    });
 
-})
+});
 
 router.get('/getfieldlengths', function(req, res, next){
 
@@ -110,10 +110,10 @@ router.get('/getfieldlengths', function(req, res, next){
             }
 
             res.json(rows);
-        })
-    })
+        });
+    });
 
-})
+});
 
 router.post('/updateinfo', function(req, res, next){
 
@@ -136,10 +136,10 @@ router.post('/updateinfo', function(req, res, next){
             }
             //Change session to have updated value
             req.session[req.body.field] = req.body.newFieldValue;
-        })
-    })
+        });
+    });
     res.sendStatus(200);
-})
+});
 
 router.post('/updateEmailSettings', function(req, res, next){
 
@@ -167,10 +167,10 @@ router.post('/updateEmailSettings', function(req, res, next){
                 res.sendStatus(500);
                 return;
             }
-        })
-    })
+        });
+    });
     res.sendStatus(200);
-})
+});
 
 router.get('/emailSettings', function(req, res, next){
 
@@ -193,9 +193,9 @@ router.get('/emailSettings', function(req, res, next){
 
             }
             res.json(rows);
-        })
-    })
+        });
+    });
 
-})
+});
 
 module.exports = router;

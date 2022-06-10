@@ -44,7 +44,7 @@ var vueinst = new Vue({
             let vueReference = this;
             let requestee = invitee;
             let add_friend = {requestee: requestee};
-            console.log(requestee)
+            console.log(requestee);
             console.log("making friend request");
             var xhttp = new XMLHttpRequest();
             xhttp.onreadystatechange = function() {
@@ -57,7 +57,7 @@ var vueinst = new Vue({
             };
 
             xhttp.open("POST", "api/friends/sendRequest", true);
-            xhttp.setRequestHeader("Content-type","application/json")
+            xhttp.setRequestHeader("Content-type","application/json");
             xhttp.send(JSON.stringify(add_friend));
         },
         remove: function(friend2){
@@ -76,7 +76,7 @@ var vueinst = new Vue({
             };
 
             xhttp.open("POST", "api/friends/removeFriend", true);
-            xhttp.setRequestHeader("Content-type","application/json")
+            xhttp.setRequestHeader("Content-type","application/json");
             xhttp.send(JSON.stringify(remove_friend));
         },
         accept: function(friend2){
@@ -96,7 +96,7 @@ var vueinst = new Vue({
             };
 
             xhttp.open("POST", "api/friends/acceptRequest", true);
-            xhttp.setRequestHeader("Content-type","application/json")
+            xhttp.setRequestHeader("Content-type","application/json");
             xhttp.send(JSON.stringify(remove_friend));
         },
 
@@ -116,7 +116,7 @@ var vueinst = new Vue({
             };
 
             xhttp.open("POST", "api/friends/declineRequest", true);
-            xhttp.setRequestHeader("Content-type","application/json")
+            xhttp.setRequestHeader("Content-type","application/json");
             xhttp.send(JSON.stringify(remove_friend));
         },
         //send a search for users who match search term, if more than 3 chars.
@@ -135,12 +135,12 @@ var vueinst = new Vue({
                 xhttp.open("GET",`/api/friends/search?searchTerm=${this.searchTerm}`,true);
                 xhttp.send();
             }else{
-                this.searchTerm=""
+                this.searchTerm="";
             }
         }
     },
     created: function(){
-        this.updateFriends()
-        this.updateFriendRequests()
+        this.updateFriends();
+        this.updateFriendRequests();
     }
 });

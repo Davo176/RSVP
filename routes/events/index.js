@@ -51,7 +51,7 @@ router.get('/invited', function(req,res,next){
           res.send(rows);
         });
       });
-    })
+    });
 
 //get admins
 router.get('/admin', function(req,res,next){
@@ -89,22 +89,22 @@ router.get('/admin', function(req,res,next){
         res.send(rows);
       });
     });
-  })
+  });
 
 //Where multer should upload files
 
 var storage = multer.diskStorage({
   destination: function (req, file, cb) {
-    cb(null, './public/images/userUploads')
+    cb(null, './public/images/userUploads');
   },
   filename: function (req, file, cb) {
     let split = file.originalname.split(".");
     let extension = file.originalname.split(".")[split.length-1];
-    cb(null, Uuid.v4() + "." + extension)
+    cb(null, Uuid.v4() + "." + extension);
   }
-})
+});
 
-var upload = multer({ storage: storage });
+upload = multer({ storage: storage });
 
 router.post('/add', upload.single("eventImage"), function(req, res, next){
 
@@ -121,7 +121,7 @@ router.post('/add', upload.single("eventImage"), function(req, res, next){
     if(req.body.eventTitle){
       eventTitle = req.body.eventTitle;
     }
-    let fileName = "test.jpg"
+    let fileName = "test.jpg";
     if(req.file){
       fileName = req.file.filename;
     }
@@ -155,7 +155,7 @@ router.post('/add', upload.single("eventImage"), function(req, res, next){
     });
 
     res.redirect('/event?id='+eventID);
-  })
+  });
 });
 
 //update your attending status (and send emails out)
@@ -165,8 +165,8 @@ router.post('/updateStatus', function(req,res,next){
     res.sendStatus(400);
     return;
   }else{
-    let query="update event_invitees set attending_status=? where event_id=? and invitee_id=?"
-    let query2 = "select event_title from events where event_id=?;"
+    let query="update event_invitees set attending_status=? where event_id=? and invitee_id=?";
+    let query2 = "select event_title from events where event_id=?;";
     let query3 = `select users.email from events
                 left join event_admins on events.event_id = event_admins.event_id
                 left join users on event_admins.admin_id = users.user_name
@@ -176,7 +176,7 @@ router.post('/updateStatus', function(req,res,next){
                 and
                 user_email_settings.setting_name='response'
                 and
-                user_email_settings.setting_state=1;`
+                user_email_settings.setting_state=1;`;
     req.pool.getConnection(function(error, connection){
       if(error){
         console.log(error);
@@ -210,7 +210,7 @@ router.post('/updateStatus', function(req,res,next){
       });
     });
   }
-})
+});
 //get event info
 router.get('/info', function(req,res,next){
   if (!('event_id' in req.query)){
@@ -233,7 +233,7 @@ router.get('/info', function(req,res,next){
               from event_invitees as i
               left join events as e on e.event_id = i.event_id
               where i.event_id = ? and i.invitee_id=?;
-              `
+              `;
     req.pool.getConnection(function(error, connection){
       if(error){
         console.log(error);
@@ -251,7 +251,7 @@ router.get('/info', function(req,res,next){
       });
     });
   }
-})
+});
 //get people attending event (and admins)
 router.get('/people', function(req,res,next){
   if (!('event_id' in req.query)){
@@ -288,7 +288,7 @@ router.get('/people', function(req,res,next){
                   end as areFriends
               from event_admins as a
               left join users as u on a.admin_id=u.user_name
-              where event_id=?;`
+              where event_id=?;`;
       req.pool.getConnection(function(error, connection){
         if(error){
           console.log(error);
@@ -306,7 +306,7 @@ router.get('/people', function(req,res,next){
         });
       });
     }
-})
+});
 //check if you are an admin
 router.get('/areAdmin', function(req,res,next){
   if (!('event_id' in req.query)){
@@ -319,7 +319,7 @@ router.get('/areAdmin', function(req,res,next){
                   admin_id
                  from
                   event_admins
-                 where event_id=?;`
+                 where event_id=?;`;
       req.pool.getConnection(function(error, connection){
         if(error){
           console.log(error);
@@ -343,7 +343,7 @@ router.get('/areAdmin', function(req,res,next){
         });
       });
     }
-})
+});
 //invite someone to an event who doesnt have an account
 router.post('/invite',function(req,res,next){
   if ('first_name' in req.body && 'last_name' in req.body && 'event_id' in req.body)
@@ -375,7 +375,7 @@ router.post('/invite',function(req,res,next){
   {
     res.sendStatus(400);
   }
-})
+});
 
 
 module.exports = router;
