@@ -96,6 +96,7 @@ function addAlertDiv() {
   body.prepend(div);
 }
 
+//Load bar, didn't end up figuring out how to call this function from inside vue
 // function toggleLoad() {
 
 //   let header = document.querySelector("header");

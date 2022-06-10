@@ -1,19 +1,3 @@
-function toggleLoad() {
-
-    let header = document.querySelector("header");
-
-    let animation = window.getComputedStyle(header, null).getPropertyValue("animation");
-
-    console.log(animation);
-
-    if(animation == "1s ease 0s infinite alternate none running loading"){
-      header.style.animation = "";
-    } else {
-      header.style.animation = "loading 1s infinite alternate";
-    }
-
-}
-
 let vueinst = new Vue({
 
     el: "#app",
