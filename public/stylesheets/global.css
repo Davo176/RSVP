@@ -157,8 +157,8 @@ a {
 
 /* The animation code */
 @keyframes example {
-  from {position: left;}
-  to {position: right;}
+  0% {left: 0px;}
+  100% {left: 100px;}
 }
 
 /* The element to apply the animation to */
