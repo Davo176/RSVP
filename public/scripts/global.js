@@ -98,10 +98,11 @@ function addAlertDiv() {
 }
 
 function addLoadingDiv() {
+
   let div = document.createElement("div");
   div.id = "loading";
 
-  document.prepend(div);
+  document.querySelector("body").prepend(div);
 
 }
 
