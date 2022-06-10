@@ -3,6 +3,7 @@
 
     <head>
         <title>Event Planning - Account</title>
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
         <link rel="stylesheet" href="/stylesheets/global.css">
         <link rel="stylesheet" href="/stylesheets/account.css">
         <link rel="icon" type="image/x-icon" href="/images/favicon.ico">
@@ -32,68 +33,68 @@
 
             <header id="Nav"></header>
 
-            </br>
+            <br/>
             <div class="accountPageContainer">
                 <h3>Your Account Info</h3>
 
-                <label for="userName">Username: </label>
-                <p style="display: inline" id="user_name" name = "userName"></p>
+                <span>Username: </span>
+                <p style="display: inline" id="user_name"></p>
 
-                </br>
+                <br/>
 
-                <label for="firstName">First name: </label>
-                <input type="text" name="firstName" id="first_name"> </input>
+                <span>First name: </span>
+                <input type="text">
                 <button type="submit" v-on:click="updateUser(`first_name`)">Submit</button>
                 <p id="maxLengthFirstName"></p>
 
-                </br>
+                <br/>
 
-                <label for="lastName">Last name: </label>
-                <input type="text" name="lastName" id="last_name"> </input>
+                <span>Last name: </span>
+                <input type="text">
                 <button type="submit" v-on:click="updateUser(`last_name`)">Submit</button>
                 <p id="maxLengthLastName"></p>
 
-                </br>
+                <br/>
 
-                <label for="email">Email: </label>
-                <input type="text" name="email" id="email"> </input>
+                <span>Email: </span>
+                <input type="text">
                 <button type="submit" v-on:click="updateUser(`email`)">Submit</button>
                 <p id="maxLengthEmail"></p>
 
-                </br>
+                <br/>
 
                 <h3>Change Password</h3>
 
                 <div id="passwordFields">
 
-                    <label for="oldPassword">Current Password: </label>
+                    <span>Current Password: </span>
                     <div class="passwordContainer">
-                        <input type="password" name="oldPassword" id="oldPassword" onclick="removeError()"></input>
-                        <i class="fa-solid fa-eye" alt="Show password" onmousedown="showPassword('oldPassword')" onmouseup="hidePassword('oldPassword')"></i>
+                        <input type="password">
+                        <i class="fa-solid fa-eye" title="Show password" onmousedown="showPassword('oldPassword')" onmouseup="hidePassword('oldPassword')"></i>
                     </div>
 
-                    </br>
+                    <br/>
 
-                    <label for="newPassword">New Password: </label>
+                    <span>New Password: </span>
                     <div class="passwordContainer">
-                        <input type="password" name="newPassword" id="newPassword" onclick="removeError()"></input>
-                        <i class="fa-solid fa-eye" alt="Show password" onmousedown="showPassword('newPassword')" onmouseup="hidePassword('newPassword')"></i>
+                        <input type="password">
+                        <i class="fa-solid fa-eye" title="Show password" onmousedown="showPassword('newPassword')" onmouseup="hidePassword('newPassword')"></i>
                     </div>
 
-                    </br>
+                    <br/>
 
-                    <label for="newPasswordRepeat">Repeat new password: </label>
+                    <span>Repeat new password: </span>
                     <div class="passwordContainer">
-                        <input type="password" name="newPasswordRepeat" id="newPasswordRepeat" onclick="removeError()"></input>
-                        <i class="fa-solid fa-eye" alt="Show password" onmousedown="showPassword('newPasswordRepeat')" onmouseup="hidePassword('newPasswordRepeat')"></i>
+                        <input type="password">
+                        <i class="fa-solid fa-eye" title="Show password" onmousedown="showPassword('newPasswordRepeat')" onmouseup="hidePassword('newPasswordRepeat')"></i>
                     </div>
 
                 </div>
 
                 <button type="submit" v-on:click="changePassword()">Submit</button>
 
-                </br>
-                </br>
+                <br/>
+                <br/>
                 <h3>Email Settings</h3>
                 <div class="emailSettingsContainer">
                     <p>Receive an Email when an event is finalised:</p>
