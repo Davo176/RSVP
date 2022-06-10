@@ -8,6 +8,7 @@ CREATE TABLE users (
     last_name VARCHAR(50),
     email VARCHAR(255),
     password_hash VARCHAR(255),
+    forgotten_password_code INT,
     PRIMARY KEY (user_name)
 );
 
@@ -18,6 +19,8 @@ CREATE TABLE events (
     event_time VARCHAR(255),
     event_image VARCHAR(64),
     event_address VARCHAR(255),
+    event_description VARCHAR(255),
+    finalised tinyint,
     PRIMARY KEY (event_id)
 );
 
@@ -38,6 +41,7 @@ CREATE TABLE unavailabilities (
     reason VARCHAR(64),
     user VARCHAR(36),
     event_id VARCHAR(36),
+    origin VARCHAR(10),
     FOREIGN KEY (user) REFERENCES users(user_name) ON DELETE CASCADE,
     FOREIGN KEY (event_id) REFERENCES events(event_id) ON DELETE CASCADE,
     PRIMARY KEY (unavailability_id)
@@ -54,6 +58,7 @@ CREATE TABLE event_admins (
 CREATE TABLE event_invitees (
     invitee_id VARCHAR(36),
     event_id VARCHAR(36),
+    attending_status VARCHAR(30),
     FOREIGN KEY (invitee_id) REFERENCES users(user_name) ON DELETE CASCADE,
     FOREIGN KEY (event_id) REFERENCES events(event_id) ON DELETE CASCADE,
     PRIMARY KEY (invitee_id,event_id)

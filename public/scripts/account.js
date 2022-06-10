@@ -61,6 +61,7 @@ var vueInst = new Vue({
             //send a request to update a users fields
             let newFieldValue = document.getElementById(field).value;
             let reqBody = JSON.stringify({"newFieldValue": newFieldValue, "field": field});
+          
             let xhttp2 = new XMLHttpRequest();
 
             xhttp2.onreadystatechange = function()
