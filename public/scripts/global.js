@@ -100,7 +100,7 @@ function toggleLoad() {
 
   let header = document.querySelector("header");
 
-  let playState = window.getComputedStyle(header, null).getPropertyValue("animationPlayState");
+  let playState = window.getComputedStyle(header, null);
 
   console.log(playState);
 
