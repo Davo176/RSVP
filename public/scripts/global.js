@@ -76,7 +76,7 @@ window.onclick = function(event){
       document.getElementById("dropdownContent").classList.remove("show");
   }
   if(document.querySelector("button") && !event.target.matches("button")){
-      document.getElementById("alert").style.display = "none";
+      document.getElementById("alertContent").style.display = "none";
   }
 }
 
