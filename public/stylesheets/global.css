@@ -74,7 +74,6 @@ header {
   animation-iteration-count: infinite;
   animation-duration: 1s;
   animation-direction: alternate;
-  animation-play-state: paused;
 }
 
 @keyframes loading {

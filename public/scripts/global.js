@@ -106,7 +106,7 @@ function toggleLoad() {
     header.style.removeProperty("animation");
     header.style.removeProperty("opacity");
   } else {
-    header.style.animationPlayState = "running";
+    header.style.animation = "loading";
   }
 
 }
