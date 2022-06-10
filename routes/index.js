@@ -1,6 +1,11 @@
 var express = require('express');
 var router = express.Router();
 
+router.use(function(req, res, next){
+  console.log("gone in");
+  document.querySelector("header").style.animationPlayState = "running";
+})
+
 router.get('/forgottenPassword', function(req, res, next){
   res.sendFile('/public/forgottenPassword.html', { root: __dirname+"/.." });
 })
