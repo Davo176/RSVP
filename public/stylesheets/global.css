@@ -160,14 +160,18 @@ a {
   height: 10px;
   background-color: white;
   position: relative;
-  animation-name: example;
+  animation-name: loadingAnimation;
   animation-duration: 1s;
   animation-iteration-count: infinite;
 }
 
-@keyframes example {
+@keyframes loadingAnimation {
   from   {left:33vw; top:0px;}
   to  {left:66vw; top:0px;}
+}
+
+#loading::after {
+  
 }
 
 /* @keyframes acrossScreen {
