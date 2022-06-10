@@ -67,6 +67,7 @@ let vueinst = new Vue({
 
                 xhttp.onreadystatechange = function(){
                     if(this.readyState == 4){
+                        
                         if(this.status == 200){
                             showAlert("Password updated");
                         }
