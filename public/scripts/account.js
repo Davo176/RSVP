@@ -61,7 +61,7 @@ var vueInst = new Vue({
             //send a request to update a users fields
             let newFieldValue = document.getElementById(field).value;
             let reqBody = JSON.stringify({"newFieldValue": newFieldValue, "field": field});
-          
+
             let xhttp2 = new XMLHttpRequest();
 
             xhttp2.onreadystatechange = function()
@@ -153,7 +153,7 @@ var vueInst = new Vue({
             if(this.readyState == 4 && this.status == 200){
 
                 let user = JSON.parse(this.responseText);
-
+                console.log(user);
                 document.getElementById("user_name").innerText = user[0]["user_name"];
                 document.getElementById("first_name").value = user[0]["first_name"];
                 document.getElementById("last_name").value = user[0]["last_name"];

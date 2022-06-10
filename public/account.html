@@ -14,17 +14,6 @@
         <link href="https://fonts.googleapis.com/css2?family=Open+Sans&display=swap" rel="stylesheet">
         <script src="/scripts/global.js" defer></script>
         <script src="/scripts/account.js" defer></script>
-
-        <!--Not in vue because I couldn't find an "onmouseup" element for vue-->
-        <script>
-            function showPassword(field){
-                //Turns password field into text field
-                document.getElementById(field).type = "text";
-            }
-            function hidePassword(field){
-                document.getElementById(field).type = "password";
-            }
-        </script>
     </head>
 
     <body>
@@ -43,22 +32,22 @@
                 <br/>
 
                 <span>First name: </span>
-                <input type="text">
+                <input type="text" id="first_name">
                 <button type="submit" v-on:click="updateUser(`first_name`)">Submit</button>
                 <p id="maxLengthFirstName"></p>
 
                 <br/>
 
                 <span>Last name: </span>
-                <input type="text">
+                <input type="text" id="last_name">
                 <button type="submit" v-on:click="updateUser(`last_name`)">Submit</button>
                 <p id="maxLengthLastName"></p>
 
                 <br/>
 
                 <span>Email: </span>
-                <input type="text">
-                <button type="submit" v-on:click="updateUser(`email`)">Submit</button>
+                <input type="text" id="email">
+                <button type="submit" v-on:click="updateUser(`email`)" >Submit</button>
                 <p id="maxLengthEmail"></p>
 
                 <br/>
@@ -69,7 +58,7 @@
 
                     <span>Current Password: </span>
                     <div class="passwordContainer">
-                        <input type="password">
+                        <input type="password" id="oldPassword">
                         <i class="fa-solid fa-eye" title="Show password" onmousedown="showPassword('oldPassword')" onmouseup="hidePassword('oldPassword')"></i>
                     </div>
 
@@ -77,7 +66,7 @@
 
                     <span>New Password: </span>
                     <div class="passwordContainer">
-                        <input type="password">
+                        <input type="password" id="newPassword">
                         <i class="fa-solid fa-eye" title="Show password" onmousedown="showPassword('newPassword')" onmouseup="hidePassword('newPassword')"></i>
                     </div>
 
@@ -85,7 +74,7 @@
 
                     <span>Repeat new password: </span>
                     <div class="passwordContainer">
-                        <input type="password">
+                        <input type="password" id="newPasswordRepeat">
                         <i class="fa-solid fa-eye" title="Show password" onmousedown="showPassword('newPasswordRepeat')" onmouseup="hidePassword('newPasswordRepeat')"></i>
                     </div>
 

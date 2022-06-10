@@ -1,3 +1,11 @@
+function showPassword(field){
+  //Turns password field into text field
+  document.getElementById(field).type = "text";
+}
+function hidePassword(field){
+  document.getElementById(field).type = "password";
+}
+
 function homeButton () {
   location.href = "home";
 }
@@ -115,7 +123,9 @@ function updateNav () {
   if(document.body.contains(document.querySelector("header"))){
 
       var nav = document.getElementById('Nav');
-
+      if (!nav){
+        return;
+      }
       if (first_name == "GUEST")
       {
         nav.innerHTML += `
