@@ -99,7 +99,7 @@ header {
   display: none;
   position: absolute;
   color: white;
-  background-color:var(--secondary-color);
+  background-color:var(--secondary-color);;
   right: 0.5em;
   top: 3em;
 }
@@ -172,12 +172,12 @@ a {
  * ==============================================
  */
 .dot-elastic {
-  position: relative;
+  position: sticky;
   width: 10px;
   height: 10px;
   border-radius: 5px;
-  background-color: #9880ff;
-  color: var(--primary-color);
+  background-color: var(--secondary-color);
+  color: #9880ff;
   animation: dotElastic 1s infinite linear;
 }
 
@@ -193,8 +193,8 @@ a {
   width: 10px;
   height: 10px;
   border-radius: 5px;
-  background-color: #9880ff;
-  color: var(--primary-color);
+  background-color: var(--secondary-color);
+  color: #9880ff;
   animation: dotElasticBefore 1s infinite linear;
 }
 
@@ -203,7 +203,7 @@ a {
   width: 10px;
   height: 10px;
   border-radius: 5px;
-  background-color: #9880ff;
+  background-color: var(--secondary-color);
   color: #9880ff;
   animation: dotElasticAfter 1s infinite linear;
 }
