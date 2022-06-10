@@ -5,12 +5,12 @@ const Uuid = require('uuid');
 
 var storage = multer.diskStorage({
     destination: function (req, file, cb) {
-      cb(null, './public/images/userUploads')
+      cb(null, './public/images/userUploads');
     },
     filename: function (req, file, cb) {
       let split = file.originalname.split(".");
       let extension = file.originalname.split(".")[split.length-1];
-      cb(null, Uuid.v4() + "." + extension)
+      cb(null, Uuid.v4() + "." + extension);
     }
 });
 
@@ -18,7 +18,7 @@ var upload = multer({ storage: storage });
 
 var fs = require('fs');
 
-var sendMail = require('../../../email')
+var sendMail = require('../../../email');
 
 //middleware to make sure an admin is making the request
 router.use(upload.single("newImage"), function (req, res, next) {
@@ -38,7 +38,7 @@ router.use(upload.single("newImage"), function (req, res, next) {
             connection.query(query, [user, event], function (error, rows, fields) {
                 connection.release();
                 if (error) {
-                    console.log(error);se
+                    console.log(error);
                     res.sendStatus(500);
                     return;
                 }
@@ -64,7 +64,7 @@ router.post('/title', function (req, res, next) {
                 return;
             }
             let event_id = req.body.event_id;
-            let title = req.body.title
+            let title = req.body.title;
             let query = "update events set event_title = ? where event_id = ?";
             connection.query(query, [title, event_id], function (error, rows, fields) {
                 connection.release();
@@ -151,7 +151,7 @@ router.post('/image', function(req, res, next){
                 res.sendStatus(500);
                 return;
             }
-            let query = "UPDATE events SET event_image = ? WHERE event_id = ?"
+            let query = "UPDATE events SET event_image = ? WHERE event_id = ?";
             connection.query(query, [req.file.filename, req.body.event_id], function(error, rows, fields) {
                 connection.release();
                 if(error) {
@@ -160,7 +160,7 @@ router.post('/image', function(req, res, next){
                     return;
                 }
                 res.sendStatus(200);
-            })
+            });
         });
     }
     catch(err){
@@ -180,7 +180,7 @@ router.post('/finalise', function (req, res, next) {
         }
         let event_id = req.body.event_id;
         let query = "update events set finalised = 1 where event_id = ?";
-        let query2 = "select event_title,event_date,event_time from events where event_id=?;"
+        let query2 = "select event_title,event_date,event_time from events where event_id=?;";
         let query3 = `select * from events
                     left join event_invitees on events.event_id = event_invitees.event_id
                     left join users on event_invitees.invitee_id = users.user_name
@@ -190,7 +190,7 @@ router.post('/finalise', function (req, res, next) {
                     and
                     user_email_settings.setting_name='finalise'
                     and
-                    user_email_settings.setting_state=1;`
+                    user_email_settings.setting_state=1;`;
 
 
         connection.query(query, [event_id], function (error, rows, fields) {
@@ -207,7 +207,7 @@ router.post('/finalise', function (req, res, next) {
                     return;
                 }
                 let dateTime=rows[0].event_date + " " + rows[0].event_time;
-                let eventTitle = rows[0].event_title
+                let eventTitle = rows[0].event_title;
                 //get emails to send email too
                 connection.query(query3, [event_id], function (error, rows, fields) {
                     connection.release();
@@ -236,7 +236,7 @@ router.post('/address', function (req, res, next) {
                 return;
             }
             let event_id = req.body.event_id;
-            let address = req.body.address
+            let address = req.body.address;
             let query = "update events set event_address = ? where event_id = ?";
             connection.query(query, [address, event_id], function (error, rows, fields) {
                 connection.release();
@@ -263,7 +263,7 @@ router.post('/description', function (req, res, next) {
                 return;
             }
             let event_id = req.body.event_id;
-            let description = req.body.description
+            let description = req.body.description;
             let query = "update events set event_description = ? where event_id = ?";
             connection.query(query, [description, event_id], function (error, rows, fields) {
                 connection.release();
@@ -290,7 +290,7 @@ router.post('/invite', function (req, res, next) {
                 return;
             }
             let event_id = req.body.event_id;
-            let user_id = req.body.user_id
+            let user_id = req.body.user_id;
             let query = "insert into event_invitees (event_id,invitee_id,attending_status) values (?,?,?)";
             connection.query(query, [event_id, user_id, "Unsure"], function (error, rows, fields) {
                 connection.release();
@@ -317,7 +317,7 @@ router.post('/uninvite', function (req, res, next) {
                 return;
             }
             let event_id = req.body.event_id;
-            let user_id = req.body.user_id
+            let user_id = req.body.user_id;
             let query = "delete from event_invitees where event_id = ? and invitee_id = ?";
 
             connection.query(query, [event_id, user_id], function (error, rows, fields) {
@@ -345,7 +345,7 @@ router.post('/makeAdmin', function (req, res, next) {
                 return;
             }
             let event_id = req.body.event_id;
-            let user_id = req.body.user_id
+            let user_id = req.body.user_id;
             //theoretically need to check that they are invited first.
             let query = "insert into event_admins (event_id,admin_id) values (?,?)";
             connection.query(query, [event_id, user_id], function (error, rows, fields) {
@@ -371,7 +371,7 @@ router.post('/delete', function (req, res, next) {
         }
         let event_id = req.body.event_id;
         //theoretically need to check that they are invited first.
-        let query  = "select event_title from events where event_id=?;"
+        let query  = "select event_title from events where event_id=?;";
         let query2 = `select users.email from events
                 left join event_invitees on events.event_id = event_invitees.event_id
                 left join users on event_invitees.invitee_id = users.user_name
@@ -381,7 +381,7 @@ router.post('/delete', function (req, res, next) {
                 and
                 user_email_settings.setting_name='cancel'
                 and
-                user_email_settings.setting_state=1;`
+                user_email_settings.setting_state=1;`;
         let query3 = "delete from events where event_id=?";
         connection.query(query, [event_id], function (error, rows, fields) {
             if (error) {
@@ -389,7 +389,7 @@ router.post('/delete', function (req, res, next) {
                 res.sendStatus(500);
                 return;
             }
-            let eventTitle = rows[0].event_title
+            let eventTitle = rows[0].event_title;
             connection.query(query2, [event_id], function (error, rows, fields) {
                 if (error) {
                     console.log(error);
@@ -420,7 +420,7 @@ router.post('/delete', function (req, res, next) {
             });
         });
     });
-})
+});
 
 //NOTE this endpoint doesnt change anything, but need event admin privledges to see
 //get friends that arent invited
@@ -455,7 +455,7 @@ router.get('/uninvitedFriends', function (req, res, next) {
                    and
                    requestee NOT IN (select event_invitees.invitee_id from event_invitees where event_invitees.event_id=?)
                    and
-                   f.friendship_start_date is not null;`
+                   f.friendship_start_date is not null;`;
         req.pool.getConnection(function (error, connection) {
             if (error) {
                 console.log(error);
@@ -474,7 +474,7 @@ router.get('/uninvitedFriends', function (req, res, next) {
             });
         });
     }
-})
+});
 //get people who arent available.
 router.get('/unavailable', function (req, res, next) {
     if (!('event_id' in req.query) && !('date' in req.query) && !('time' in req.query)) {
@@ -501,7 +501,7 @@ router.get('/unavailable', function (req, res, next) {
                             us.user_name in (select invitee_id from event_invitees where event_id=? and attending_status<>'Not Going')
                         and
                             (un.event_id <> ? or un.event_id is null);
-                            `
+                            `;
         req.pool.getConnection(function (error, connection) {
             if (error) {
                 console.log(error);
@@ -519,6 +519,6 @@ router.get('/unavailable', function (req, res, next) {
             });
         });
     }
-})
+});
 
 module.exports = router;

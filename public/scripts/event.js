@@ -60,13 +60,13 @@ var vueinst = new Vue({
                     console.log("error");
                 }
                 if (this.readyState == 4 && this.status == 200){
-                    let res = JSON.parse(this.responseText)
+                    let res = JSON.parse(this.responseText);
                     if (res.length==0){
-                        vueReference.nextDateTime=vueReference.moment(currentEventTime)
+                        vueReference.nextDateTime=vueReference.moment(currentEventTime);
                         vueReference.searchFromDate=currentEventTime.format("YYYY-MM-DD");
                         vueReference.searchFromTime=currentEventTime.format("HH:mm");
                     }else{
-                        vueReference.getNextFullAvailableTime(currentEventTime.format("YYYY-MM-DD"),currentEventTime.format("HH:mm"))
+                        vueReference.getNextFullAvailableTime(currentEventTime.format("YYYY-MM-DD"),currentEventTime.format("HH:mm"));
                     }
 
                 }
@@ -157,7 +157,7 @@ var vueinst = new Vue({
                         vueReference.getUnavailabilities(vueReference.event.event_id,vueReference.event.Date,vueReference.event.Time,true);
                         vueReference.searchFromDate = vueReference.event.Date;
                         vueReference.searchFromTime = vueReference.event.Time;
-                        vueReference.getNextFullAvailableTime(vueReference.searchFromDate,vueReference.searchFromTime)
+                        vueReference.getNextFullAvailableTime(vueReference.searchFromDate,vueReference.searchFromTime);
                     }
                 }
             };
@@ -297,7 +297,7 @@ var vueinst = new Vue({
 
             let newImage = document.getElementById("imageEdit").files[0];
 
-            if(newImage == null){
+            if(newImage === null){
                 showAlert("Please select image to change to");
             } else {
 
@@ -318,7 +318,7 @@ var vueinst = new Vue({
                     if(this.readyState == 4 && this.status == 200){
                         vueReference.getEventInfo(vueReference.event.event_id);
                     }
-                }
+                };
 
                 xhttp.open("POST", "/api/events/change/image", true); //For some reason, this worked only when we didn't set the request header. In order to use, multer I think I needed to set it to 'multipart/form-data'
                 xhttp.send(formData);
@@ -347,7 +347,7 @@ var vueinst = new Vue({
             let vueReference = this;
             let requestee = user_id;
             let add_friend = {requestee: requestee};
-            console.log(requestee)
+            console.log(requestee);
             console.log("making friend request");
             var xhttp = new XMLHttpRequest();
             xhttp.onreadystatechange = function() {
@@ -361,7 +361,7 @@ var vueinst = new Vue({
             };
 
             xhttp.open("POST", "api/friends/sendRequest", true);
-            xhttp.setRequestHeader("Content-type","application/json")
+            xhttp.setRequestHeader("Content-type","application/json");
             xhttp.send(JSON.stringify(add_friend));
         },
         addAdmin: function(user_id){
@@ -431,7 +431,7 @@ var vueinst = new Vue({
                     if (setValue){
                         vueReference.unavailable=JSON.parse(this.responseText);
                     }else{
-                        return(JSON.parse(this.responseText))
+                        return(JSON.parse(this.responseText));
                     }
 
                 }
@@ -456,7 +456,7 @@ var vueinst = new Vue({
         },
         generateLink: function(eventID){
             let vueReference = this;
-            let eventID2 = vueReference.event.event_id
+            let eventID2 = vueReference.event.event_id;
             let firstname = document.getElementById("fname").value;
             let lastname = document.getElementById("lname").value;
             let signup = {
@@ -487,7 +487,7 @@ var vueinst = new Vue({
             };
 
             xhttp.open("POST","/api/events/invite",true);
-            xhttp.setRequestHeader("Content-type","application/json")
+            xhttp.setRequestHeader("Content-type","application/json");
             xhttp.send(JSON.stringify(signup));
 
             //Invite user to event
@@ -511,7 +511,7 @@ var vueinst = new Vue({
             };
 
             xhttp.open("POST", "/api/calendar/addEvent", true);
-            xhttp.setRequestHeader('Content-type', 'application/json; charset=UTF-8')
+            xhttp.setRequestHeader('Content-type', 'application/json; charset=UTF-8');
             xhttp.send(reqBody);
         },
 

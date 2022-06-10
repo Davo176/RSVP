@@ -46,12 +46,12 @@ var vueInst = new Vue({
                             showAlert("Bad form");
                         }
                     }
-                }
+                };
 
                 let oldPassword = document.getElementById("oldPassword").value;
 
                 xhttp.open("POST","api/account/updatePassword");
-                xhttp.setRequestHeader("Content-type","application/json")
+                xhttp.setRequestHeader("Content-type","application/json");
                 xhttp.send(JSON.stringify({oldPassword: oldPassword, newPassword: newPassword}));
 
             }
@@ -61,18 +61,15 @@ var vueInst = new Vue({
             //send a request to update a users fields
             let newFieldValue = document.getElementById(field).value;
             let reqBody = JSON.stringify({"newFieldValue": newFieldValue, "field": field});
-
-            if(newFieldValue > )
-
             let xhttp2 = new XMLHttpRequest();
 
-            xhttp2.onreadystatechange = function(){
-
-                if(this.readyState == 4 && this.status == 200){
+            xhttp2.onreadystatechange = function()
+            {
+                if (this.readyState == 4 && this.status == 200)
+                {
                     //console.log("updated " + field + " to " + newFieldValue);
                 }
-            }
-
+            };
             xhttp2.open("POST", "api/account/updateinfo", true);
             xhttp2.setRequestHeader('Content-type', 'application/json');
             xhttp2.send(reqBody);
@@ -87,7 +84,7 @@ var vueInst = new Vue({
                 if(this.readyState == 4 && this.status == 200){
                     vueReference.getEmailSettings();
                 }
-            }
+            };
 
             xhttp2.open("POST", "api/account/updateEmailSettings", true);
             xhttp2.setRequestHeader('Content-type', 'application/json');
@@ -104,13 +101,13 @@ var vueInst = new Vue({
                 if (this.readyState == 4 && this.status == 200){
                     for (let setting of JSON.parse(this.responseText)){
                         if (setting.setting_name === "cancel"){
-                            vueReference.currentEmailSettingCancel = setting.setting_state
+                            vueReference.currentEmailSettingCancel = setting.setting_state;
                         }
                         if (setting.setting_name === "finalise"){
-                            vueReference.currentEmailSettingFinalise = setting.setting_state
+                            vueReference.currentEmailSettingFinalise = setting.setting_state;
                         }
                         if (setting.setting_name === "response"){
-                            vueReference.currentEmailSettingResponse = setting.setting_state
+                            vueReference.currentEmailSettingResponse = setting.setting_state;
                         }
                     }
                 }
@@ -128,13 +125,13 @@ var vueInst = new Vue({
             if(this.readyState == 4 && this.status == 200){
 
                 //Formats the data into a JSON array
-                object = JSON.parse(this.responseText);
+                var object = JSON.parse(this.responseText);
                 object = JSON.parse(object[0]["JSON_OBJECTAGG(COLUMN_NAME, CHARACTER_MAXIMUM_LENGTH)"]);
 
-                user_nameMax = object["user_name"];
-                first_nameMax = object["first_name"];
-                last_nameMax = object["last_name"];
-                emailMax = object["email"];
+                var user_nameMax = object["user_name"];
+                var first_nameMax = object["first_name"];
+                var last_nameMax = object["last_name"];
+                var emailMax = object["email"];
 
                 document.getElementById("first_name").setAttribute("maxlength", first_nameMax);
                 document.getElementById("last_name").setAttribute("maxlength", last_nameMax);
@@ -145,7 +142,7 @@ var vueInst = new Vue({
                 document.getElementById("maxLengthEmail").innerText = "Max length: " + emailMax + " characters";
 
             }
-        }
+        };
 
         xhttp2.open("GET", 'api/account/getfieldlengths', true);
         xhttp2.send();
@@ -162,8 +159,8 @@ var vueInst = new Vue({
                 document.getElementById("email").value = user[0]["email"];
 
             }
-        }
+        };
         xhttp.open("GET", 'api/account/getuserinfo');
         xhttp.send();
     }
-})
+});

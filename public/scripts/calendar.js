@@ -15,7 +15,7 @@ var vueinst = new Vue({
     methods: {
         formatTime: function (time) {
             //return the time as a formatted string
-            return moment.utc(time).format("h:mm A")
+            return moment.utc(time).format("h:mm A");
         },
         getMonth: function (month, year) {
             //get the calendar for displayed month
@@ -82,7 +82,7 @@ var vueinst = new Vue({
             };
 
             xhttp.open("POST", "/api/calendar/add", true);
-            xhttp.setRequestHeader('Content-type', 'application/json; charset=UTF-8')
+            xhttp.setRequestHeader('Content-type', 'application/json; charset=UTF-8');
             xhttp.send(reqBody);
         },
         deleteEvent: function (event) {
@@ -104,11 +104,12 @@ var vueinst = new Vue({
             };
 
             xhttp.open("POST", "/api/calendar/delete", true);
-            xhttp.setRequestHeader('Content-type', 'application/json; charset=UTF-8')
+            xhttp.setRequestHeader('Content-type', 'application/json; charset=UTF-8');
             xhttp.send(reqBody);
         },
         pushUnavUp: function(a,b,c,d){
             pushUnavUp(a,b,c);
+            //This is a different function which is defined in the calendar.html page
             let reqBody = JSON.stringify({ id: d });
             let xhttp = new XMLHttpRequest();
             let vueReference = this;
@@ -123,12 +124,12 @@ var vueinst = new Vue({
             };
 
             xhttp.open("POST", "/api/calendar/setOriginExternal", true);
-            xhttp.setRequestHeader('Content-type', 'application/json; charset=UTF-8')
+            xhttp.setRequestHeader('Content-type', 'application/json; charset=UTF-8');
             xhttp.send(reqBody);
         }
     },
     created: function () {
         //on page create get the current month
-        this.getMonth()
+        this.getMonth();
     }
 });
