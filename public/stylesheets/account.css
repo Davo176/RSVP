@@ -12,9 +12,9 @@
     justify-content: space-between;
 }
 
-#passwordcontainer {
+#passwordFields {
     display: flex;
-    width: 50vw;
+    width: 30vw;
     flex-grow: 1;
     flex-direction: column;
 }
