@@ -99,7 +99,7 @@ header {
   display: none;
   position: absolute;
   color: white;
-  background-color:var(--secondary-color);;
+  background-color:var(--secondary-color);
   right: 0.5em;
   top: 3em;
 }
@@ -177,7 +177,7 @@ a {
   height: 10px;
   border-radius: 5px;
   background-color: #9880ff;
-  color: #9880ff;
+  color: var(--primary-color);
   animation: dotElastic 1s infinite linear;
 }
 
@@ -194,7 +194,7 @@ a {
   height: 10px;
   border-radius: 5px;
   background-color: #9880ff;
-  color: #9880ff;
+  color: var(--primary-color);
   animation: dotElasticBefore 1s infinite linear;
 }
 
