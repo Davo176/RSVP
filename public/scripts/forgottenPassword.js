@@ -11,7 +11,7 @@ let vueinst = new Vue({
 
             // toggleLoad();
 
-            vueinst.userName = vueinst.userName;
+            //vueinst.userName = vueinst.userName;
 
             let xhttp = new XMLHttpRequest();
 
@@ -26,9 +26,9 @@ let vueinst = new Vue({
 
                                 showAlert("email sent to " + JSON.parse(this.responseText)[0]);
 
-                                vueinst.userName = vueinst.userName;
+                                //vueinst.userName = vueinst.userName;
                             }
-                        }
+                        };
 
                         xhttp2.open("POST", "/api/forgottenPassword/sendEmail", true);
                         xhttp2.setRequestHeader("Content-type", "application/json");
@@ -41,7 +41,7 @@ let vueinst = new Vue({
                         document.getElementById("userName").classList.add("error");
                     }
                 }
-            }
+            };
 
             xhttp.open("POST", "/api/forgottenPassword/generateCode", true);
             xhttp.setRequestHeader("Content-type", "application/json");
@@ -82,7 +82,7 @@ let vueinst = new Vue({
                             document.getElementById("userName").classList.add("error");
                         }
                     }
-                }
+                };
 
                 xhttp.open("POST", "/api/forgottenPassword/updatePassword", true);
                 xhttp.setRequestHeader("Content-type", "application/json");

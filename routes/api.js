@@ -27,7 +27,7 @@ router.use(function(req,res,next){
   }else{
     next();
   }
-})
+});
 
 router.use('/events', eventsRouter);
 router.use('/calendar', calendarRouter);

@@ -104,7 +104,7 @@ app.post('/loginGoogle', function(req, res, next) {
         return;
       }
       //Check if user has signed up before
-      query1 = 'SELECT * FROM users WHERE email = ?'
+      var query1 = 'SELECT * FROM users WHERE email = ?';
       connection.query(query1,[info.email], function(error, rows, fields)
       {
         if (error)
@@ -117,7 +117,7 @@ app.post('/loginGoogle', function(req, res, next) {
         {
           //User doesnt exist so sign up
           var user_name = first_name + last_name + Math.floor(1000 + Math.random() * 9000);
-          query2 = "INSERT INTO users (user_name, first_name, last_name, email) VALUES (?,?,?,?)"
+          var query2 = "INSERT INTO users (user_name, first_name, last_name, email) VALUES (?,?,?,?)";
           connection.query(query2,[user_name, first_name, last_name, email], function(error, rows, fields)
           {
             connection.release();
@@ -231,7 +231,7 @@ app.get('/externalInvitee', function(req, res, next) {
   }
   else
   {
-    res.sendStatus(400)
+    res.sendStatus(400);
   }
 });
 

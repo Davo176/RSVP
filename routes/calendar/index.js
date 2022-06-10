@@ -74,7 +74,7 @@ router.get('/', function (req, res, next) {
               dates: [],
             },
           ]
-        }
+        };
 
         //loop until end of month and a sunday
         while (!(reachedEndOfMonth && monthStart.day() == 0)) {
@@ -82,7 +82,7 @@ router.get('/', function (req, res, next) {
             date: monthStart.format('DD'),
             blank: false,
             events: []
-          }
+          };
           if (!reachedStartOfMonth || reachedEndOfMonth) {
             currObj.blank = true;
           }
@@ -173,7 +173,7 @@ router.post('/delete', function (req, res, next) {
       });
     });
   }
-})
+});
 
 router.post('/clearExternal', function (req,res, next){
   if (!('month' in req.body)){
@@ -186,9 +186,9 @@ router.post('/clearExternal', function (req,res, next){
         res.sendStatus(500);
         return;
       }
-      let month = moment(req.body.month)
-      let startOfMonth = moment(month).startOf('month').format("YYYY-MM-DD HH:mm")
-      let endOfMonth = moment(month).endOf('month').format("YYYY-MM-DD HH:mm")
+      let month = moment(req.body.month);
+      let startOfMonth = moment(month).startOf('month').format("YYYY-MM-DD HH:mm");
+      let endOfMonth = moment(month).endOf('month').format("YYYY-MM-DD HH:mm");
       let unavailabilityID = req.body.id;
       let query = "delete from unavailabilities where origin='external' and user=? and unavailable_from > ? and unavailable_from <?";
       connection.query(query, [user,startOfMonth,endOfMonth], function (error, rows, fields) {
@@ -202,7 +202,7 @@ router.post('/clearExternal', function (req,res, next){
       });
     });
   }
-})
+});
 
 router.post('/addExternal', function (req, res, next) {
   if (!('unavailable_from' in req.body) || !('unavailable_to' in req.body) || !('reason' in req.body) || !('origin' in req.body)) {
@@ -246,7 +246,7 @@ router.post('/addEvent', function (req, res, next) {
     let unavailableTo = moment(req.body.unavailable_to);
     let reason = req.body.reason;
     let origin = req.body.origin;
-    let event_id = req.body.event_id
+    let event_id = req.body.event_id;
     const unavailabilityID = Uuid.v4();
     req.pool.getConnection(function (error, connection) {
       if (error) {
