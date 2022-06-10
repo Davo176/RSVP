@@ -59,6 +59,7 @@ function getUser()
       {
         first_name=this.responseText;
         loggedIn = true;
+        addLoadingDiv();
         addAlertDiv();
         updateNav();
       }
@@ -94,6 +95,14 @@ function addAlertDiv() {
 
   var body = document.querySelector("body");
   body.prepend(div);
+}
+
+function addLoadingDiv() {
+  let div = document.createElement("div");
+  div.id = "loading";
+
+  document.prepent(div);
+
 }
 
 function updateNav () {
