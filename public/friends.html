@@ -3,6 +3,7 @@
 
 <head>
     <title>Event Planning - Friends</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
     <link rel="stylesheet" href="/stylesheets/global.css">
     <link rel="stylesheet" href="/stylesheets/friends.css">
     <link rel="icon" type="image/x-icon" href="/images/favicon.ico">
@@ -21,7 +22,7 @@
         <div class="friendFinderContainer">
             <div class="searchContainer">Enter {{Math.max(4-searchTerm.length,0)}} more characters</div>
             <div class="searchContainer">
-                <input class="search" type="text" placeholder="Search.." v-model="searchTerm"></input>
+                <input class="search" type="text" placeholder="Search.." v-model="searchTerm">
                 <button v-on:click="searchForNewFriends">Search</button>
             </div>
             <div class="searchResultContainer" v-for="person in searchResults">

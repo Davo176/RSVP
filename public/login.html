@@ -2,6 +2,7 @@
 <html lang="en">
     <head>
         <title>Event Planning - Login</title>
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
         <link rel="stylesheet" href="/stylesheets/global.css">
         <link rel="stylesheet" href="/stylesheets/events.css">
         <link rel="stylesheet" href="/stylesheets/notifications.css">
@@ -43,8 +44,8 @@
                         <input type="text" id="l_username" placeholder="Enter Username" name="username" onclick="removeError()" required>
                         <p>Password </p>
                         <div class="passwordContainer">
-                            <input type="password" id="l_password" placeholder="Enter Password" name="password" style="flex-grow: 0.95" style="flex-grow: 0.95" onclick="removeError()" required>
-                            <i class="fa-solid fa-eye" alt="Show password" onmousedown="showPassword('l_password')" onmouseup="hidePassword('l_password')"></i>
+                            <input type="password" id="l_password" placeholder="Enter Password" name="password" style="flex-grow: 0.95" onclick="removeError()" required>
+                            <i class="fa-solid fa-eye" onmousedown="showPassword('l_password')" onmouseup="hidePassword('l_password')"></i>
                         </div>
                         <a href="/forgottenPassword" class="href">(Forgotten your password?)</a>
                         <br/>
@@ -95,10 +96,10 @@
                         <p>Password</p>
                         <div class="passwordContainer">
                             <input type="password" id="s_password" placeholder="Enter Password" name="password" required>
-                            <i class="fa-solid fa-eye" alt="Show password" onmousedown="showPassword('s_password')" onmouseup="hidePassword('s_password')"></i>
+                            <i class="fa-solid fa-eye" onmousedown="showPassword('s_password')" onmouseup="hidePassword('s_password')"></i>
                         </div>
                         <br/>
-                        <button class="loginButton" onclick="signup()">Login</button>
+                        <button class="loginButton" onclick="signup()">Sign up</button>
                     </div>
                 </div>
                 <p id="signup_result"></p>
