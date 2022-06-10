@@ -28,10 +28,10 @@ function loginButton ()
 function showAlert(argAlert){
 
   console.log(argAlert);
-  let alertContent = document.getElementById("alertContent");
+  let alert = document.getElementById("alert");
 
   alertContent.innerText = argAlert;
-  alertContent.style.display = "flex";
+  alert.style.display = "flex";
 
 }
 
@@ -76,7 +76,7 @@ window.onclick = function(event){
       document.getElementById("dropdownContent").classList.remove("show");
   }
   if(document.querySelector("button") && !event.target.matches("button")){
-      document.getElementById("alertContent").style.display = "none";
+      document.getElementById("alert").style.display = "none";
   }
 }
 
