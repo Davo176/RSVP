@@ -136,7 +136,7 @@ a {
 .alert {
   display: none;
   position: sticky;
-  justify-self: center;
+  justify-content: center;
   align-self:center;
   top: 3em;
   width: 100vw;
