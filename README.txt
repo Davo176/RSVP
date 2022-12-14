@@ -41,7 +41,7 @@ Accounts within the website:
 Google Login (Recommended):
     To use google login, you must be signed into an developer email:
         Email: rsvpwdc@gmail.com
-        Password: IanKnight
+        Password: ****** (Send message to me for password)
     Once signed into the google account, you can access the website
     via google sign in
 
