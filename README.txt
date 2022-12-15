@@ -25,7 +25,7 @@ Steps to get website running:
     npm start (Make sure port server is running on is set to public)
 6. We recommend signing in with the following google account
     Email: rsvpwdc@gmail.com
-    Password: IanKnight
+    Password: ****** (Send message to me for password)
 
 Accounts within the website:
     Username: Bugs Password: admin1234
